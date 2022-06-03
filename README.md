@@ -18,7 +18,7 @@
 |    :---:       |     :---:                  |     :---:       |
 | Soujanya Nayak | soujanyaravindra@gmail.com | soujanyanayak18 |
 | Andy Cho       |andrewyunejo@gmail.com      |  andrewyjo      |
-| member3        |                            |                 |
+| Qin Geng       | gengqin50@gmail.com        |  genggeng88     |
 | Martin Salvatierra|martysaljhost@gmail.com   | Salvatim007     |
 | member5        |                            |                 |
 | member6        |                            |                 |
