@@ -17,7 +17,7 @@
 | Student Name   | Student Email              | GitHub Username |
 |    :---:       |     :---:                  |     :---:       |
 | Soujanya Nayak | soujanyaravindra@gmail.com | soujanyanayak18 |
-| member2        |                            |                 |
+| Andy Cho       |andrewyunejo@gmail.com      |  andrewyjo      |
 | member3        |                            |                 |
 | Martin Salvatierra|martysaljhost@gmail.com   | Salvatim007     |
 | member5        |                            |                 |
