@@ -21,7 +21,7 @@
 | Qin Geng             | gengqin50@gmail.com        |  genggeng88     |
 | Martin Salvatierra   |martysaljhost@gmail.com     | Salvatim007     |
 | Margaret De La Torre | mdelato1@mail.sfsu.edu     | MargaretDLT     |
-| member6               |                           |                 |
+| Victor Callejas      | vcallejas@mail.sfsu.edu    | vcallejas       |
 | William Plachno      | wjplachno@gmail.com        | wPlachno        |
 
 ## NO code needs to be stored in the root of your repository. You may rename the application folder if you like to your team's application name. But all source code related to your team's application should be stored inside the application folder.
