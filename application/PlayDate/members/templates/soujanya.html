@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  {% load static %}
+  <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+</head>
+
+<body>
+  <div class="card container-fluid" style="width: 18rem;">
+    <img class="card-img-top" src="{% static 'media/img_sou.jpeg' %}" alt="Soujanya">
+    <div class="card-body">
+      <h5 class="card-title">Soujanya Ravindra Nayak</h5>
+      <p class="card-text">
+        I am soujanya. I love painting.
+      </p>
+    </div>
+
+    {% include 'footer.html' %}
+</body>
+
+</html>
