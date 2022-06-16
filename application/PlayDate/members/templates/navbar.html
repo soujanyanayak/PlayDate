@@ -10,17 +10,15 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="/home/">Home</a>
         </li>
-
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="{% url 'about' %}">About Us</a>
         </li>
 
-        <li class="dropdown me-1">
-          <a class="nav-link dropdown-toggle" href="{% url 'about' %}" id="navbarDropdown" role="button"
-            data-bs-toggle="dropdown" aria-expanded="false" data-bs-offset="10,20">
-            Members
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false" href="{% url 'about' %}"></a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="/home/about/">About page</a></li>
             <li><a class="dropdown-item" href="/home/about/soujanya">Soujanya</a></li>
             <li><a class="dropdown-item" href="/home/about/andy">Andy</a></li>
             <li><a class="dropdown-item" href="/home/about/magaret">Magaret</a></li>
