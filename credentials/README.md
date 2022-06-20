@@ -8,28 +8,28 @@
 # Below is a list of items required. Missing items will causes points to be deducted from multiple milestone submissions.
 
 1. Server URL or IP
-    34.83.255.32:8000
+    <br> 34.83.255.32:8000
 2. SSH username
-    andy
+    <br> andy
 3. SSH password or key.
     <br> If a ssh key is used please upload the key to the credentials folder.
     Public and Private Key Files are used, please refer to credentials folder.
-    Password for “sudo ssh”: CSC648!@#Team03
+    <br> Password for “sudo ssh”: CSC648!@#Team03
 4. Database URL or IP and port used.
     <br><strong> NOTE THIS DOES NOT MEAN YOUR DATABASE NEEDS A PUBLIC FACING PORT.</strong> But knowing the IP and port number will help with SSH tunneling into the database. The default port is more than sufficient for this class.
-    Host: 34.83.255.32 Port: 3306
+    <br> Host: 34.83.255.32 Port: 3306
 5. Database username
-    playdateadmin
+    <br> playdateadmin
 6. Database password
-    Pl@yd@te03
+    <br> Pl@yd@te03
 7. Database name (basically the name that contains all your tables)
-    playdate
+    <br> playdate
 8. Instructions on how to use the above information.
-    You can put the key files in the folder: ~/.ssh of your local computer.
-    When connect to the server, use command:
-    $ sudo ssh -i ~/.ssh/team03-testuser andy@34.83.255.32
-    password for this sudo ssh is: CSC648!@#Team03
-    (If you have created your own key files with a password before, you shall first enter your own password, then enter ours.)
+    <br> You can put the key files in the folder: ~/.ssh of your local computer.
+    <br> When connect to the server, use command:
+    <br> $ sudo ssh -i ~/.ssh/team03-testuser andy@34.83.255.32
+    <br> password for this sudo ssh is: CSC648!@#Team03
+    <br> (If you have created your own key files with a password before, you shall first enter your own password, then enter ours.)
     
     
 # Most important things to Remember
