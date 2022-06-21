@@ -25,12 +25,31 @@
 7. Database name (basically the name that contains all your tables)
     <br> playdate
 8. Instructions on how to use the above information.
+    <strong>8.1 Connect To Our App Server</strong>
     <br> You can put the key files in the folder: ~/.ssh of your local computer.
-    <br> When connect to the server, use command:
-    <br> $ sudo ssh -i ~/.ssh/team03-testuser andy@34.83.255.32
-    <br> password for this sudo ssh is: CSC648!@#Team03
-    <br> (If you have created your own key files with a password before, you shall first enter your own password, then enter ours.)
+    <br> When connect to the server, use command:<br> 
     
+    <br> $ sudo ssh -i ~/.ssh/team03-testuser andy@34.83.255.32<br> 
+    
+    <br> password for this sudo ssh is: CSC648!@#Team03
+    <br> Project directory is: /projectdir
+    <br> (If you have created your own key files with a password before, you shall first enter your own password, then enter ours.)<br> 
+    
+    <strong>8.2 Connect To Our App Database Server</strong>
+    <br> There are three ways to connect to our Database Server:
+    <br> Directly connect to our DB server with command:<br> 
+
+    <br> $ mysql -h 34.83.255.32 -u playdateadmin -p
+    <br> Password: Pl@yd@te03<br> 
+
+    <br> First ssh to our app server, then login our DB server with command:<br> 
+
+    <br> $ mysql -u playdateadmin -p
+    <br> Password: Pl@yd@te03<br> 
+
+    <br> Connect to our DB server with MySQL workbench
+    <br> In your workbench, set “Hostname” as “34.83.255.32”, set “Port” as “3306”, set “Username” as “playdateadmin”, set “Password” as “Pl@yd@te03”, then connect.<br> 
+
     
 # Most important things to Remember
 ## These values need to kept update to date throughout the semester. <br>
