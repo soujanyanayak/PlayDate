@@ -35,18 +35,14 @@
     <br> (If you have created your own key files with a password before, you shall first enter your own password, then enter ours.)
     
     <strong>8.2 Connect To Our App Database Server</strong>
-    <br> There are three ways to connect to our Database Server:
+    <br> 8.2.1. There are three ways to connect to our Database Server:
     <br> Directly connect to our DB server with command:
-
     <br> $ mysql -h 34.83.255.32 -u playdateadmin -p
     <br> Password: Pl@yd@te03
-
-    <br> First ssh to our app server, then login our DB server with command:
-
+    <br> 8.2.2 First ssh to our app server, then login our DB server with command:
     <br> $ mysql -u playdateadmin -p
     <br> Password: Pl@yd@te03
-
-    <br> Connect to our DB server with MySQL workbench
+    <br> 8.2.3 Connect to our DB server with MySQL workbench
     <br> In your workbench, set “Hostname” as “34.83.255.32”, set “Port” as “3306”, set “Username” as “playdateadmin”, set “Password” as “Pl@yd@te03”, then connect.
 
     
