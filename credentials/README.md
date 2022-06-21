@@ -12,8 +12,7 @@
 2. SSH username
     <br> andy
 3. SSH password or key.
-    <br> If a ssh key is used please upload the key to the credentials folder.
-    Public and Private Key Files are used, please refer to credentials folder.
+    <br> Public and Private Key Files “team03-testuser” and “team03-testuser.pub” are uploaded, please refer to credentials folder.
     <br> Password for “sudo ssh”: CSC648!@#Team03
 4. Database URL or IP and port used.
     <br><strong> NOTE THIS DOES NOT MEAN YOUR DATABASE NEEDS A PUBLIC FACING PORT.</strong> But knowing the IP and port number will help with SSH tunneling into the database. The default port is more than sufficient for this class.
@@ -27,28 +26,28 @@
 8. Instructions on how to use the above information.
     <strong>8.1 Connect To Our App Server</strong>
     <br> You can put the key files in the folder: ~/.ssh of your local computer.
-    <br> When connect to the server, use command:<br> 
+    <br> When connect to the server, use command:
     
-    <br> $ sudo ssh -i ~/.ssh/team03-testuser andy@34.83.255.32<br> 
+    <br> $ sudo ssh -i ~/.ssh/team03-testuser andy@34.83.255.32
     
     <br> password for this sudo ssh is: CSC648!@#Team03
     <br> Project directory is: /projectdir
-    <br> (If you have created your own key files with a password before, you shall first enter your own password, then enter ours.)<br> 
+    <br> (If you have created your own key files with a password before, you shall first enter your own password, then enter ours.)
     
     <strong>8.2 Connect To Our App Database Server</strong>
     <br> There are three ways to connect to our Database Server:
-    <br> Directly connect to our DB server with command:<br> 
+    <br> Directly connect to our DB server with command:
 
     <br> $ mysql -h 34.83.255.32 -u playdateadmin -p
-    <br> Password: Pl@yd@te03<br> 
+    <br> Password: Pl@yd@te03
 
-    <br> First ssh to our app server, then login our DB server with command:<br> 
+    <br> First ssh to our app server, then login our DB server with command:
 
     <br> $ mysql -u playdateadmin -p
-    <br> Password: Pl@yd@te03<br> 
+    <br> Password: Pl@yd@te03
 
     <br> Connect to our DB server with MySQL workbench
-    <br> In your workbench, set “Hostname” as “34.83.255.32”, set “Port” as “3306”, set “Username” as “playdateadmin”, set “Password” as “Pl@yd@te03”, then connect.<br> 
+    <br> In your workbench, set “Hostname” as “34.83.255.32”, set “Port” as “3306”, set “Username” as “playdateadmin”, set “Password” as “Pl@yd@te03”, then connect.
 
     
 # Most important things to Remember
