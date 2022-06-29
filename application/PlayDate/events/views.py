@@ -4,8 +4,8 @@ from django.http import HttpResponse
 
 
 def events(request):
-    return HttpResponse("Events")
+    return render(request, "events/events.html")
 
 
 def createEvent(request):
-    return HttpResponse("Create event")
+    return render(request, "events/createEvent.html")
