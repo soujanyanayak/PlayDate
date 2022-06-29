@@ -10,7 +10,7 @@ from . import views
 # ]
 
 urlpatterns = [
-    path('', views.home, name='home'),
+    #path('', views.home, name='home'),
     path('about/', views.about, name='about'),
     path('about/soujanya/', views.soujanya, name='soujanya'),
     path('about/andy/', views.andy, name='andy'),
