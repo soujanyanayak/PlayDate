@@ -1,0 +1,52 @@
+<nav class="navbar navbar-expand-lg bg-light sticky-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">PlayDate</a>
+        <ul class="navbar-nav mb-lg-0">
+            <a class="nav-link active" aria-current="page" href="/about">About Us</a>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false" href="{% url 'about' %}"></a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="/about/soujanya">Soujanya</a></li>
+                    <li><a class="dropdown-item" href="/about/andy">Andy</a></li>
+                    <li><a class="dropdown-item" href="/about/margaret">Margaret</a></li>
+                    <li><a class="dropdown-item" href="/about/martin">Martin</a></li>
+                    <li><a class="dropdown-item" href="/about/qin">Qin</a></li>
+                    <li><a class="dropdown-item" href="/about/william">William</a></li>
+                    <li><a class="dropdown-item" href="/about/victor">Victor</a></li>
+                </ul>
+            </li>
+        </ul>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mx-auto mb-lg-0">
+                <form class="me-10 d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </ul>
+            <ul class="navbar-nav mx-2 mb-lg-0">
+                <a class="nav-link active" aria-current="page" href="/register">Sign Up</a>
+                <a class="nav-link active" aria-current="page" href="/login">Log In</a>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+
+
+
+
+
+<!-- 
+<div class="topnav">
+    <a href="/">Home</a>
+    <a href="/login">Login</a>
+    <a href="/register">Register</a>
+    <a href="/logout">Logout</a>
+    <a href="/groups/createGroup">Create A Group!</a>
+    <a href="/groups">Group</a>
+    <a href="/events">Event</a>
+    <a href="/events/createEvent">Create Event</a>
+</div>
+{% block content %} {% endblock %} -->
