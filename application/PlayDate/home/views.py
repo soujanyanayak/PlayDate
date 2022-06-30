@@ -56,7 +56,9 @@ def registrationPage(request):
 
         if user_form.is_valid() and accountForm.is_valid():
             user = user_form.save()
-            account = accountForm.save()
+            account = accountForm.save(commit=False)
+            account.accountID = user.id
+            account.save()
             username = request.POST['username']
             password = request.POST['password1']
             user = authenticate(request, username=username, password=password)
