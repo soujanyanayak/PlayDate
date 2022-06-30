@@ -5,11 +5,11 @@ from django.http import HttpResponse
 from django.template import loader
 
 
-def home(request):
-    #return HttpResponse("Hello, world. You're at the introduction index.")
-    template = loader.get_template('home.html')
-    return HttpResponse(template.render())
-
+# def home(request):
+#    #return HttpResponse("Hello, world. You're at the introduction index.")
+#    template = loader.get_template('home.html')
+#    return HttpResponse(template.render())
+#
 def about(request):
     """View function for home page of site."""
 
@@ -25,35 +25,42 @@ def about(request):
         # "indexes" : [1,2,3,4,5,6,7],
         # "members" : [member1,member2,member3,member4,member5,member6,member7],
         # "pages" : ['soujanya', 'andy', 'margaret', 'martin', 'qin', 'william', 'victor'],
-        "member1" : member1,
-        "member2" : member2,
-        "member3" : member3,
-        "member4" : member4,
-        "member5" : member5,
-        "member6" : member6,
-        "member7" : member7,
+        "member1": member1,
+        "member2": member2,
+        "member3": member3,
+        "member4": member4,
+        "member5": member5,
+        "member6": member6,
+        "member7": member7,
     }
 
     # Render the HTML template index.html with the data in the context variable
     return render(request, 'about.html', context=context)
 
+
 def soujanya(request):
     return render(request, 'soujanya.html')
+
 
 def andy(request):
     return render(request, 'andy.html')
 
+
 def margaret(request):
     return render(request, 'margaret.html')
+
 
 def martin(request):
     return render(request, 'martin.html')
 
+
 def qin(request):
     return render(request, 'qin.html')
 
+
 def william(request):
     return render(request, 'william.html')
+
 
 def victor(request):
     return render(request, 'victor.html')
@@ -63,7 +70,7 @@ def victor(request):
 #     #return HttpResponse("Hello, world. You're at the introduction index.")
 #     template = loader.get_template('soujanya.html')
 #     return HttpResponse(template.render())
-    
+
 # def qin(request):
 #     #return HttpResponse("Hello, world. You're at the introduction index.")
 #     template = loader.get_template('qin.html')

@@ -1,0 +1,32 @@
+{% include "header.html" %}
+
+<body>
+    {% include "general_navbar.html" %}
+
+
+
+    {% include "footer.html" %}
+</body>
+
+</html>
+
+
+<!-- 
+<body>
+    {% block content %}
+    <h1>Homepage</h1>
+    {% csrf_token %} {% if user.is_authenticated %}
+    <p>Welcome, {{ user.get_username }}. Thanks for logging in.</p>
+    <p>ID: {{userID}}</p>
+    <p>name: {{fname}} {{lname}}</p>
+    <p>email: {{email}}</p>
+    <p>gender: {{gender}}</p>
+    <p>Your dob: {{ dob }}</p>
+    {% else %}
+    <p>Welcome, new user. Please log in.</p>
+    {% endif %}
+    <form action="#" method="get">
+        <input type="submit" class="btn" value="Click" name="logoutBTN" />
+    </form>
+    {% endblock %}
+</body> -->
