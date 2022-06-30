@@ -34,7 +34,7 @@ INSTALLED_APPS = [
     'home.apps.HomeConfig',
     'events.apps.EventsConfig',
     'groups.apps.GroupsConfig',
-    #    'members.apps.MembersConfig',
+    'members.apps.MembersConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -90,8 +90,13 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'playdate',
+<<<<<<< HEAD
         'USER': 'root',
         'PASSWORD': 'sou@12345',
+=======
+        'USER': 'qin',
+        'PASSWORD': '',
+>>>>>>> fcd2d8030eaf90f1f5ac6ac2a213d84cd5fb65e6
         'HOST': '127.0.0.1',
         'PORT': '3306',
         'OPTIONS': {
@@ -134,7 +139,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

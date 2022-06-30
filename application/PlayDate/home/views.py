@@ -8,32 +8,32 @@ from . import forms
 
 
 def home(request):
-    userData = request.user
-    if userData.is_authenticated:
-        userInfo = User.objects.get(username=userData)
+    # userData = request.user
+    # if userData.is_authenticated:
+    #     userInfo = User.objects.get(username=userData)
 
-        accountInfo = models.Account.objects.get(accountID=userInfo.id)
+    #     accountInfo = models.Account.objects.get(accountID=userInfo.id)
 
-        print(userData)
-        userID = userInfo.id
-        lastLogin = userInfo.last_login
-        is_superuser = userInfo.is_superuser
-        fname = userInfo.first_name
-        lname = userInfo.last_name
-        email = userInfo.email
+    #     print(userData)
+    #     userID = userInfo.id
+    #     lastLogin = userInfo.last_login
+    #     is_superuser = userInfo.is_superuser
+    #     fname = userInfo.first_name
+    #     lname = userInfo.last_name
+    #     email = userInfo.email
 
-        gender = accountInfo.gender
-        dob = accountInfo.dob
-        print(is_superuser)
-        print(lastLogin)
-        print(userID)
-        print(gender)
-        return render(request, 'home/home.html', {'userID': userID, 'fname': fname, 'lname': lname, 'email': email, 'gender': gender, 'dob': dob})
-        if(request.get('logoutBTN')):
-            logout(request.user)
-        return render(request, 'home/logout.html')
-    else:
-        return render(request, 'home/home.html')
+    #     gender = accountInfo.gender
+    #     dob = accountInfo.dob
+    #     print(is_superuser)
+    #     print(lastLogin)
+    #     print(userID)
+    #     print(gender)
+    #     return render(request, 'home/home.html', {'userID': userID, 'fname': fname, 'lname': lname, 'email': email, 'gender': gender, 'dob': dob})
+    #     if(request.get('logoutBTN')):
+    #         logout(request.user)
+    #     return render(request, 'home/logout.html')
+    # else:
+    #     return render(request, 'home/home.html')
 
     return render(request, 'home/home.html')
 
