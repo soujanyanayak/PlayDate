@@ -9,12 +9,28 @@ from django.db import models
 
 
 class Location(models.Model):
-    country_code = models.CharField(max_length=2)
+    country_code = models.CharField(max_length=2, blank=True, null=True)
     zipcode = models.IntegerField(primary_key=True)
-    city = models.CharField(max_length=180)
-    state_name = models.CharField(max_length=45)
-    state_code = models.CharField(max_length=45)
+    city = models.CharField(max_length=180, blank=True, null=True)
+    state_name = models.CharField(max_length=45, blank=True, null=True)
+    state_code = models.CharField(max_length=45, blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'location'
+
+
+class Event(models.Model):
+    event_id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=45)
+    created_on = models.DateTimeField()
+    description = models.CharField(max_length=100, blank=True, null=True)
+    category = models.CharField(max_length=10, blank=True, null=True)
+    event_start = models.DateTimeField()
+    event_end = models.DateTimeField(blank=True, null=True)
+    street_address = models.CharField(max_length=45, blank=True, null=True)
+    location = models.ForeignKey(Location, models.DO_NOTHING, db_column='location', blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'event'
