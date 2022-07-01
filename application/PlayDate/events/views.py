@@ -62,7 +62,7 @@ def events(request):
             # context={'results': searchevents(query),'submitbutton': submitbutton}
             #result=Event.objects.select_related('location')
 
-            print(query)
+            #print(query)
            
             lookups= Q(location__city__icontains=query) | Q(location__state_name__icontains=query)
 
