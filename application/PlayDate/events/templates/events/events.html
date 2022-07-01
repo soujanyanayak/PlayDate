@@ -1,18 +1,40 @@
-{% extends "navbar.html" %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-        <meta charset="UTF-8">
-        <title>events</title>
-</head>
+{% include "header.html" %}
 <body>
-        {% block content %} 
-        <h1>create group</h1>
-        {% endblock %}
+    {% include "general_navbar.html" %}
+
+        <h1>Search Page</h1>
+
+        <br/>
+        <form action="{% url 'events' %}" method="GET" value="{{request.GET.q}}"> 
+            <input type="text" name="q" value="{{request.GET.q}}" placeholder="city"/>
+            <input type="submit" name="submit" value="Search"/>
+        </form>
+        
+        
+        {% if submitbutton == 'Search' and request.GET.q != '' %}
+            {% if results %}
+            <h1>Results for <b>{{ request.GET.q }}</b></h1>
+            <br/><br/>
+            <div class="container">
+                {% for result in results %}
+                <div>
+                    {{result.name}}
+                    <br/>
+                    {{result.url}}  
+                    <br/>
+                    {{result.street_address}}
+                    <br />
+        
+                </div>
+                {% endfor %}
+            {% else %}
+            No events found
+            {% endif %}
+        {% endif %}
+        
+        </div>
+    
+
+
+    {% include "footer.html" %}
 </body>
-</html>
-
-
-
-
-
