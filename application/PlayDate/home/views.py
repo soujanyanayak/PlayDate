@@ -9,11 +9,7 @@ from . import forms
 
 
 def home(request):
-    generalUser = models.generalUser()
-    ip, is_routable = get_client_ip(request)
-    generalUser.ip = ip
-    generalUser.save()
-    # userData = request.user
+   # userData = request.user
     # if userData.is_authenticated:
     #     userInfo = User.objects.get(username=userData)
 
