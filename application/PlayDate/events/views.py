@@ -66,7 +66,7 @@ def events(request):
            
             lookups= Q(address__city__icontains=query) | Q(address__zipcode__icontains=query) | Q(address__country__icontains=query) | Q(address__street__icontains=query)
 
-            results= Publicevent.objects.filter(lookups)
+            #results= Publicevent.objects.filter(lookups)
             results = Publicevent.objects.filter(lookups).select_related('address')
 
             context={'results': results,
