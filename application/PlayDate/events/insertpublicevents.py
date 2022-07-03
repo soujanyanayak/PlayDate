@@ -1,8 +1,9 @@
+# from turtle import title
 from MySQLdb import Error
 from bs4 import BeautifulSoup
 import mysql.connector
 import requests 
-from datetime import datetime
+
 
 
 eventlist=[]
@@ -50,11 +51,12 @@ def readInput():
             host="localhost",
             user="root",
             password="sou@12345",
-            database="playdate",
+            database="PlaydateDB",
             auth_plugin="mysql_native_password",
         )
-        mycursor =mydb.cursor()
-        mycursor.execute("select city, state_code, zipcode from location where state_code='CA' LIMIT 100")
+        mycursor =mydb.cursor(buffered=True)
+    
+        mycursor.execute("select DISTINCT city, state_code from location where state_code='CA' LIMIT 100")
         data=mycursor.fetchall()
 
         for row in data:
@@ -64,24 +66,29 @@ def readInput():
                 inputdata=searchevents(city,state)
                 if inputdata is not None:
                     eventlist.extend(inputdata)
-        event_id=100
+        event_id=8
+        id = 8
         count=0
         for item in eventlist:
             if count%2 == 0:
-                name=item['title']
-                location=item['location']
+                name=str(item['title']).split(':')[0]
+                loc=str(item['location']).split('•')
+                street=loc[0].removeprefix('in')
                 url=item['url']
                 state=item['state']
                 city=item['city']
-                now = datetime.now()
-                formatted_date = now.strftime('%Y-%m-%d %H:%M:%S')
-                mycursor.execute("select zipcode from location where city=%s and state_code=%s LIMIT 1",(city,state))
-                zipcode=mycursor.fetchone()
-                print(str(zipcode).strip("(,)"))
-
-                mycursor.execute("INSERT INTO event(event_id,name,created_on,description,category,street_address,location,url) VALUES (%s,%s,%s,'','pet',%s,%s,%s)",(event_id,name,formatted_date,location,str(zipcode).strip("(),"),url))
-                event_id=event_id+1
-            count=count+1
+                mycursor.execute("select zipcode from location where city=%s and state_code=%s",(city,state))
+                zipcode=str(mycursor.fetchone()).strip("(),")
+                print(name)
+                # mycursor.execute("INSERT INTO publicevent(public_event_id,name,created_on,description,category,street_address,location,url) VALUES (%s,%s,%s,'','pet',%s,%s,%s)",(event_id,name,formatted_date,location,int(str(zipcode).strip("(),"),url)))
+                print(str(id) + " , " + street + "," + city + " , " + str(zipcode))
+                mycursor.execute("select * from PublicEvent where name = %s",(name,))
+                if mycursor.fetchone() is None:
+                    mycursor.execute("INSERT INTO address(address_id,street,country,city,zipcode,state) VALUES(%s,%s,'United States',%s,%s,'California')",(id,street,city,int(zipcode)))
+                    mycursor.execute("INSERT INTO PublicEvent(public_event_id,address_id,event_url,name) VALUES (%s,%s,%s,%s)",(event_id,id,url,name))
+                    event_id=event_id+1
+                    id=id+1
+            
             # key=event_id
             # #print(key)
             # mycursor.execute("Insert into public_event(event_id,url) values(%s,%s)",(key,url))

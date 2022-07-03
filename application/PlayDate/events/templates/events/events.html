@@ -11,31 +11,35 @@
         </form> -->
         {% if submitbutton == 'Search' and request.GET.q != '' %}
         {% if results %}
-        <div class="result-body">
-            <div class="table-responsive">
-                <table class="table widget-26">
-                    <tbody>
-                        {% for result in results %}
-                        <tr>
-                            <td>
-                                <div class="widget-26-job-title">
-                                    {{result.name}}
-                                    <p class="m-0"><a href={{result.url}} class="employer-name">Register here</a>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="widget-26-job-info">
-            
-                                    <p class="text-muted m-0">in <span class="location">{{result.street_address}}</span></p>
-                                </div>
-                            </td>
-                           
-                            
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+        
+        <div class="container">
+            <div class="result-body">
+                <div class="table-responsive">
+                    <table class="table widget-26">
+                        <tbody>
+                            {% for result in results %}
+                            <tr>
+                                <td>
+                                    <div class="widget-26-job-title">
+                                        {{result.name}}
+                                        <p class="m-0"><a href={{result.url}}  class="employer-name">Register here</a>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="widget-26-job-info">
+                
+                                        <p class="text-muted m-0"> <span class="location"> {{result.address.street}}, {{result.address.city}}, {{result.address.state}}, {{result.address.country}}</span></p>
+                                    </div>
+                                </td>
+                               
+                                
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
+
         </div>
         {% else %}
             No events found

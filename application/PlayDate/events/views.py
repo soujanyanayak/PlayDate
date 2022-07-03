@@ -1,9 +1,9 @@
-from cgitb import lookup
+# from cgitb import lookup
 from unittest import result
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.db.models import Q
-from events.models import Event, Location
+from events.models import  Publicevent, Address
 
 import requests
 from bs4 import BeautifulSoup
@@ -64,12 +64,14 @@ def events(request):
 
             #print(query)
            
-            lookups= Q(location__city__icontains=query) | Q(location__state_name__icontains=query)
+            lookups= Q(address__city__icontains=query) | Q(address__zipcode__icontains=query) | Q(address__country__icontains=query) | Q(address__street__icontains=query)
 
-            results= Event.objects.filter(lookups).distinct()
+            results= Publicevent.objects.filter(lookups)
+            results = Publicevent.objects.filter(lookups).select_related('address')
 
             context={'results': results,
                      'submitbutton': submitbutton}
+            
 
             return render(request, 'events/events.html', context)
 
