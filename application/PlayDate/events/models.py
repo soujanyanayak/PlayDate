@@ -22,15 +22,23 @@ class Location(models.Model):
 
 class Event(models.Model):
     event_id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=45)
-    created_on = models.DateTimeField()
+    name = models.CharField(max_length=1000, blank=True, null=True)
+    created_on = models.DateTimeField(blank=True, null=True)
     description = models.CharField(max_length=100, blank=True, null=True)
     category = models.CharField(max_length=10, blank=True, null=True)
-    event_start = models.DateTimeField()
+    event_start = models.DateTimeField(blank=True, null=True)
     event_end = models.DateTimeField(blank=True, null=True)
-    street_address = models.CharField(max_length=45, blank=True, null=True)
+    street_address = models.CharField(max_length=500, blank=True, null=True)
     location = models.ForeignKey(Location, models.DO_NOTHING, db_column='location', blank=True, null=True)
+    type = models.CharField(max_length=2, blank=True, null=True)
+    url = models.CharField(max_length=1000, blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'event'
+
+class citysuggestion(models.Model):
+    name = models.CharField(max_length=100)
+  
+    def __str__(self):
+        return f"{self.name}"
