@@ -59,10 +59,7 @@ def events(request):
         submitbutton= request.GET.get('submit')
 
         if query is not None: 
-            # context={'results': searchevents(query),'submitbutton': submitbutton}
-            #result=Event.objects.select_related('location')
-
-            #print(query)
+           #query databse to check if matching city, zipcode, or street
            
             lookups= Q(address__city__icontains=query) | Q(address__zipcode__icontains=query) | Q(address__country__icontains=query) | Q(address__street__icontains=query)
 
