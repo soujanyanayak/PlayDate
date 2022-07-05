@@ -89,10 +89,17 @@ WSGI_APPLICATION = 'playdate.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
+<<<<<<< HEAD
         'NAME': 'playdatedb',
         'USER': 'root',
         'PASSWORD': 'sou@12345',
         'HOST': 'localhost',
+=======
+        'NAME': 'playdate',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': '127.0.0.1',
+>>>>>>> 2ad22cf (settings)
         'PORT': '3306',
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
