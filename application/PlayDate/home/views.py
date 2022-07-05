@@ -52,7 +52,7 @@ def home(request):
     # else:
     #     return render(request, 'home/home.html')
 
-    return render(request, 'home/home.html')
+    return render(request, 'home.html')
 
 
 def loginPage(request):
@@ -65,13 +65,14 @@ def loginPage(request):
         if user is not None:
             login(request, user)
             return redirect('home')
+            # return render(request, 'login.html')
 
     context = {}
-    return render(request, 'home/login.html')
+    return render(request, 'login.html')
 
 
 def logoutPage(request):
-    return render(request, 'home/logout.html')
+    return render(request, 'logout.html')
 
 
 def registrationPage(request):
@@ -111,8 +112,8 @@ def registrationPage(request):
                 gender = accountInfo.gender
                 dob = accountInfo.dob
 
-                return render(request, "home/home.html", {'userID': userID, 'fname': fname, 'lname': lname, 'email': email, 'gender': gender, 'dob': dob})
+                return render(request, "home.html", {'userID': userID, 'fname': fname, 'lname': lname, 'email': email, 'gender': gender, 'dob': dob})
             else:
-                return render(request, "home/invalidLogin.html")
+                return render(request, "invalidLogin.html")
 
-    return render(request, 'home/register.html', {'user_form': user_form, 'accountForm': accountForm})
+    return render(request, 'register.html', {'user_form': user_form, 'accountForm': accountForm})

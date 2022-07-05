@@ -1,0 +1,77 @@
+{% load static %}
+{% include "header.html" %}
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Register for PlayDate!</title>
+
+    <!-- <link rel="stylesheet" href="{% static 'css/register.css' %}"> -->
+    <script src="{% static 'js/register.js' %}" defer="true"></script>
+</head>
+
+<body>
+    <div>
+        <a href="/">
+            <h5 style="text-align: center; margin-top: 30px;">PlayDate</h5>
+        </a>
+    </div>
+    <div class="card mx-auto mt-2" style="width: 30rem;">
+        <div class="card-body">
+            <h6 class="card-subtitle mb-2 text-muted">Sign-Up:</h6>
+            <form class="register" style="width: 450px;" method="POST" action="">
+                {% csrf_token %}
+                <label for="username">
+                    {{user_form.username.label}}
+                    {{user_form.username}}
+                </label><br><br>
+                <label for="name">
+                    {{user_form.first_name.label}}
+                    {{user_form.first_name}}<br><br>
+                    {{user_form.last_name.label}}
+                    {{user_form.last_name}}
+                </label><br><br>
+                <label for="email">
+                    {{user_form.email.label}}
+                    {{user_form.email}}
+                </label><br><br>
+                <label for="password1">
+                    {{user_form.password1.label}}
+                    {{user_form.password1}}
+                </label><br><br>
+                <label for="password1">
+                    <p>Re-enter Password
+                        {{user_form.password2}}</p>
+                </label><br>
+                <label for="gender">
+                    {{accountForm.gender.label}}
+                    {{accountForm.gender}}<br>
+                </label><br><br>
+                <label for="dob">
+                    {{accountForm.dob.label}}
+                    {{accountForm.dob}}<br>
+                </label><br><br>
+
+                <div class="col">
+                    <button class="btn btn-primary pt-2" type="submit">
+                        Sign Up
+                    </button>
+                </div><br>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="gridCheck1" required>
+                    <label class="form-check-label" for="gridCheck1">By continuing, you agree to PlayDate's <a
+                            href="#">Terms of Use</a>
+                        and <a href="#">Privacy Notice</a>.
+                    </label>
+                </div><br>
+                <div class="text-center">
+                    <p>Already a member? <a href="/login">Log In</a></p>
+                </div>
+            </form>
+        </div>
+    </div><br><br><br>
+
+    {% include "footer.html" %}
+
+</body>
+
+</html>
