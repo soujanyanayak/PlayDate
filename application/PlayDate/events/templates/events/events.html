@@ -12,9 +12,27 @@
         <div class="container"></div>
         {% if submitbutton == 'Search' and request.GET.q != '' %}
         {% if results %}
+
+        
         
         
             <div class="result-body">
+
+            
+                
+                <div class="form-group col-sm-8 col-md-6" action="{% url 'events' %}" method="GET" value="{{request.GET.category}}">
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="pets" name="category" value="pets">
+                        <label class="checkbox-inline"> Pets </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="kids" name="category" value="kids">
+                        <label class="checkbox-inline"> Kids </label>
+                    </div>
+                    <button class="btn btn-outline-success" type="submit" name="submit" value="submit">Filter</button>
+                </div>
+                
                 <div class="table-responsive">
                     <table class="table widget-26">
                         <tbody>

@@ -13,10 +13,14 @@ class Publicevent(models.Model):
     address = models.ForeignKey('Address', models.DO_NOTHING)
     event_url = models.CharField(max_length=1000)
     name = models.CharField(max_length=500)
+    
+    category = models.CharField(max_length=10, blank=True, null=True)
+    
 
     class Meta:
         managed = False
         db_table = 'PublicEvent'
+
 
 
 

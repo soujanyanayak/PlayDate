@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.db.models import Q
 from events.models import  Publicevent, Address
+from itertools import chain
 
 import requests
 from bs4 import BeautifulSoup
@@ -55,26 +56,39 @@ def createEvent(request):
 def events(request):
     if request.method == 'GET':
         query= request.GET.get('q')
-        print(query)
+        
         submitbutton= request.GET.get('submit')
+
+        category=request.GET.getlist('category')
+        
+
+
+       
 
         if query is not None: 
            #query databse to check if matching city, zipcode, or street
            
             lookups= Q(address__city__icontains=query) | Q(address__zipcode__icontains=query) | Q(address__country__icontains=query) | Q(address__street__icontains=query)
 
-            #results= Publicevent.objects.filter(lookups)
-            results = Publicevent.objects.filter(lookups).select_related('address')
-
+            results= Publicevent.objects.filter(lookups) 
             context={'results': results,
                      'submitbutton': submitbutton}
-            
-
-            return render(request, 'events/events.html', context)
-
-        else:
-            return render(request, 'events/events.html')
-
+        
+            if category is not None:
+                category=request.GET.getlist('category')
+                result_list=[]
+                if len(category)==1:
+                    for r in category:
+                        result_list= result_list.union(results.filter(category=r)) 
+                        print(category)
+                    results=result_list
+                    context={'results': results,
+                        'submitbutton': submitbutton}
+                
+        return render(request, 'events/events.html', context)
+        
+        
+        
     else:
         return render(request, 'events/events.html')
 
