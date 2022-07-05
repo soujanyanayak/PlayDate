@@ -1,8 +1,45 @@
-*, *::before, *::after{
-    box-sizing: border-box;
+
+.filter{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 400px;
+    position: relative;
+}
+.filter-name{
+    margin-top: 40px;
+    width: 100px;
+}
+.filter-drop-arrow{
+    margin-top: 30px;
+    margin-left: 10px;
+    margin-right: 15px;
+}
+.filter-drop-menu{
+    position: absolute;
+    top: 100%;
+    left: 0;
+    list-style: none;
+    background-color: #ffff;
+    width: 40%;
+    border-radius:4px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s;
+}
+.filter-drop-menu li{
+    padding: 5px 10px;
+}
+.filter-drop-menu.open{
+    max-height: 300px;
 }
 
 
+
+
+*, *::before, *::after{
+    box-sizing: border-box;
+}
 .carousel{
     width: 100vw;
     height: 100vh;
