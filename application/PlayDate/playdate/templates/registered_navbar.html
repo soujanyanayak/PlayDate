@@ -35,6 +35,29 @@
                     type="submit">&#128269;</button>
             </form>
 
+            <script>
+                let filter = document.getElementById("filter");
+                let list = document.getElementById("list")
+                let filterText = document.getElementById("filterText")
+                let options = document.getElementsByClassName("options")
+
+                let aboutDrop = document.getElementById("aboutDrop")
+                let aboutList = document.getElementById("aboutList")
+
+                filter.onclick = function () {
+                    list.classList.toggle("open");
+                }
+                for (option of options) {
+                    option.onclick = function () {
+                        filterText.innerHTML = "Search " + this.innerHTML;
+                    }
+                }
+
+                aboutDrop.onclick = function () {
+                    aboutList.classList.toggle("open");
+                }
+
+            </script>
 
             <ul class="navbar-nav mx-2 mb-lg-0">
                 <a class="nav-link active" aria-current="page" href="#">My Groups</a>
