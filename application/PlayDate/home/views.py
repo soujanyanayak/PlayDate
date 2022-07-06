@@ -122,3 +122,6 @@ def registrationPage(request):
 
 def publicPage(request):
     return render(request, 'public.html')
+
+def helpPage(request):
+    return render(request, 'helpPage.html')
