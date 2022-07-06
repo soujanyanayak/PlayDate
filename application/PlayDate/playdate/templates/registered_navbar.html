@@ -1,26 +1,13 @@
 <nav class="navbar navbar-expand-lg bg-light fixed-top">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/">PlayDate</a>
+        <a class="navbar-brand" href="/" style="font-family: 'Gill Sans', sans-serif;color:#0d6efd;"><b>PlayDate</b></a>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mb-lg-0">
                 <a class="nav-link active" aria-current="page" href="/public">Public Events</a>
                 <a class="nav-link active" aria-current="page" href="/events">Events</a>
                 <a class="nav-link active" aria-current="page" href="/groups">Groups</a>
-                <a class="nav-link active" aria-current="page" href="/about">About Us</a>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-                        aria-expanded="false" href="{% url 'about' %}"></a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="/about/soujanya">Soujanya</a></li>
-                        <li><a class="dropdown-item" href="/about/andy">Andy</a></li>
-                        <li><a class="dropdown-item" href="/about/margaret">Margaret</a></li>
-                        <li><a class="dropdown-item" href="/about/martin">Martin</a></li>
-                        <li><a class="dropdown-item" href="/about/qin">Qin</a></li>
-                        <li><a class="dropdown-item" href="/about/william">William</a></li>
-                        <li><a class="dropdown-item" href="/about/victor">Victor</a></li>
-                    </ul>
-                </li>
+
 
             </ul>
             <!-- <ul class="navbar-nav mx-auto mb-lg-0">
@@ -29,7 +16,7 @@
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
             </ul> -->
-            <form class="search-field  button me-10 d-flex" role="search" action="{% url 'events' %}" method="GET"
+            <form class="search-field  button mx-auto d-flex" role="search" action="{% url 'events' %}" method="GET"
                 value="{{request.GET.q}}">
                 <div id="filter" class="dropdown">
                     <button id="filterText" class="btn btn-primary dropdown-toggle" type="button"
@@ -52,6 +39,20 @@
             <ul class="navbar-nav mx-2 mb-lg-0">
                 <a class="nav-link active" aria-current="page" href="#">My Groups</a>
                 <a class="nav-link active" aria-current="page" href="#">My Events</a>
+                <a class="nav-link active" aria-current="page" href="/about">About</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false" href="{% url 'about' %}"></a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="/about/soujanya">Soujanya</a></li>
+                        <li><a class="dropdown-item" href="/about/andy">Andy</a></li>
+                        <li><a class="dropdown-item" href="/about/margaret">Margaret</a></li>
+                        <li><a class="dropdown-item" href="/about/martin">Martin</a></li>
+                        <li><a class="dropdown-item" href="/about/qin">Qin</a></li>
+                        <li><a class="dropdown-item" href="/about/william">William</a></li>
+                        <li><a class="dropdown-item" href="/about/victor">Victor</a></li>
+                    </ul>
+                </li>
                 {% load static %}
                 <a class="nav-link active" aria-current="page" href="#"><img src="{% static 'media/message_icon.png' %}"
                         width="30" height="30"></a>
