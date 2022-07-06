@@ -51,7 +51,7 @@
           
         <form class="search-field  button me-10 d-flex" role="search" action="{% url 'events' %}" method="GET" value="{{request.GET.q}}">
             <select name="category">  
-                <option value="All">All</option>
+                <option selected="selected" value="All">All</option>
                 <option value="Kids">Kids</option>
                 <option value="Pets">Pets</option>
               </select>
