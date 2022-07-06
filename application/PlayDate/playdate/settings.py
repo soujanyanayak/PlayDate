@@ -90,8 +90,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'playdatedb',
-        'USER': 'martin',
-        'PASSWORD': 'martin@12345',
+        'USER': 'root',
+        'PASSWORD': 'sou@12345',
         'HOST': 'localhost',
         'PORT': '3306',
         'OPTIONS': {
