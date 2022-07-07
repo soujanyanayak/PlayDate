@@ -90,15 +90,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'playdate',
-<<<<<<< HEAD
         'USER': 'victor',
         'PASSWORD':'victor12345',
         'HOST': '127.0.0.1',
-=======
-        'USER': 'qin',
-        'PASSWORD': '',
         'HOST': 'localhost',
->>>>>>> origin/development
         'PORT': '3306',
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"

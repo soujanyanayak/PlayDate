@@ -128,3 +128,6 @@ def helpPage(request):
 
 def termsofuse(request):
         return render(request, 'termsofuse.html')
+
+def privacy(request):
+        return render(request, 'privacy.html')
