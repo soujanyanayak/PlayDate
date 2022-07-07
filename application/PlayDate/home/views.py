@@ -131,3 +131,7 @@ def termsofuse(request):
 
 def privacy(request):
         return render(request, 'privacy.html')
+
+
+def comesoonPage(request):
+    return render(request, 'comeSoon.html')

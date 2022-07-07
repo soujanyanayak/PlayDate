@@ -11,4 +11,5 @@ urlpatterns = [
     path('helpPage/', views.helpPage, name='helpPage'),
     path('termsofuse/', views.termsofuse, name='termsofuse'),
     path('privacy/', views.privacy, name='privacy'),
+    path('comeSoon/', views.comesoonPage, name='comesoon'),
  ]
