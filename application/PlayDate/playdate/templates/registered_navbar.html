@@ -4,7 +4,7 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mb-lg-0">
-                <a class="nav-link active" aria-current="page" href="/public">Public Events</a>
+                <a class="nav-link active" aria-current="page" href="/events">Public Events</a>
                 <a class="nav-link active" aria-current="page" href="/events">Events</a>
                 <a class="nav-link active" aria-current="page" href="/groups">Groups</a>
             </ul>
@@ -53,8 +53,8 @@
             </script>
 
             <ul class="navbar-nav mx-2 mb-lg-0">
-                <a class="nav-link active" aria-current="page" href="#">My Groups</a>
-                <a class="nav-link active" aria-current="page" href="#">My Events</a>
+                <a class="nav-link active" aria-current="page" href="/groups">My Groups</a>
+                <a class="nav-link active" aria-current="page" href="/events">My Events</a>
                 <a class="nav-link active" aria-current="page" href="/about">About</a>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
@@ -70,12 +70,12 @@
                     </ul>
                 </li>
                 {% load static %}
-                <a class="nav-link active" aria-current="page" href="#"><img src="{% static 'media/message_icon.png' %}"
-                        width="30" height="30"></a>
-                <a class="nav-link active" aria-current="page" href="#"><img
+                <a class="nav-link active" aria-current="page" href="/individuleInfo"><img
+                        src="{% static 'media/message_icon.png' %}" width="30" height="30"></a>
+                <a class="nav-link active" aria-current="page" href="/individuleInfo"><img
                         src="{% static 'media/notification_icon.png' %}" width="25" height="25"></a>
-                <a class="nav-link active" aria-current="page" href="#"><img src="{% static 'media/plus_icon.png' %}"
-                        width="30" height="25"></a>
+                <a class="nav-link active" aria-current="page" href="/individuleInfo"><img
+                        src="{% static 'media/plus_icon.png' %}" width="30" height="25"></a>
 
                 <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
@@ -83,8 +83,8 @@
                         <img src="{% static 'media/profile_icon.png' %}" width="30" height="30">
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="#">Profile</a></li>
-                        <li><a class="dropdown-item" href="#">Edit</a></li>
+                        <li><a class="dropdown-item" href="/individuleInfo">Profile</a></li>
+                        <li><a class="dropdown-item" href="/individuleInfo">Edit</a></li>
                         <li><a class="dropdown-item" href="/logout">Log Out</a></li>
                     </ul>
                 </div>

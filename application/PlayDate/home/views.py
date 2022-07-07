@@ -120,8 +120,8 @@ def registrationPage(request):
     return render(request, 'register.html', {'user_form': user_form, 'accountForm': accountForm})
 
 
-def publicPage(request):
-    return render(request, 'public.html')
+def individuleInfoPage(request):
+    return render(request, 'individuleInfo.html')
 
 def helpPage(request):
     return render(request, 'helpPage.html')
