@@ -26,82 +26,26 @@
                     <li><a class="dropdown-item" href="/about/victor">Victor</a></li>
                 </ul>
             </li>
-<<<<<<< HEAD
-        </ul>     
-        <div>
-            <form class="search-field  button me-10 d-flex" role="search" action="{% url 'events' %}" method="GET" value="{{request.GET.q}}">
-                <select name="category" id="select-item" onchange="SubmitEvent();">  
-                    <option selected="selected" value="All">All</option>
-                    <option value="Kids">Kids</option>
-                    <option value="Pets">Pets</option>
-                  </select>
-                <input class="form-control me-1" type="search" name="q" value="{{request.GET.q}}" placeholder="Street, City, State, Country" aria-label="Search">
-                <button class="search-button-text btn btn-outline-success" name="submit" value="Search" type="submit">&#128269;</button>
-            </form>
-            <!-- <form action="{% url 'filter' %}" method="post">
-                <select name="category">
-                  
-                  <option selected="selected" value="All">All</option>
-                  <option value="Kids">Kids</option>
-                  <option value="Pets">Pets</option>
-                </select>
-                <input type="submit" value="Select">
-              </form> -->
-
-              
-            <!-- <ul class="filter" id="filter">
-                    <p id="filterText" class="filter-name">Search All</p> 
-                    <a class="filter-drop-arrow dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" 
-                        aria-expanded="false"></a>
-                    <ul id="list" class="filter-drop-menu" aria-labelledby="navbarDropdown">
-                        <li class="options">All</li>
-                        <li class="options" >Kids</li>
-                        <li class="options" >Pets</li>
-                    </ul>
-            </ul> -->
-        </div>  
-          
-        <!-- <form class="search-field  button me-10 d-flex" role="search" action="{% url 'events' %}" method="GET" value="{{request.GET.q}}">
-            <select name="category" id="select-item" onchange="SubmitEvent();">  
-                <option selected="selected" value="All">All</option>
-                <option value="Kids">Kids</option>
-                <option value="Pets">Pets</option>
-              </select>
-            <input class="form-control me-1" type="search" name="q" value="{{request.GET.q}}" placeholder="Street, City, State, Country" aria-label="Search">
-            <button class="search-button-text btn btn-outline-success" name="submit" value="Search" type="submit">&#128269;</button>
-        </form> -->
-       
-            <script>
-                let filter = document.getElementById("filter");
-                let list = document.getElementById("list")
-                let filterText = document.getElementById("filterText")
-                let options = document.getElementsByClassName("options")
-
-                let aboutDrop = document.getElementById("aboutDrop")
-                let aboutList = document.getElementById("aboutList")
-
-                filter.onclick = function(){
-                    list.classList.toggle("open");
-                }
-                for(option of options){
-                    option.onclick = function(){
-                        filterText.innerHTML = "Search " + this.innerHTML;
-                    }
-=======
         </ul>
 
         <form class="search-field  button mx-auto d-flex" role="search" action="{% url 'events' %}" method="GET"
             value="{{request.GET.q}}">
             <div id="filter" class="dropdown">
-                <button id="filterText" class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1"
-                    data-bs-toggle="dropdown" aria-expanded="false">
+                <select id="filterText" class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                    data-bs-toggle="dropdown" aria-expanded="false" name="category" id="select-item" onchange="SubmitEvent();">
                     Search For
-                </button>
-                <ul id="list" class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <!-- <select name="category" id="select-item" onchange="SubmitEvent();">   -->
+                        <option selected="selected" value="All">All</option>
+                        <option value="Kids">Kids</option>
+                        <option value="Pets">Pets</option>
+                      </select>
+                    <!-- </select > -->
+                <!-- <ul id="list" class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                     <li class="options dropdown-item">All</a></li>
                     <li class="options dropdown-item">Kids</a></li>
                     <li class="options dropdown-item">Pets</a></li>
-                </ul>
+                </ul> -->
+                
             </div>
             <input class="form-control me-1" type="search" name="q" value="{{request.GET.q}}" placeholder="City"
                 aria-label="Search">
@@ -138,7 +82,6 @@
             for (option of options) {
                 option.onclick = function () {
                     filterText.innerHTML = "Search " + this.innerHTML;
->>>>>>> d8fe47728305da6dc60dfa9afdadbec3e3208389
                 }
             }
 
