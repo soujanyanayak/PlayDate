@@ -89,9 +89,9 @@ WSGI_APPLICATION = 'playdate.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'playdatedb',
-        'USER': 'root',
-        'PASSWORD': 'sou@12345',
+        'NAME': 'playdate',
+        'USER': 'qin',
+        'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '3306',
         'OPTIONS': {
