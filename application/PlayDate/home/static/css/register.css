@@ -1,59 +1,6 @@
-.register {
-    display: flex;
-    flex-direction: column;
-}
-.register > ul {
-    display: none;
-}
-.register > p {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-.register > p > label {
-    margin-right: 5px;
-}
-.register > h1 {
-    margin: 0px auto 16px;
-}
-body{
-	background-color: rgb(228, 233, 238);
-}
-.container {
-	border-radius: .3em;
-	background-color: #f8f9fa;
-	box-shadow: 3px 3px silver;
-	padding: 10px;
-	margin: 5px auto;
-	width:fit-content;
-	color: slategray;
-}
-h1 {
-	color: #0a58ca;
-}
-.inactive {
-	display: none;
-}
-.active {
-	display: block;
-}
-.helptext {
-	display:none;
-}
-.formTable tr {
-	display: flex;
-	flex-direction: row;
-	align-items: flex-start;
-}
-.formTable th {
-	width: 200px;
-}
 #id_username, #id_last_name, #id_email, #id_password2, #id_dob {
 	margin-bottom: 10px;
 }
-input:invalid {
-	box-shadow: 2px 2px rgb(116, 11, 11);
-}
-input:valid {
-	box-shadow: none;
+.register > label > input {
+	width: 20em;
 }

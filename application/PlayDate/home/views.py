@@ -72,7 +72,8 @@ def loginPage(request):
 
 
 def logoutPage(request):
-    return render(request, 'logout.html')
+    logout(request)
+    return render(request, 'home.html')
 
 
 def registrationPage(request):
@@ -117,3 +118,13 @@ def registrationPage(request):
                 return render(request, "invalidLogin.html")
 
     return render(request, 'register.html', {'user_form': user_form, 'accountForm': accountForm})
+
+
+def publicPage(request):
+    return render(request, 'public.html')
+
+def helpPage(request):
+    return render(request, 'helpPage.html')
+
+def termsofuse(request):
+        return render(request, 'termsofuse.html')

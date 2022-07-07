@@ -32,9 +32,18 @@
 </style>
 
 <body>
+    {% block content %}
+    {% if user.is_authenticated %}
+    {% load static %}
+    {% include "registered_navbar.html" %}
+    {% else %}
     {% load static %}
     {% include "general_navbar.html" %}
+    {% endif %}
+    {% endblock %}
+
     <main role="main">
+
         <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
             <div class="carousel-indicators">
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
@@ -53,7 +62,9 @@
                         <div class="carousel-caption text-left">
                             <h1>Make Your Kids Playdated.</h1>
                             <p>Find events and playdates for your kids, let them be accompanied!</p>
-                            <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
+                            <p><a class="btn btn-lg btn-primary" href="/register" role="button">Sign up today</a>
+                            </p>
+                            <br>
                         </div>
                     </div>
                 </div>
@@ -64,7 +75,7 @@
                         <div class="carousel-caption">
                             <h1>Enjoy Outdoor Activities.</h1>
                             <p>Let kids enjoy the sunshine and fresh air togther!</p>
-                            <p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p>
+                            <br><!-- <p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p> -->
                         </div>
                     </div>
                 </div>
@@ -75,7 +86,8 @@
                         <div class="carousel-caption text-right">
                             <h1>Pets With Friends.</h1>
                             <p>Your lovely pets need friend too, let them play together!</p>
-                            <p><a class="btn btn-lg btn-primary" href="#" role="button">Browse gallery</a></p>
+                            <br>
+                            <!-- <p><a class="btn btn-lg btn-primary" href="#" role="button">Browse gallery</a></p> -->
                         </div>
                     </div>
                 </div>
@@ -96,36 +108,35 @@
         <!-- Wrap the rest of the page in another container to center all the content. -->
 
         <div class="container marketing">
-
             <!-- Three columns of text below the carousel -->
             <div class="row">
                 <div class="col-lg-4">
                     {% load static %}
-                    <img class="rounded-circle" src="{% static 'media/public_event.webp' %}"
+                    <img class="rounded-circle" src="{% static 'media/public_events.jpg' %}"
                         alt="Generic placeholder image" width="140" height="140">
                     <h2>Public Events</h2>
                     <p>Tons of public events provided for you! Search and browse the upcoming public events, take your
                         children and pets to have fun!</p>
-                    <p><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p>
+                    <!-- <p><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p> -->
                 </div><!-- /.col-lg-4 -->
                 <div class="col-lg-4">
                     {% load static %}
-                    <img class="rounded-circle" src="{% static 'media/event.webp' %}" alt="Generic placeholder image"
+                    <img class="rounded-circle" src="{% static 'media/events.jpg' %}" alt="Generic placeholder image"
                         width="140" height="140">
                     <h2>Events From Members</h2>
                     <p>Find out other members event schedules. Join their events, meet your neighbors, and have children
                         and pet find a friend!
                     </p>
-                    <p><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p>
+                    <!-- <p><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p> -->
                 </div><!-- /.col-lg-4 -->
                 <div class="col-lg-4">
                     {% load static %}
-                    <img class="rounded-circle" src="{% static 'media/group.jpeg' %}" alt="Generic placeholder image"
+                    <img class="rounded-circle" src="{% static 'media/groups.jpg' %}" alt="Generic placeholder image"
                         width="140" height="140">
                     <h2>Groups</h2>
                     <p>Join the groups from your neighbors. Share your events and experiences with them. Make families
                         with children and pets stay closer!</p>
-                    <p><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p>
+                    <!-- <p><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p> -->
                 </div><!-- /.col-lg-4 -->
             </div><!-- /.row -->
 
@@ -136,14 +147,14 @@
 
             <div class="row featurette">
                 <div class="col-md-7">
-                    <h2 class="featurette-heading">First featurette heading. <span class="text-muted">It'll blow your
-                            mind.</span></h2>
-                    <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis
-                        euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus,
-                        tellus ac cursus commodo.</p>
+                    <h2 class="featurette-heading">We Feeds Latest Events.</h2>
+                    <p class="lead">All events will be updated frenquently to make sure you get the lastest information.
+                        You can browse all public events. You can event comment and sign up for your other users' events
+                        if you becoma a registered user!</p>
                 </div>
                 <div class="col-md-5">
-                    <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto"
+                    {% load static %}
+                    <img class="featurette-image img-fluid mx-auto" src="{% static 'media/latest.jpg' %}"
                         alt="Generic placeholder image">
                 </div>
             </div>
@@ -152,14 +163,13 @@
 
             <div class="row featurette">
                 <div class="col-md-7 order-md-2">
-                    <h2 class="featurette-heading">Oh yeah, it's that good. <span class="text-muted">See for
-                            yourself.</span></h2>
-                    <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis
-                        euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus,
-                        tellus ac cursus commodo.</p>
+                    <h2 class="featurette-heading">We Connecting Neighbors and Communities.</h2>
+                    <p class="lead">You can add your neighbors as friends and join local groups from your community.
+                        Share experiences with your neighbors and make your community a bigger family.</p>
                 </div>
                 <div class="col-md-5 order-md-1">
-                    <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto"
+                    {% load static %}
+                    <img class="featurette-image img-fluid mx-auto" src="{% static 'media/community.jpg' %}"
                         alt="Generic placeholder image">
                 </div>
             </div>
@@ -168,33 +178,27 @@
 
             <div class="row featurette">
                 <div class="col-md-7">
-                    <h2 class="featurette-heading">And lastly, this one. <span class="text-muted">Checkmate.</span></h2>
-                    <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis
-                        euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus,
-                        tellus ac cursus commodo.</p>
+                    <h2 class="featurette-heading">We Care About Your Privacy.</h2>
+                    <p class="lead">We'll protect your and your families' data. Every registered user is verified and
+                        safe to you and your family.</p>
                 </div>
                 <div class="col-md-5">
-                    <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto"
+                    {% load static %}
+                    <img class="featurette-image img-fluid mx-auto" src="{% static 'media/privacy.jpg' %}"
                         alt="Generic placeholder image">
                 </div>
             </div>
-
             <hr class="featurette-divider">
-
-            <!-- /END THE FEATURETTES -->
 
         </div><!-- /.container -->
 
-
-        <!-- FOOTER -->
-        <footer class="container">
-            <p class="float-right"><a href="#">Back to top</a></p>
-            <p>&copy; 2017-2018 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
-        </footer>
+        <div class="container-fluid bg-light text-center sticky-bottom">
+            <span class="text-dark ">
+                <a href="#">Terms of Use | </a><a href="#">Privacy Notice | </a><a href="/helpPage">Help</a><br>
+            </span>
+            <span class="text-dark">Copyright © 2022 TheBabySitters. All rights reserved.</span>
+        </div>
     </main>
-
-    {% load static %}
-    {% include "footer.html" %}
 
 </body>
 

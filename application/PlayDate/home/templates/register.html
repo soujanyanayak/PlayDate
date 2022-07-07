@@ -5,14 +5,17 @@
     <meta charset="UTF-8" />
     <title>Register for PlayDate!</title>
 
-    <!-- <link rel="stylesheet" href="{% static 'css/register.css' %}"> -->
+    <link rel="stylesheet" href="{% static 'css/register.css' %}">
+    </link>
     <script src="{% static 'js/register.js' %}" defer="true"></script>
 </head>
 
 <body>
     <div>
         <a href="/">
-            <h5 style="text-align: center; margin-top: 30px;">PlayDate</h5>
+            <h5 style="font-family: 'Gill Sans', sans-serif;color: #0d6efd; text-align: center; margin-top: 30px;">
+                <b>PlayDate</b>
+            </h5>
         </a>
     </div>
     <div class="card mx-auto mt-2" style="width: 30rem;">
@@ -21,33 +24,33 @@
             <form class="register" style="width: 450px;" method="POST" action="">
                 {% csrf_token %}
                 <label for="username">
-                    {{user_form.username.label}}
-                    {{user_form.username}}
-                </label><br><br>
+                    <b>{{user_form.username.label}}</b><br>
+                    {{user_form.username}}<br>
+                </label><br>
                 <label for="name">
-                    {{user_form.first_name.label}}
-                    {{user_form.first_name}}<br><br>
-                    {{user_form.last_name.label}}
-                    {{user_form.last_name}}
-                </label><br><br>
+                    <b>{{user_form.first_name.label}}</b><br>
+                    {{user_form.first_name}}<br>
+                    <b>{{user_form.last_name.label}}</b><br>
+                    {{user_form.last_name}}<br>
+                </label><br>
                 <label for="email">
-                    {{user_form.email.label}}
-                    {{user_form.email}}
-                </label><br><br>
+                    <b>{{user_form.email.label}}</b><br>
+                    {{user_form.email}}<br>
+                </label><br>
                 <label for="password1">
-                    {{user_form.password1.label}}
-                    {{user_form.password1}}
-                </label><br><br>
-                <label for="password1">
-                    <p>Re-enter Password
-                        {{user_form.password2}}</p>
+                    <b>{{user_form.password1.label}}</b><br>
+                    {{user_form.password1}}<br>
+                </label><br>
+                <label for="password2">
+                    <b>Re-enter Password</b><br>
+                    {{user_form.password2}}<br>
                 </label><br>
                 <label for="gender">
-                    {{accountForm.gender.label}}
+                    <b>{{accountForm.gender.label}}</b><br>
                     {{accountForm.gender}}<br>
-                </label><br><br>
+                </label><br>
                 <label for="dob">
-                    {{accountForm.dob.label}}
+                    <b>{{accountForm.dob.label}}</b><br>
                     {{accountForm.dob}}<br>
                 </label><br><br>
 
