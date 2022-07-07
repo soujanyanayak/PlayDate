@@ -125,3 +125,9 @@ def publicPage(request):
 
 def helpPage(request):
     return render(request, 'helpPage.html')
+
+def termsofuse(request):
+        return render(request, 'termsofuse.html')
+
+def privacy(request):
+        return render(request, 'privacy.html')
