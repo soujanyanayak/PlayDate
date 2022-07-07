@@ -1,0 +1,11 @@
+.pyc
+/PlayDate/home/migrations
+/PlayDate/home/__pycache__
+/PlayDate/events/__pycache__
+/PlayDate/events/migrations
+/PlayDate/.DS_Store
+/PlayDate/members/migrations
+/PlayDate/members/__pycache__
+/PlayDate/groups/migrations
+/PlayDate/groups/__pycache__
+/PlayDate/playdate/__pycache__

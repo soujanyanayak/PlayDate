@@ -1,0 +1,6 @@
+#id_username, #id_last_name, #id_email, #id_password2, #id_dob {
+	margin-bottom: 10px;
+}
+.register > label > input {
+	width: 20em;
+}
