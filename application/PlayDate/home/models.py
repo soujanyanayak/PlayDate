@@ -10,7 +10,6 @@ from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 
-
 class Address(models.Model):
     address_id = models.IntegerField(primary_key=True)
     street = models.CharField(max_length=45)
@@ -18,16 +17,9 @@ class Address(models.Model):
     city = models.CharField(max_length=45)
     zipcode = models.IntegerField()
 
-    class Meta:
-        db_table = 'Address'
-
-
 class generalUser(models.Model):
     trackingID = models.AutoField(primary_key=True)
     ip = models.CharField(max_length=50)
-
-    class Meta:
-        db_table = 'generalUser'
 
 
 class Account(models.Model):
@@ -44,15 +36,3 @@ class Account(models.Model):
     dob = models.DateField(max_length=11)
     date_joined = models.DateTimeField(auto_now=True)
     last_login = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        db_table = 'Account'
-
-
-class Profile(models.Model):
-    profileID = models.ForeignKey(
-        Account, to_field='accountID', on_delete=models.CASCADE)
-    profile_desc = models.CharField(max_length=256)
-
-    class Meta:
-        db_table = 'Profile'
