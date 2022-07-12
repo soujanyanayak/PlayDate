@@ -7,9 +7,10 @@ urlpatterns = [
     path('login/', views.loginPage, name='login'),
     path('logout/', views.logoutPage, name='logout'),
     path('register/', views.registrationPage, name='register'),
-    path('individuleInfo/', views.individuleInfoPage, name='individuleInfo'),
+    path('profileEdit/', views.profileEditPage, name='profileEdit'),
+    path('profile/', views.profilePage, name='profile'),
     path('helpPage/', views.helpPage, name='helpPage'),
     path('termsofuse/', views.termsofuse, name='termsofuse'),
     path('privacy/', views.privacy, name='privacy'),
     path('comeSoon/', views.comesoonPage, name='comesoon'),
- ]
+]

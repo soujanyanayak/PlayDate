@@ -1,0 +1,11 @@
+LOAD DATA local INFILE '/home/andy/dev/repo648/publicevents.csv' INTO TABLE PublicEvent FIELDS TERMINATED BY ',';
+
+
+rm -rf */migrations && p manage.py makemigrations home events groups && p manage.py migrate
+
+LOAD DATA local INFILE '/home/andy/dev/repo648/Address.csv' INTO TABLE Address FIELDS TERMINATED BY ';';
+
+LOAD DATA local INFILE '/home/andy/dev/repo648/publicevents.csv' INTO TABLE PublicEvent FIELDS TERMINATED BY ';';
+
+LOAD DATA local INFILE '/projectdir/csc648-848-01-sw-engineering-summer-22-Team03/application/PlayDate/Data/Address.csv' INTO TABLE events_location FIELDS TERMINATED BY ',';
+
