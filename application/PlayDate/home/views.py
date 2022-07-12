@@ -82,16 +82,15 @@ def registrationPage(request):
     # print(request.session['visitorIP'])
     user_form = forms.userRegistrationForm()
     accountForm = forms.accountForm()
-
     if request.method == 'POST':
         sessionCreation(request)
         user_form = forms.userRegistrationForm(request.POST)
         accountForm = forms.accountForm(request.POST)
-
-        if user_form.is_valid() and accountForm.is_valid():
+        profileForm = forms.profileForm(request.POST)
+        if user_form.is_valid() and accountForm.is_valid() and profileForm.is_valid():
             user = user_form.save()
             account = accountForm.save(commit=False)
-            account.accountID = user.id
+            account.accountID = user
             account.save()
             account.trackingID = request.session.session_key
             username = request.POST['username']
@@ -100,6 +99,11 @@ def registrationPage(request):
             account.save()
             if user is not None:
                 login(request, user)
+                # trying to figure out how to put the next 3 lines above 'if user is not None'
+                profile = profileForm.save(commit=False)
+                profile.profileID = request.user
+                profile.save()
+
                 userData = request.user
                 userInfo = User.objects.get(username=username)
                 accountInfo = models.Account.objects.get(accountID=userInfo.id)
@@ -120,17 +124,49 @@ def registrationPage(request):
     return render(request, 'register.html', {'user_form': user_form, 'accountForm': accountForm})
 
 
+def profileEditPage(request):
+    profile = models.Profile.objects.get(profileID=request.user)
+    print(profile.avatar)
+    profileForm = forms.profileForm()
+    if request.method == 'POST':
+        profileForm = forms.profileForm(request.POST, request.FILES)
+        if profileForm.is_valid():
+            instance = profileForm.save(commit=False)
+            instance.profileID = request.user
+            # Delete current avatar and replace it with request.FILES['avatar']
+            instance.avatar = None
+            instance.avatar = request.FILES['avatar']
+            print(instance.avatar)
+            # Update profile in database
+            instance.save()
+
+            profile = models.Profile.objects.get(profileID=request.user)
+            return render(request, 'profilePage.html', {'profileForm': profileForm, 'profile': profile})
+    else:
+        profileForm = forms.profileForm()
+    return render(request, 'profileEdit.html', {'profileForm': profileForm, 'profile': profile})
+
+
+def profilePage(request):
+    profile = models.Profile.objects.get(profileID=request.user)
+    # print(profile)
+    return render(request, 'profilePage.html', {'profile': profile})
+
+
 def individuleInfoPage(request):
     return render(request, 'individuleInfo.html')
+
 
 def helpPage(request):
     return render(request, 'helpPage.html')
 
+
 def termsofuse(request):
-        return render(request, 'termsofuse.html')
+    return render(request, 'termsofuse.html')
+
 
 def privacy(request):
-        return render(request, 'privacy.html')
+    return render(request, 'privacy.html')
 
 
 def comesoonPage(request):

@@ -13,15 +13,11 @@ class Publicevent(models.Model):
     address = models.ForeignKey('Address', models.DO_NOTHING)
     event_url = models.CharField(max_length=1000)
     name = models.CharField(max_length=500)
-    
+
     category = models.CharField(max_length=10, blank=True, null=True)
-    
 
     class Meta:
-        managed = False
         db_table = 'PublicEvent'
-
-
 
 
 class Address(models.Model):
@@ -33,7 +29,6 @@ class Address(models.Model):
     state = models.CharField(max_length=45)
 
     class Meta:
-        managed = False
         db_table = 'Address'
 
 
@@ -45,5 +40,4 @@ class Location(models.Model):
     state_code = models.TextField(blank=True, null=True)
 
     class Meta:
-        managed = False
         db_table = 'Location'

@@ -6,6 +6,16 @@ from django.forms.widgets import DateInput
 from . import models
 
 
+class profileForm(ModelForm):
+    class Meta:
+        model = models.Profile
+        #exclude = ('profileDesc', 'avatar',)
+        fields = ['profileDesc', 'avatar']
+        labels = {
+            'profileDesc': ('Profile Description'), 'avatar': ('Avatar'),
+        }
+
+
 class userRegistrationForm(UserCreationForm):
     class Meta:
         model = User
