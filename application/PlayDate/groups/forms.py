@@ -9,7 +9,7 @@ from . import models
 class createGroupForm(ModelForm):
     class Meta:
         model = models.Group
-        fields = ['groupName', 'groupDesc']
+        fields = ['group_name', 'group_desc']
         labels = {
             'groupName': ('Group Name'), 'groupDesc': ('Group Description')
         }
@@ -17,5 +17,5 @@ class createGroupForm(ModelForm):
 
 class memberListForm(ModelForm):
     class Meta:
-        model = models.Member
+        model = models.Groupuser
         fields = []

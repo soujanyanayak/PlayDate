@@ -4,6 +4,8 @@ from . import views
 
 urlpatterns = [
     path('', views.events, name='events'),
-    path('createEvent/', views.createEvent, name='eventCreate'),
-    path('filter/', views.filter, name='filter'),
+    path('/public-events/', views.publicevents, name='publicevents'),
+    # path('/my-events/', views.myevents, name='myevents'),
+    # path('/my-events/createvent/', views.createGroupEvent, name='createGroupEvent'),
+    path('filter', views.filter, name='filter'),
 ]

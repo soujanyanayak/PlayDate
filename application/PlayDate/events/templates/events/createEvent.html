@@ -1,4 +1,4 @@
-{% extends "navbar.html" %}
+<!-- {% extends "navbar.html" %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,9 +7,16 @@
 </head>
 <body>
         {% block content %} 
+        
+        {% endblock %} -->
+        <br><br><br><br><br><br><br><br><br><br>
         <h1>create event</h1>
-        {% endblock %}
-</body>
-</html>
+        <form action="/createvent/" method="POST">
+                {% csrf_token %}
+                {{ form }}
+                <input type="submit" value="Submit">
+        </form>
+<!-- </body>
+</html> -->
 
 

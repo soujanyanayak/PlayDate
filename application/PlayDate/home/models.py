@@ -8,15 +8,27 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, User
 
+
 # Create your models here.
 
 
+# class Address(models.Model):
+#     address_id = models.IntegerField(primary_key=True)
+#     street = models.CharField(max_length=45)
+#     country = models.CharField(max_length=20)
+#     city = models.CharField(max_length=45)
+#     zipcode = models.IntegerField()
+
 class Address(models.Model):
-    address_id = models.IntegerField(primary_key=True)
-    street = models.CharField(max_length=45)
-    country = models.CharField(max_length=20)
-    city = models.CharField(max_length=45)
+    address_id = models.AutoField(primary_key=True)
+    street = models.CharField(max_length=100,default='NA')
+    country = models.CharField(max_length=20,default='NA')
+    city = models.CharField(max_length=45,default='NA')
     zipcode = models.IntegerField()
+    state = models.CharField(max_length=45,default='NA')
+
+    class Meta:
+        db_table = 'Address'
 
 
 class generalUser(models.Model):
@@ -58,3 +70,54 @@ class Profile(models.Model):
 
     class Meta:
         db_table = 'Profile'
+
+
+class Backendadmin(models.Model):
+    backend_admin_id = models.IntegerField(primary_key=True)
+    user = models.ForeignKey(User, models.DO_NOTHING)
+    class Meta:
+        # managed = False
+        db_table = 'BackendAdmin'
+        unique_together = (('backend_admin_id', 'user'),)
+
+
+
+class Dependent(models.Model):
+    dependent_id = models.IntegerField(primary_key=True)
+    profile = models.ForeignKey('Profile', models.DO_NOTHING)
+    name = models.CharField(max_length=45)
+    dob = models.DateTimeField()
+    interests = models.CharField(max_length=45)
+
+    class Meta:
+        # managed = False
+        db_table = 'Dependent'
+
+
+class Requestsupport(models.Model):
+    request_id = models.IntegerField(primary_key=True)
+    general = models.ForeignKey(generalUser, models.DO_NOTHING, blank=True, null=True)
+    staff = models.ForeignKey('Supportstaff', models.DO_NOTHING, blank=True, null=True)
+    type = models.CharField(max_length=10)
+    details = models.CharField(max_length=200)
+
+    class Meta:
+        # managed = False
+        db_table = 'RequestSupport'
+
+class Supportstaff(models.Model):
+    staff_id = models.IntegerField(primary_key=True)
+    staff_email = models.CharField(max_length=45)
+
+    class Meta:
+        # managed = False
+        db_table = 'SupportStaff'
+
+
+class Friendlist(models.Model):
+    friend_id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(User, models.DO_NOTHING)
+
+    class Meta:
+        # managed = False
+        db_table = 'FriendList'
