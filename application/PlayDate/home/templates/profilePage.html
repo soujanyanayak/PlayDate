@@ -5,7 +5,8 @@
         <title>Profile Page</title>
     </head>
     <body>
-        {% csrf_token %} {{profile}} {{profile.profileDesc}} {{profile.avatar}}
+        {% csrf_token %} {{profile}} {{profile.profileDesc}}<br />
+        {{profile.avatar}}
         <img src="{{profile.avatar.url}}" alt="" />
     </body>
 </html>
