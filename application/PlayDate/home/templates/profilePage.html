@@ -7,6 +7,9 @@
     <body>
         {% csrf_token %} {{profile}} {{profile.profileDesc}}<br />
         {{profile.avatar}}
-        <img src="{{profile.avatar.url}}" alt="" />
+        {% if profile.avatar.url != None %}
+            <img src="{{profile.avatar.url}}" alt="" />
+        {% endif %}
+        
     </body>
 </html>
