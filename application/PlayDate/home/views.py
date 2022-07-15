@@ -156,6 +156,12 @@ def profilePage(request):
     return render(request, 'profilePage.html', {'profile': profile})
 
 
+def profileView(request, profile_id):
+    profile = models.Profile.objects.get(profileID=profile_id)
+    account = models.Account.objects.get(accountID=profile_id)
+    return render(request, 'profileView.html', {'profile': profile, 'account': account})
+
+
 def individuleInfoPage(request):
     return render(request, 'individuleInfo.html')
 
