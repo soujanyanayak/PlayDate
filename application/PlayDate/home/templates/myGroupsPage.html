@@ -1,4 +1,77 @@
 {% include "header.html" %}
+<!-- My groups for registered users -->
+<body>
+    {% block content %}
+    {% if user.is_authenticated %}
+    {% load static %}
+    {% include "registered_navbar.html" %}
+    {% else %}
+    {% load static %}
+    {% include "general_navbar.html" %}
+    {% endif %}
+    {% endblock %}
+
+<div class="container">
+
+    <div class="row">
+        <div class="col card mx-2 my-2" style="width: 18rem;">
+            <img src="{% static 'media/groupstock-unsplash.jpg' %}" width="300px" height="300px"
+                class="card-img-top  mt-2" alt="...">
+            <div class="card-body">
+                <p class="card-text">Splashing & Swimming Group</p>
+                <a href="#" class="btn btn-primary">View details</a>
+            </div>
+        </div>
+
+        <div class="col card mx-2 my-2" style="width: 18rem;">
+            <img src="{% static 'media/groupstock-unsplash.jpg' %}" class="card-img-top  mt-2" width="300px"
+                height="300px" alt="...">
+            <div class="card-body">
+                <p class="card-text">East Bay Outdoor Summer Group</p><br>
+                <a href="#" class="btn btn-primary">View details</a>
+            </div>
+        </div>
+
+        <div class="col card mx-2 my-2" style="width: 18rem;">
+            <img src="{% static 'media/groupstock-unsplash.jpg' %}" class="card-img-top mt-2" width="300px"
+                height="300px" alt="...">
+            <div class="card-body">
+                <p class="card-text">Local Park Group</p><br>
+                <a href="#" class="btn btn-primary">View details</a>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-4">
+        <div class="col card mx-2 my-2" style="width: 18rem;">
+            <img src="{% static 'media/groupstock-unsplash.jpg' %}" class="card-img-top  mt-2" width="300px"
+                height="300px" alt="...">
+            <div class="card-body">
+                <p class="card-text">Bikers and Dogs Group</p><br>
+                <a href="#" class="btn btn-primary">View details</a><br>
+            </div>
+        </div>
+
+        <div class="col card mx-2 my-2" style="width: 18rem;">
+            <img src="{% static 'media/groupstock-unsplash.jpg' %}" class="card-img-top  mt-2" width="300px"
+                height="300px" alt="...">
+            <div class="card-body">
+                <p class="card-text">Local families meet and greet Grooup</p>
+                <a href="#" class="btn btn-primary">View details</a>
+            </div>
+        </div>
+
+        <div class="col card mx-2 my-2" style="width: 18rem;">
+            <img src="{% static 'media/groupstock-unsplash.jpg' %}" class="card-img-top  mt-2" width="300px" height="300px"
+                alt="...">
+            <div class="card-body">
+                <p class="card-text">San Ramon Olympic Pool & Aquatic Park</p><br>
+                <a href="#" class="btn btn-primary">View details</a>
+            </div>
+        </div>
+    </div>
 
 
+
+</div>
+</body>
 {% include "footer.html" %}
