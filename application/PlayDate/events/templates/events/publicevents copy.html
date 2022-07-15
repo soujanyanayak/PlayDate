@@ -1,12 +1,13 @@
 {% include "header.html" %}
 <!-- #marty -->
+
 <body>
     {% include "general_navbar.html" %}
 
-<body>
+    <body>
 
-    {% load static %}
-   
+        {% load static %}
+
 
         <!-- <h1>Search Page</h1>
 
@@ -15,7 +16,7 @@
             <input type="text" name="q" value="{{request.GET.q}}" placeholder="city"/>
             <input type="submit" name="submit" value="Search"/>
         </form> -->
-    
+
         <div class="container">
             <div class="result-body">
                 <div class="table-responsive">
@@ -26,17 +27,19 @@
                                 <td>
                                     <div class="widget-26-job-title">
                                         {{result.name}}
-                                        <p class="m-0"><a href={{result.url}}  class="employer-name">Register here</a>
+                                        <p class="m-0"><a href={{result.url}} class="employer-name">Register here</a>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="widget-26-job-info">
-                
-                                        <p class="text-muted m-0"> <span class="location"> {{result.address.street}}, {{result.address.city}}, {{result.address.state}}, {{result.address.country}}</span></p>
+
+                                        <p class="text-muted m-0"> <span class="location"> {{result.address.street}},
+                                                {{result.address.city}}, {{result.address.state}},
+                                                {{result.address.country}}</span></p>
                                     </div>
                                 </td>
-                               
-                                
+
+
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -46,11 +49,11 @@
 
         </div>
         {% else %}
-            No events found
-            {% endif %}
+        No events found
         {% endif %}
-                    
-        
+        {% endif %}
+
+
         <!-- {% if submitbutton == 'Search' and request.GET.q != '' %}
             {% if results %}
             <h1>Results for <b>{{ request.GET.q }}</b></h1>
@@ -73,8 +76,8 @@
         {% endif %}
         
         </div> -->
-    
 
 
-    {% include "footer.html" %}
-</body>
+
+        {% include "footer.html" %}
+    </body>
