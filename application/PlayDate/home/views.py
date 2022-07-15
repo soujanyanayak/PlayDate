@@ -175,6 +175,9 @@ def privacy(request):
 def comesoonPage(request):
     return render(request, 'comeSoon.html')
 
+def myGroupsPage(request):
+    return render(request, 'myGroupsPage.html')
+
 def contactSupport(request):
     csForm = forms.supportForm()
     print (request.user)
