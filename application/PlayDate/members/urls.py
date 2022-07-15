@@ -12,4 +12,5 @@ urlpatterns = [
     path('qin/', views.qin, name='qin'),
     path('william/', views.william, name='william'),
     path('victor/', views.victor, name='victor'),
+    path('HelenLee/', views.HelenLee, name='HelenLee'),
 ]
