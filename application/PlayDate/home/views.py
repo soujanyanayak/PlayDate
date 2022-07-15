@@ -120,6 +120,9 @@ def registrationPage(request):
                 return render(request, "home.html", {'userID': userID, 'fname': fname, 'lname': lname, 'email': email, 'gender': gender, 'dob': dob})
             else:
                 return render(request, "invalidLogin.html")
+        else:
+            print (user_form.errors)
+            return render(request, 'register.html', {'user_form': user_form, 'accountForm': accountForm, 'error': user_form.errors})
 
     return render(request, 'register.html', {'user_form': user_form, 'accountForm': accountForm})
 
