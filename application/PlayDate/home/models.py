@@ -95,11 +95,24 @@ class Dependent(models.Model):
 
 
 class Requestsupport(models.Model):
-    request_id = models.IntegerField(primary_key=True)
+    SUPPORT_TYPE_REPORT = "REP"
+    SUPPORT_TYPE_ONBOARD = "ONB"
+    SUPPORT_TYPE_BUG = "BUG"
+    SUPPORT_TYPE_OTHER = "OTH"
+    SUPPORT_TYPE_CHOICES = [
+        (SUPPORT_TYPE_REPORT, "Report User or Content"),
+        (SUPPORT_TYPE_ONBOARD, "Registration Issues"),
+        (SUPPORT_TYPE_BUG, "PlayDate Not Working"),
+        (SUPPORT_TYPE_OTHER, "Other")
+    ]
+    request_id = models.AutoField(primary_key=True)
+    accountID = models.ForeignKey(User, models.DO_NOTHING, blank=True, null=True)
     general = models.ForeignKey(generalUser, models.DO_NOTHING, blank=True, null=True)
     staff = models.ForeignKey('Supportstaff', models.DO_NOTHING, blank=True, null=True)
-    type = models.CharField(max_length=10)
-    details = models.CharField(max_length=200)
+    contact = models.CharField(max_length=52)
+    name = models.CharField(max_length=100)
+    type = models.CharField(max_length=3, choices=SUPPORT_TYPE_CHOICES, default=SUPPORT_TYPE_ONBOARD)
+    details = models.TextField(max_length=500)
 
     class Meta:
         # managed = False

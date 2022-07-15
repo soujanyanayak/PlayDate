@@ -13,4 +13,5 @@ urlpatterns = [
     path('termsofuse/', views.termsofuse, name='termsofuse'),
     path('privacy/', views.privacy, name='privacy'),
     path('comeSoon/', views.comesoonPage, name='comesoon'),
+    path('support/', views.contactSupport, name='contactSupport'),
 ]

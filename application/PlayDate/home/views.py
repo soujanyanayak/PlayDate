@@ -171,3 +171,45 @@ def privacy(request):
 
 def comesoonPage(request):
     return render(request, 'comeSoon.html')
+
+def contactSupport(request):
+    csForm = forms.supportForm()
+    print (request.user)
+    if request.method == 'POST':
+        print (request)
+        print (request.POST)
+        csForm = forms.supportForm(request.POST)
+        if csForm.is_valid():
+            ticket = csForm.save(commit=False)
+
+            # Grab Registered user data
+            if request.user.is_authenticated:
+                ticket.accountID = request.user
+
+            # Grab General User Data
+            ipAddr = request.META['REMOTE_ADDR']
+            try:
+                userQuery = models.generalUser.objects.get(ip=ipAddr)
+                userInfo = userQuery[0]
+            except:
+                userInfo = models.generalUser(ip=ipAddr)
+                userInfo.save()
+            else:
+                print ("generalUser found")
+            finally:
+                ticket.general = userInfo
+                # Grab Support Staff Data
+                try: 
+                    staffQuery = models.Supportstaff.objects.all()
+                    staffInfo = staffQuery[0]
+                    ticket.staff = staffInfo
+                    status = 'Success'
+                except:
+                    print ("No staff to send support request to")
+                    status = 'No Staff'
+                finally:
+                    ticket.save()
+                    print(ticket)
+                    return render(request, 'contactSupport.html', { 'csForm': csForm, 'status': status})
+
+    return render(request, 'contactSupport.html', {'csForm': csForm})
