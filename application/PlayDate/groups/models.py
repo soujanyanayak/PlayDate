@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from taggit.managers import TaggableManager
 # from events.models import Event
 # Create your models here.
 
@@ -14,6 +15,9 @@ class Group(models.Model):
     #group_tags = models.TextField(max_length=512, default=None, blank=True)
     group_desc = models.TextField(
         max_length=256, null=True, blank=True, default=None)
+
+    # Django-Taggit
+    tags = TaggableManager()
 
 
 class Member(models.Model):

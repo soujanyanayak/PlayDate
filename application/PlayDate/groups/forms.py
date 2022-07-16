@@ -15,9 +15,9 @@ class joinGroupForm(ModelForm):
 class createGroupForm(ModelForm):
     class Meta:
         model = models.Group
-        fields = ['group_name', 'group_desc']
+        fields = ['group_name', 'group_desc', 'tags']
         labels = {
-            'group_name': ('Group Name'), 'group_desc': ('Group Description')
+            'group_name': ('Group Name'), 'group_desc': ('Group Description'), 'tags': ("Enter keywords separated by a space; These words will help users to find your group.")
         }
 
 

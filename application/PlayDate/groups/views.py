@@ -19,6 +19,20 @@ def groups(request):
     return render(request, "groups/viewAllGroups.html", {'groupList': groupList})
 
 
+def Search(request):
+    if 'search' in request.GET:
+        query = request.GET['search'].split()
+        print("\nQuery:", query)
+        groups = models.Group.objects.filter(tags__name__in=query).distinct()
+        print(groups)
+        return render(request, "groups/groupSearch.html", {'groups': groups})
+    return render(request, "groups/groupSearch.html")
+
+
+def searchResults(request):
+    return render(request, "groups/searchResults.html")
+
+
 def groupView(request, group_id):
     joinGroupForm = forms.joinGroupForm()
     group = models.Group.objects.get(
@@ -33,6 +47,10 @@ def groupView(request, group_id):
             # print(isMember)
     if not request.user.is_authenticated:
         print("user is not authenticated")
+
+    # This represents the part of the page for a member of the group.
+    # Contains functionality for view/crud posts
+    # if isMember == True:
 
     # The following 2 if-statements correspond to joining a group and leaving a group
     if 'joinGroup' in request.POST:
@@ -57,18 +75,6 @@ def groupView(request, group_id):
     return render(request, "groups/groups.html", {'group': group, 'member_list': member_list, 'isMember': isMember})
 
 
-def joinSuccess(request, group_id):
-    # ░█▀▄░█▀▀░█▀█░█▀█░▀█▀░█▀▄░░░█▀█░█▀▀░█▀▀░█▀▄░█▀▀░█▀▄
-    # ░█▀▄░█▀▀░█▀▀░█▀█░░█░░█▀▄░░░█░█░█▀▀░█▀▀░█░█░█▀▀░█░█
-    # ░▀░▀░▀▀▀░▀░░░▀░▀░▀▀▀░▀░▀░░░▀░▀░▀▀▀░▀▀▀░▀▀░░▀▀▀░▀▀░
-    # MAINTENENCE - instead for now just redirect user to the updated group page being joining group
-    # group = models.Group.objects.get(group_id=group_id)
-    # print("hello", group)
-    # return render(request, "groups/joinSuccess.html", {'group': group})
-    print("Maintenence")
-    return HttpResponse("404 Maintenence")
-
-
 def createGroup(request):
     createGroupForm = forms.createGroupForm()
     memberListForm = forms.memberListForm()
@@ -79,6 +85,12 @@ def createGroup(request):
             instanceGroup = createGroupForm.save(commit=False)
             instanceGroup.group_admin = request.user
             instanceGroup.save()
+            # put the title in the tags
+
+            groupName = str(instanceGroup.group_name).split()
+            print(groupName)
+
+            createGroupForm.save_m2m()
 
             instanceMember = memberListForm.save(commit=False)
             instanceMember.group_id = instanceGroup
@@ -87,6 +99,21 @@ def createGroup(request):
 
             group = models.Group.objects.get(
                 group_id=instanceGroup.group_id)
+            for titleWord in groupName:
+                group.tags.add(titleWord)
+
             return render(request, 'groups/groups.html', {'group': group})
 
     return render(request, 'groups/createGroup.html', {'createGroupForm': createGroupForm, 'memberListForm': memberListForm})
+
+
+def joinSuccess(request, group_id):
+    # ░█▀▄░█▀▀░█▀█░█▀█░▀█▀░█▀▄░░░█▀█░█▀▀░█▀▀░█▀▄░█▀▀░█▀▄
+    # ░█▀▄░█▀▀░█▀▀░█▀█░░█░░█▀▄░░░█░█░█▀▀░█▀▀░█░█░█▀▀░█░█
+    # ░▀░▀░▀▀▀░▀░░░▀░▀░▀▀▀░▀░▀░░░▀░▀░▀▀▀░▀▀▀░▀▀░░▀▀▀░▀▀░
+    # MAINTENENCE - instead for now just redirect user to the updated group page being joining group
+    # group = models.Group.objects.get(group_id=group_id)
+    # print("hello", group)
+    # return render(request, "groups/joinSuccess.html", {'group': group})
+    print("Maintenence")
+    return HttpResponse("404 Maintenence")
