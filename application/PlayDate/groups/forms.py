@@ -6,16 +6,22 @@ from django.forms.widgets import DateInput
 from . import models
 
 
+class joinGroupForm(ModelForm):
+    class Meta:
+        model = models.Member
+        fields = []
+
+
 class createGroupForm(ModelForm):
     class Meta:
         model = models.Group
-        fields = ['group_name', 'group_desc']
+        fields = ['group_name', 'group_desc', 'tags']
         labels = {
-            'groupName': ('Group Name'), 'groupDesc': ('Group Description')
+            'group_name': ('Group Name'), 'group_desc': ('Group Description'), 'tags': ("Enter keywords separated by a space; These words will help users to find your group.")
         }
 
 
 class memberListForm(ModelForm):
     class Meta:
-        model = models.Groupuser
+        model = models.Member
         fields = []

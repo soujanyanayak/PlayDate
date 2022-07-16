@@ -34,3 +34,15 @@ class accountForm(ModelForm):
         widgets = {
             'dob': DateInput(attrs={'type': 'date'})
         }
+
+class supportForm(ModelForm):
+    class Meta:
+        model = models.Requestsupport
+        fields = ['contact', 'name', 'type', 'details']
+        labels = {
+            'contact': ('Your Email or Phone'),
+            'name': ('Name of the Issue'),
+            'type': ('Support Category'),
+            'details':  ('Please provide detail of the issue')
+        }
+
