@@ -65,6 +65,8 @@ def william(request):
 def victor(request):
     return render(request, 'victor.html')
 
+def HelenLee(request):
+    return render(request, 'HelenLee.html')
 
 # def soujanya(request):
 #     #return HttpResponse("Hello, world. You're at the introduction index.")
