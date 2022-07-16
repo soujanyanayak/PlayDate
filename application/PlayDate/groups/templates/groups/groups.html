@@ -16,6 +16,10 @@
     <p>Group Name: {{group.group_name}}</p>
     <p>Creation Date:{{group.create_date}}</p>
     <p>Group Description:{{group.group_desc}}</p>
+    <p>
+        Keywords: {% if group.tags.all %} {% for tag in group.tags.all %} {{tag}}, {% endfor %}{% else %}No Keywords
+        {%endif %}
+    </p>
     <p>Group size: {{member_list|length}} people</p>
     <br />
 
@@ -61,7 +65,7 @@
 
     {% endif %}
     <div class="row my-2 justify-content-center">
-        <a href="/groups/createGroup" class="btn btn-primary me-4" style="width: 15rem;">Create Your Group</a>
+        <a href="/groups/createGroup" class="btn btn-primary me-4" style="width: 15rem">Create Your Group</a>
     </div>
     <br />
 

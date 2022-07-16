@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'taggit',
 ]
 
 MIDDLEWARE = [
@@ -90,8 +91,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'playdate',
-        'USER': 'qin',
-        'PASSWORD': '',
+        'USER': 'tester00',
+        'PASSWORD': 'GreenOrange098#@!',
         'HOST': 'localhost',
         'PORT': '3306',
         'OPTIONS': {
@@ -151,3 +152,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# The following makes tag searching case-insensitive
+TAGGIT_CASE_INSENSITIVE = True
