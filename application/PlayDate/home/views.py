@@ -184,6 +184,9 @@ def comesoonPage(request):
 def myGroupsPage(request):
     return render(request, 'myGroupsPage.html')
 
+def resetPassword(request):
+        return render(request, 'resetPassword.html')
+
 def contactSupport(request):
     csForm = forms.supportForm()
     print (request.user)
