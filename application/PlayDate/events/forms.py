@@ -2,7 +2,7 @@ from django import forms
 
 
 
-class userEventForm(forms.Form):
+class GroupEventForm(forms.Form):
     CATEGORY=(
     ('pets','Pets'),
     ('kids','Kids'),)
