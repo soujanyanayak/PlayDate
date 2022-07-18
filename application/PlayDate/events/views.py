@@ -18,16 +18,6 @@ def publicevents(request):
     publicevent = Publicevent.objects.all()
     return render(request,"publicevents.html",{'publicevent':publicevent})
 
-<<<<<<< HEAD
-def myevents(request):
-    # publicevent = Publicevent.objects.all()
-    return render(request,"myevents.html")
-
-@csrf_exempt
-def createUserEvent(request):
-    # publicevent = Publicevent.objects.all()
-    return render(request,"createuserevent.html")
-=======
 def membersevents(request):
     return render(request,"membersevents.html")
 
@@ -39,7 +29,6 @@ def memberEvent1(request):
 
 def signUpSucceed(request):
     return render(request,"signUpSucceed.html")
->>>>>>> 3c4e71c6d2fcf0ac71c0637d7c4d95b598510c10
 
 @csrf_exempt
 def createGroupEvent(request):
