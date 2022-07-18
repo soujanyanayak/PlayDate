@@ -1,7 +1,7 @@
 {% include "header.html" %}
 <!-- #marty -->
 
-<body>
+<body style="background-color: #9de2ff;">
 
     {% block content %}
     {% if user.is_authenticated %}
@@ -10,9 +10,8 @@
     {% else %}
     {% load static %}
     {% include "general_navbar.html" %}
-    {% endif %}
-    {% endblock %}
-    <br><br><br>
+    {% endif%}
+    {% endblock %} <br><br><br>
     <div class="container">
         <!-- <div class="section-title">
             <p>Fun activities  for you kids and pets.</p>
@@ -34,7 +33,7 @@
                     class="card-img-top  mt-2" alt="...">
                 <div class="card-body">
                     <p class="card-text">Splashing & Swimming at the San Leandro Family Aquatic Center</p>
-                    <a href="#" class="btn btn-primary">View details</a>
+                    <a href="/events/publicEvent1" class="btn btn-primary">View details</a>
                 </div>
             </div>
 
