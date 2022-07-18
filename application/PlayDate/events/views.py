@@ -18,6 +18,18 @@ def publicevents(request):
     publicevent = Publicevent.objects.all()
     return render(request,"publicevents.html",{'publicevent':publicevent})
 
+def membersevents(request):
+    return render(request,"membersevents.html")
+
+def publicEvent1(request):
+    return render(request,"publicEvent1.html")
+
+def memberEvent1(request):
+    return render(request,"memberEvent1.html")
+
+def signUpSucceed(request):
+    return render(request,"signUpSucceed.html")
+
 @csrf_exempt
 def createGroupEvent(request):
     if request.method == 'POST':
