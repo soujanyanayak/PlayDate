@@ -1,428 +1,74 @@
-{% load static %} {% include "header.html" %}
-<style>
-        body {
-                margin-top: 20px;
-                background: #eee;
-                padding-left: 20%;
-        }
-
-        .profile-widget {
-                position: relative;
-        }
-
-        .profile-widget .image-container {
-                background-size: cover;
-                background-position: center;
-                padding: 190px 0 10px;
-        }
-
-        .profile-widget .image-container .profile-background {
-                width: 100%;
-                height: auto;
-        }
-
-        .profile-widget .details {
-                padding: 50px 15px 15px;
-                text-align: center;
-        }
-
-        /* End Component: Profile Widget */
-        /********************************************************************
-        *********************************************************************
-        *********************************************************************/
-        /* Component: Mini Profile Widget */
-
-
-        /* Component: Panel */
-        .panel {
-                border-radius: 0;
-                margin-bottom: 30px;
-        }
-
-        .panel.solid-color {
-                color: white;
-        }
-
-        .panel .panel-heading {
-                border-radius: 0;
-                position: relative;
-        }
-
-        .panel .panel-heading>.controls {
-                position: absolute;
-                right: 10px;
-                top: 12px;
-        }
-
-        .panel .panel-heading>.controls .nav.nav-pills {
-                margin: -8px 0 0 0;
-        }
-
-        .panel .panel-heading>.controls .nav.nav-pills li a {
-                padding: 5px 8px;
-        }
-
-        .panel .panel-heading .clickable {
-                margin-top: 0px;
-                font-size: 12px;
-                cursor: pointer;
-        }
-
-        .panel .panel-heading.no-heading-border {
-                border-bottom-color: transparent;
-        }
-
-        .panel .panel-heading .left {
-                float: left;
-        }
-
-        .panel .panel-heading .right {
-                float: right;
-        }
-
-        .panel .panel-title {
-                font-size: 16px;
-                line-height: 20px;
-        }
-
-        .panel .panel-title.panel-title-sm {
-                font-size: 18px;
-                line-height: 28px;
-        }
-
-        .panel .panel-title.panel-title-lg {
-                font-size: 24px;
-                line-height: 34px;
-        }
-
-        .panel .panel-body {
-                font-size: 13px;
-        }
-
-        .panel .panel-body>.body-section {
-                margin: 0px 0px 20px;
-        }
-
-        .panel .panel-body>.body-section>.section-heading {
-                margin: 0px 0px 5px;
-                font-weight: bold;
-        }
-
-        .panel .panel-body>.body-section>.section-content {
-                margin: 0px 0px 10px;
-        }
-
-        .panel-white {
-                border: 1px solid #dddddd;
-        }
-
-        .panel-white>.panel-heading {
-                color: #333;
-                background-color: #fff;
-                border-color: #ddd;
-        }
-
-        .panel-white>.panel-footer {
-                background-color: #fff;
-                border-color: #ddd;
-        }
-
-        .panel-primary {
-                border: 1px solid #dddddd;
-        }
-
-        .panel-purple {
-                border: 1px solid #dddddd;
-        }
-
-        .panel-purple>.panel-heading {
-                color: #fff;
-                background-color: #8e44ad;
-                border: none;
-        }
-
-        .panel-purple>.panel-heading .panel-title a:hover {
-                color: #f0f0f0;
-        }
-
-        .panel-light-purple {
-                border: 1px solid #dddddd;
-        }
-
-        .panel-light-purple>.panel-heading {
-                color: #fff;
-                background-color: #9b59b6;
-                border: none;
-        }
-
-        .panel-light-purple>.panel-heading .panel-title a:hover {
-                color: #f0f0f0;
-        }
-
-        .panel-blue,
-        .panel-info {
-                border: 1px solid #dddddd;
-        }
-
-        .panel-blue>.panel-heading,
-        .panel-info>.panel-heading {
-                color: #fff;
-                background-color: #2980b9;
-                border: none;
-        }
-
-        .panel-blue>.panel-heading .panel-title a:hover,
-        .panel-info>.panel-heading .panel-title a:hover {
-                color: #f0f0f0;
-        }
-
-        .panel-light-blue {
-                border: 1px solid #dddddd;
-        }
-
-        .panel-light-blue>.panel-heading {
-                color: #fff;
-                background-color: #3498db;
-                border: none;
-        }
-
-        .panel-light-blue>.panel-heading .panel-title a:hover {
-                color: #f0f0f0;
-        }
-
-        .panel-green,
-        .panel-success {
-                border: 1px solid #dddddd;
-        }
-
-        .panel-green>.panel-heading,
-        .panel-success>.panel-heading {
-                color: #fff;
-                background-color: #27ae60;
-                border: none;
-        }
-
-        .panel-green>.panel-heading .panel-title a:hover,
-        .panel-success>.panel-heading .panel-title a:hover {
-                color: #f0f0f0;
-        }
-
-        .panel-light-green {
-                border: 1px solid #dddddd;
-        }
-
-        .panel-light-green>.panel-heading {
-                color: #fff;
-                background-color: #2ecc71;
-                border: none;
-        }
-
-        .panel-light-green>.panel-heading .panel-title a:hover {
-                color: #f0f0f0;
-        }
-
-        .panel-orange,
-        .panel-warning {
-                border: 1px solid #dddddd;
-        }
-
-        .panel-orange>.panel-heading,
-        .panel-warning>.panel-heading {
-                color: #fff;
-                background-color: #e82c0c;
-                border: none;
-        }
-
-        .panel-orange>.panel-heading .panel-title a:hover,
-        .panel-warning>.panel-heading .panel-title a:hover {
-                color: #f0f0f0;
-        }
-
-        .panel-light-orange {
-                border: 1px solid #dddddd;
-        }
-
-        .panel-light-orange>.panel-heading {
-                color: #fff;
-                background-color: #ff530d;
-                border: none;
-        }
-
-        .panel-light-orange>.panel-heading .panel-title a:hover {
-                color: #f0f0f0;
-        }
-
-        .panel-red,
-        .panel-danger {
-                border: 1px solid #dddddd;
-        }
-
-        .panel-red>.panel-heading,
-        .panel-danger>.panel-heading {
-                color: #fff;
-                background-color: #d40d12;
-                border: none;
-        }
-
-        .panel-red>.panel-heading .panel-title a:hover,
-        .panel-danger>.panel-heading .panel-title a:hover {
-                color: #f0f0f0;
-        }
-
-        .panel-light-red {
-                border: 1px solid #dddddd;
-        }
-
-        .panel-light-red>.panel-heading {
-                color: #fff;
-                background-color: #ff1d23;
-                border: none;
-        }
-
-        .panel-light-red>.panel-heading .panel-title a:hover {
-                color: #f0f0f0;
-        }
-
-        .panel-pink {
-                border: 1px solid #dddddd;
-        }
-
-        .panel-pink>.panel-heading {
-                color: #fff;
-                background-color: #fe31ab;
-                border: none;
-        }
-
-        .panel-pink>.panel-heading .panel-title a:hover {
-                color: #f0f0f0;
-        }
-
-        .panel-light-pink {
-                border: 1px solid #dddddd;
-        }
-
-        .panel-light-pink>.panel-heading {
-                color: #fff;
-                background-color: #fd32c0;
-                border: none;
-        }
-
-        .panel-light-pink>.panel-heading .panel-title a:hover {
-                color: #f0f0f0;
-        }
-
-        .panel-group .panel {
-                border-radius: 0;
-        }
-
-        .panel-group .panel+.panel {
-                margin-top: 0;
-                border-top: 0;
-        }
-
-        /* Component: Posts */
-        .post .post-heading {
-                height: 95px;
-                padding: 20px 15px;
-        }
-
-        .post .post-heading .avatar {
-                width: 60px;
-                height: 60px;
-                display: block;
-                margin-right: 15px;
-        }
-
-        .post .post-heading .meta .title {
-                margin-bottom: 0;
-        }
-
-        .post .post-heading .meta .title a {
-                color: black;
-        }
-
-        .post .post-heading .meta .title a:hover {
-                color: #aaaaaa;
-        }
-
-        .post .post-heading .meta .time {
-                margin-top: 8px;
-                color: #999;
-        }
-
-        .post .post-image .image {
-                width: 100%;
-                height: auto;
-        }
-
-        .post .post-description {
-                padding: 15px;
-        }
-</style>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-        <meta charset="UTF-8" />
-        <title>create event</title>
-</head>
+{% load static %}
+{% include "header.html" %}
 
 <body>
-        {% block content %} {% if user.is_authenticated %} {% load static %} {% include "registered_navbar.html" %}
-        {%else %}{% load static %} {% include "general_navbar.html" %} {% endif %}
+        {% block content %}
+        {% if user.is_authenticated %}
+        {% load static %}
+        {% include "registered_navbar.html" %}
+        {% else %}
+        {% load static %}
+        {% include "general_navbar.html" %}
+        {% endif %}
+        {% endblock %}
+
         <br />
         <br />
         <br />
-        <form method="POST">
-                <h1 style="text-align: center; margin-top: 50px; font-family: 'Gill Sans', sans-serif;color: #0d6efd;">
-                        <b>Create Event</b>
-                </h1>
+        <h4 class="logo navbar-brand text-center">
+                <b>Post An Event:</b>
+        </h4>
 
-                <section>
-                        Drag an Image into this section or
-                        <label>
-                                select an image
-                                <input type="file" id="file-input" accept="image/*" />
-                        </label>
-                </section>
-                <div class="form-group">
-                        <label for="name"> Enter Name </label>
-                        <input type="text" name="name" id="name" autofocus />
+        <div class="card mx-auto my-3" style="width: 30rem;">
+                <div class="card-body">
+                        <form class="register" style="width: 450px;" method="POST" action="">
+                                <label for="eventname"><b>Event Name</b> </label><br>
+                                <input type="text" name="eventname" id="eventname" autofocus /><br>
+                                <label for="date"> <b>Date </b></label><br>
+                                <input type="text" name="date" id="date" /><br>
+                                <label for="time"> <b>Time</b> </label><br>
+                                <input type="text" name="time" id="time" /><br>
+                                <label for="Address"><b>Street address</b></label><br>
+                                <input type="text" name="address" id="address" /><br>
+                                <label for="City"> <b>City</b></label><br>
+                                <input type="text" name="city" id="city" /><br>
+                                <label for="State"> <b>State</b> </label><br>
+                                <input type="text" name="State" id="State" /><br>
+                                <label for="zipcode"> <b>Zipcode</b></label><br>
+                                <input type="text" name="Zipcode" id="Zipcode" /><br>
+                                <label for="description"><b>Description</b> </label><br>
+                                <textarea name="description" rows="5" cols="40"
+                                        placeholder="Wirte some description about your event..."></textarea><br>
+                                <label for="name">
+                                        <b>Select an image</b>
+                                        <input type="file" id="file-input" accept="image/*" /><br>
+                                </label><br>
+                                <br>
+                                <div class="col">
+                                        <button class="btn btn-primary pt-2" type="submit">
+                                                Post Event
+                                        </button>
+                                </div><br>
+                                <div>
+                                        <p>By continuing, you agree to PlayDate's <a href="/termsofuse">Terms of Use</a>
+                                                and <a href="/privacy">Privacy Notice</a>.
+                                        </p>
+                                </div>
+                        </form>
                 </div>
-                <div class="form-group">
-                        <label for="Address"> Enter address </label>
-                        <input type="text" name="address" id="address" />
-                </div>
-                <div class="form-group">
-                        <label for="date"> Enter Date </label>
-                        <input type="text" name="date" id="date" />
-                </div>
-                <div class="form-group">
-                        <label for="zipcode"> Enter Zipcode </label>
-                        <input type="text" name="Zipcode" id="Zipcode" />
-                </div>
-                <div class="form-group">
-                        <label for="description"> Enter Description </label>
-                        <input type="text" name="description" id="description" />
-                </div>
-        </form>
+        </div>
 
-        <section class="profile-card">
-                <div class="img-container">
-
+        <footer class="gsfooter mt-auto bg-light py-1 d-none d-md-flex sticky-bottom">
+                <div class="container-fluid text-center text-md-left">
+                        <span class="text-dark ">
+                                <a href="/termsofuse">Terms of Use | </a><a href="/privacy">Privacy Notice | </a><a
+                                        href="/helpPage">Contact
+                                        Us</a><br>
+                        </span>
+                        <span class="text-dark">Copyright © 2022 TheBabySitters. All rights reserved.</span>
                 </div>
 
-        </section>
-        </main>
-        <script src="index.js"></script>
-</body>
-
-</html>
-{% csrf_token %} {{createEventForm}}
-<button class="btn btn-primary pt-2" type="submit">share</button>
-
-</form>
-{% endblock %}
+        </footer>
 </body>
 
 </html>
