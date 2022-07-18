@@ -52,7 +52,10 @@ coverage.xml
 # Django stuff:
 *.log
 local_settings.py
-*/migrations/
+events/migrations/
+home/migrations/
+groups/migrations/
+members/migrations/
 
 # Flask stuff:
 instance/

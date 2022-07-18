@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.core.mail import send_mail
 from ipware import get_client_ip
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
@@ -189,42 +190,77 @@ def resetPassword(request):
 
 def contactSupport(request):
     csForm = forms.supportForm()
-    print (request.user)
+    print ('*******************************')
+    print ('Support Contact form Submitted by ' + request.user.get_username())
     if request.method == 'POST':
-        print (request)
         print (request.POST)
         csForm = forms.supportForm(request.POST)
         if csForm.is_valid():
+            print('Form is valid.')
             ticket = csForm.save(commit=False)
 
             # Grab Registered user data
             if request.user.is_authenticated:
                 ticket.accountID = request.user
+                print ('User is authenticated: ' + request.user.username)
 
             # Grab General User Data
             ipAddr = request.META['REMOTE_ADDR']
+            print ('IP Address: ' + str(ipAddr))
             try:
+                print('Trying to fill General User...')
                 userQuery = models.generalUser.objects.get(ip=ipAddr)
-                userInfo = userQuery[0]
+                print ('Query Success...')
+                userInfo = userQuery.first()
+                print ('Using general user: ' + userInfo)
             except:
+                print ('Exception Caught - Query Error')
                 userInfo = models.generalUser(ip=ipAddr)
                 userInfo.save()
+                print ('Using new General User: ' + userInfo.ip)
             else:
-                print ("generalUser found")
+                print ("General User found")
             finally:
                 ticket.general = userInfo
                 # Grab Support Staff Data
                 try: 
+                    print('Trying to fill support staff...')
                     staffQuery = models.Supportstaff.objects.all()
-                    staffInfo = staffQuery[0]
-                    ticket.staff = staffInfo
+                    print('Query Success...')
+                    staffInfo = staffQuery.first()
+                    print ('Using Staff: ' + staffInfo.staff_email +'\n')
                     status = 'Success'
+                    ticket.staff = staffInfo
                 except:
                     print ("No staff to send support request to")
                     status = 'No Staff'
                 finally:
                     ticket.save()
                     print(ticket)
+                    if status == 'Success':
+                        email_subject = 'PlayDate Support #' + str(ticket.request_id) + ': ' + ticket.name
+                        email_content = email_subject + '\n';
+                        email_content += 'User: '
+                        if request.user.is_authenticated:
+                            email_content += request.user.get_username()
+                        else:
+                            email_content += ipAddr
+                        email_content += '\nEmail: ' + ticket.accountID.email + '\n'
+                        email_content += 'Category: ' + ticket.get_type_display() + '\n'
+                        email_content += 'Details: \n\t' + ticket.details + '\n\n'
+                        email_from = 'support@playdate.com'
+                        email_to = staffInfo.staff_email
+                        print('Email Description: ')
+                        print("Subject: " + email_subject)
+                        print("Content: " + email_content)
+                        print("From: " + email_from)
+                        print("To: " + email_to)
+                        send_mail(
+                            email_subject,
+                            email_content, 
+                            email_from,
+                            [email_to],
+                            fail_silently=True
+                        )
                     return render(request, 'contactSupport.html', { 'csForm': csForm, 'status': status})
-
     return render(request, 'contactSupport.html', {'csForm': csForm})
