@@ -13,12 +13,16 @@
     {% endblock %}
     <br><br><br><br>
     <div class="container">
-        <div class="row col-lg-9 mx-auto">
-            <h2>My Groups: </h2>
+        <div class="row ">
+            <div class="col-lg-6 mx-auto">
+                <h2 class="ms-5">My Groups: </h2>
+            </div>
+            <div class="col-lg-3 me-5">
+                <a href="/groups/createGroup" class="btn btn-primary">Create Your Group</a>
+            </div>
         </div><br>
-        <!-- row end-->
         <div class="row">
-            <div class="col-lg-9 mx-auto">
+            <div class="col-lg-9 mx-auto mb-5">
                 <table class="table">
                     <thead>
                         <tr>
@@ -29,30 +33,7 @@
                     </thead>
                     <tbody>
                         <tr class="inner-box">
-                            <td>
-                                <div class="event-img">
-                                    <img src="{% static 'media/Uc_Village_Parents.jpg' %}" width="200px" height="200px"
-                                        class="card-img-top  mt-2" alt="...">
-                                </div>
-                            </td>
-                            <td>
-                                <div class="event-wrap">
-                                    <span>Group of parents living in UC Village.</span><br><br>
-                                    <div class="meta">
-                                        <div class="organizers">
-                                            <b>Group Admin:</b> Tom Taylor<br><br>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="location">
-                                    UC Village, Berkeley, CA 94706
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="inner-box">
-                            <td>
+                            <td class="col-lg-5">
                                 <div class="event-img">
                                     <img src="{% static 'media/hikers.jpg' %}" width="200px" height="200px"
                                         class="card-img-top mt-2" alt="...">
@@ -75,22 +56,84 @@
                                 </div>
                             </td>
                         </tr>
+                        <tr class="inner-box">
+                            <td>
+                                <div class="event-img">
+                                    <img src="{% static 'media/kinders.jpg' %}" width="200px" height="200px"
+                                        class="card-img-top  mt-2" alt="...">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="event-wrap">
+                                    <span>Parents of kindergardeners living in San Francisco Bay Area.</span><br><br>
+                                    <div class="meta">
+                                        <div class="organizers">
+                                            <b>Group Admin:</b> Brandon King<br><br>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="location">
+                                    San Francisco Bay Area, CA.
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="inner-box">
+                            <td class="col-lg-5">
+                                <div class="event-img">
+                                    <img src="{% static 'media/Uc_Village_Parents.jpg' %}" width="200px" height="200px"
+                                        class="card-img-top  mt-2" alt="...">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="event-wrap">
+                                    <span>Group of parents living in UC Village.</span><br><br>
+                                    <div class="meta">
+                                        <div class="organizers">
+                                            <b> Created By You!</b><br><br><br><br>
+                                        </div>
+                                        <a href="/groups/createGroup" class="btn btn-primary">Edit Group</a>
+                                        <a href="#" class="btn btn-primary">Delete Group</a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="location">
+                                    UC Village, Berkeley, CA 94706
+                                </div>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
 
-        </div>
-        <!-- /col end-->
-        <footer class="gsfooter mt-auto bg-light py-1 d-none d-md-flex fixed-bottom  mt-2">
-            <div class="container-fluid text-center text-md-left">
-                <span class="text-dark ">
-                    <a href="/termsofuse">Terms of Use | </a><a href="/privacy">Privacy Notice | </a><a
-                        href="/helpPage">Contact Us</a><br>
-                </span>
-                <span class="text-dark">Copyright © 2022 TheBabySitters. All rights reserved.</span>
-            </div>
 
-        </footer>
+            <div class="row mb-5">
+                <div class="col-lg-9 mx-auto mb-5">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="text-center" scope="col">Group </th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Location</th>
+                            </tr>
+                        </thead>
+
+                    </table>
+                </div>
+            </div>
+            <!-- /col end-->
+            <footer class="gsfooter mt-auto bg-light py-1 d-none d-md-flex fixed-bottom  mt-2">
+                <div class="container-fluid text-center text-md-left">
+                    <span class="text-dark ">
+                        <a href="/termsofuse">Terms of Use | </a><a href="/privacy">Privacy Notice | </a><a
+                            href="/helpPage">Contact Us</a><br>
+                    </span>
+                    <span class="text-dark">Copyright © 2022 TheBabySitters. All rights reserved.</span>
+                </div>
+
+            </footer>
 
 </body>
 

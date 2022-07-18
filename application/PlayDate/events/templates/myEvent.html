@@ -13,8 +13,13 @@
     {% endblock %}
     <br><br><br><br>
     <div class="container">
-        <div class="row col-lg-9 mx-auto">
-            <h2>My Event Schedule: </h2>
+        <div class="row ">
+            <div class="col-lg-6 mx-auto">
+                <h2 class="ms-5">My Events: </h2>
+            </div>
+            <div class="col-lg-3 me-5">
+                <a href="/events/createEvent" class="btn btn-primary">Post Your Event</a>
+            </div>
         </div><br>
         <!-- row end-->
         <div class="row">
@@ -109,11 +114,11 @@
                                     <span>Take pets out for a fresh breath tomorrow afternoon.</span><br><br>
                                     <div class="meta">
                                         <div class="organizers">
-                                            <b>Posted By:</b> Chris Jhonson<br><br>
+                                            <b> Created By You!</b><br><br>
                                         </div>
-                                        <div class="time">
-                                            <span><b>Time:</b> 6:00 PM</span><br><br>
-                                        </div>
+                                        <a href="/groups/createEvent" class="btn btn-primary">Edit Event</a>
+                                        <a href="#" class="btn btn-primary">Delete Event</a>
+
                                     </div>
                                 </div>
                             </td>
