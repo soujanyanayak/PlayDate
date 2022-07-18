@@ -14,6 +14,3 @@ class GroupEventForm(forms.Form):
     state = forms.CharField(label='State', max_length=200)
     country = forms.CharField(label='Country', max_length=200)
     zipcode = forms.CharField(label='Zipcode', max_length=200)
-
-
-    

@@ -39,9 +39,9 @@ class Member(models.Model):
 #    create_date = models.DateTimeField()
 #    group_size = models.IntegerField()
 #
-#    class Meta:
+    class Meta:
 #        # managed = False
-#        db_table = 'Group'
+       db_table = 'Group'
 
 
 class Groupuser(models.Model):

@@ -74,7 +74,7 @@
             </script>
 
             <ul class="navbar-nav mx-2 mb-lg-0">
-                <a class="nav-link active" aria-current="page" href="/groups">My Groups</a>
+                <a class="nav-link active" aria-current="page" href="/groups/myGroup">My Groups</a>
                 <a class="nav-link active" aria-current="page" href="/events/my-events">My Events</a>
                 <a class="nav-link active" aria-current="page" href="/about">About</a>
                 <li class="nav-item dropdown">
@@ -91,9 +91,16 @@
                     </ul>
                 </li>
                 {% load static %}
-
-                <a class="nav-link active" aria-current="page" href="/individuleInfo"><img
-                        src="{% static 'media/plus_icon.png' %}" width="30" height="25" /></a>
+                <div class="dropdown">
+                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <img src="{% static 'media/plus_icon.png' %}" width="30" height="25" />
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item" href="/events/createEvent">Create An Event</a></li>
+                        <li><a class="dropdown-item" href="/groups/createGroup">Create A Group</a></li>
+                    </ul>
+                </div>
 
                 <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
@@ -102,7 +109,7 @@
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                         <li><a class="dropdown-item" href="/profile">Profile</a></li>
-                        <li><a class="dropdown-item" href="/profileEdit">Edit</a></li>
+                        <li><a class="dropdown-item disabled" href="/profileEdit">Edit</a></li>
                         <li><a class="dropdown-item" href="/logout">Log Out</a></li>
                     </ul>
                 </div>
