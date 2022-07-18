@@ -7,10 +7,20 @@
         <title>Profile Page</title>
     </head>
     <body>
-        {% csrf_token %} {{profile}} {{profile.profileDesc}}<br />
-        {{profile.avatar}} {% if profile.avatar.url != None %}
+      {% block content %}
+      {% if user.is_authenticated %}
+      {% load static %}
+      {% include "registered_navbar.html" %}
+      {% else %}
+      {% load static %}
+      {% include "general_navbar.html" %}
+      {% endif %}
+      {% endblock %}
+        <!-- {% csrf_token %} {{profile}} {{profile.profileDesc}}<br />
+        {{profile.avatar}}
+         {% if profile.avatar.url != None %}
         <img src="{{profile.avatar.url}}" alt="" />
-        {% endif %}
+        {% endif %} -->
     </body>
 
     <div class="container">
@@ -87,7 +97,7 @@
                       <hr>
                       <div class="row">
                         <div class="col-sm-12">
-                          <a class="btn btn-info " target="__blank" href="">Edit</a>
+                          <a class="btn btn-info " href="profileEdit">Edit</a>
                         </div>
                       </div>
                     </div>
@@ -169,7 +179,7 @@ body{
     margin-top:20px;
     color: #1a202c;
     text-align: left;
-    background-color: #7ecae6;    
+    background-color: #fbfcfc;    
 }
 .main-body {
     padding: 15px;

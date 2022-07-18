@@ -152,9 +152,10 @@ def profileEditPage(request):
 
 
 def profilePage(request):
-    profile = models.Profile.objects.get(profileID=request.user)
-    # print(profile)
-    return render(request, 'profilePage.html', {'profile': profile})
+    # profile = models.Profile.objects.get(profileID=request.user)
+    # # print(profile)
+    # return render(request, 'profilePage.html', {'profile': profile})
+    return render(request, 'profilePage.html')
 
 
 def profileView(request, profile_id):
