@@ -90,11 +90,11 @@ def events(request):
                 lookups= Q(address__city__icontains=query) | Q(address__zipcode__icontains=query) | Q(address__country__icontains=query) | Q(address__street__icontains=query)
 
                 results= Publicevent.objects.filter(lookups).filter(Q(category__icontains = 'pets'))
-                
+                print(filter)
+            
             
             context={'results': results,
                      'submitbutton': submitbutton}
-           
             return render(request, 'events/events.html', context)
         
         
@@ -102,6 +102,45 @@ def events(request):
     else:
         return render(request, 'events/events.html')
     return render(request, 'events/events.html')
+# def events(request):
+#     if request.method == 'GET':
+#         query= request.GET.get('q')
+#         filter= request.GET.get('category')
+        
+#         submitbutton= request.GET.get('submit')
+#         print(query)
+        
+#         if query is not None:
+#             if filter=='All': 
+#            #query databse to check if matching city, zipcode, or street
+           
+#                 lookups= Q(address__city__icontains=query) | Q(address__zipcode__icontains=query) | Q(address__country__icontains=query) | Q(address__street__icontains=query)
+
+#                 results= Publicevent.objects.filter(lookups)
+            
+#             elif filter=='Kids': 
+#             #query databse to check if matching city, zipcode, or street
+            
+#                 lookups= Q(address__city__icontains=query) | Q(address__zipcode__icontains=query) | Q(address__country__icontains=query) | Q(address__street__icontains=query)
+
+#                 results= Publicevent.objects.filter(lookups).filter(Q(category__icontains = 'kids'))
+#                 print(filter)
+#             else:
+#                 lookups= Q(address__city__icontains=query) | Q(address__zipcode__icontains=query) | Q(address__country__icontains=query) | Q(address__street__icontains=query)
+
+#                 results= Publicevent.objects.filter(lookups).filter(Q(category__icontains = 'pets'))
+                
+            
+#             context={'results': results,
+#                      'submitbutton': submitbutton}
+           
+#             return render(request, 'events/events.html', context)
+        
+        
+        
+#     else:
+#         return render(request, 'events/events.html')
+#     return render(request, 'events/events.html')
     
 
 
