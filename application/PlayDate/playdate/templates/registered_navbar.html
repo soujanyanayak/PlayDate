@@ -6,7 +6,6 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mb-lg-0">
-                <a class="nav-link active" aria-current="page" href="/events/public-events/">Public Events</a>
                 <a class="nav-link active" aria-current="page" href="/events/members-events/">Events</a>
                 <a class="nav-link active" aria-current="page" href="/groups">Groups</a>
 
@@ -31,7 +30,7 @@
                     type="submit">&#128269;</button>
             </form> -->
 
-            <form class="search-field button mx-auto d-flex" role="search" action="{% url 'events' %}" method="GET"
+            <form class="search-field  button mx-auto d-flex" role="search" action="{% url 'events' %}" method="GET"
                 value="{{request.GET.q}}">
                 <div id="filter" class="dropdown">
                     <select id="filterText" class="btn btn-primary dropdown-toggle" type="button"
@@ -43,11 +42,10 @@
                         <option value="Pets">Pets</option>
                     </select>
                 </div>
-                <input class="form-control me-1" type="search" name="q" value="{{request.GET.q}}" placeholder="City"
-                    aria-label="Search" />
-                <button class="search-button-text btn btn-outline-success" name="submit" value="Search" type="submit">
-                    &#128269;
-                </button>
+                <input class="form-control me-1" type="search" name="q" value="{{request.GET.q}}"
+                    placeholder="City, State, Zipcode" aria-label="Search">
+                <button class="search-button-text btn btn-outline-success" name="submit" value="Search"
+                    type="submit">&#128269;</button>
             </form>
 
             <script>
@@ -74,7 +72,7 @@
             </script>
 
             <ul class="navbar-nav mx-2 mb-lg-0">
-                <a class="nav-link active" aria-current="page" href="/groups">My Groups</a>
+                <a class="nav-link active" aria-current="page" href="/groups/myGroup">My Groups</a>
                 <a class="nav-link active" aria-current="page" href="/events/my-events">My Events</a>
                 <a class="nav-link active" aria-current="page" href="/about">About</a>
                 <li class="nav-item dropdown">
@@ -92,9 +90,6 @@
                 </li>
                 {% load static %}
 
-                <a class="nav-link active" aria-current="page" href="/individuleInfo"><img
-                        src="{% static 'media/plus_icon.png' %}" width="30" height="25" /></a>
-
                 <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
                         aria-expanded="false">
@@ -102,7 +97,7 @@
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                         <li><a class="dropdown-item" href="/profile">Profile</a></li>
-                        <li><a class="dropdown-item" href="/profileEdit">Edit</a></li>
+                        <li><a class="dropdown-item" href="/helpPage">Contact</a></li>
                         <li><a class="dropdown-item" href="/logout">Log Out</a></li>
                     </ul>
                 </div>

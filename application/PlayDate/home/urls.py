@@ -1,4 +1,5 @@
 from django.urls import path
+from django.contrib.auth import views as auth_views
 
 from . import views
 
@@ -16,4 +17,5 @@ urlpatterns = [
     path('comeSoon/', views.comesoonPage, name='comesoon'),
     path('support/', views.contactSupport, name='contactSupport'),
     path('myGroupsPage/', views.myGroupsPage, name='myGroupsPage'),
+    path('resetPassword/', views.resetPassword, name='resetPassword'),
 ]

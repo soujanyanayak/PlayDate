@@ -186,6 +186,9 @@ def comesoonPage(request):
 def myGroupsPage(request):
     return render(request, 'myGroupsPage.html')
 
+def resetPassword(request):
+        return render(request, 'resetPassword.html')
+
 def contactSupport(request):
     csForm = forms.supportForm()
     print ('*******************************')
@@ -262,3 +265,9 @@ def contactSupport(request):
                         )
                     return render(request, 'contactSupport.html', { 'csForm': csForm, 'status': status})
     return render(request, 'contactSupport.html', {'csForm': csForm})
+
+def createdGroup(request):
+    return render(request, 'createdGroup.html')
+
+def createdEvent(request):
+    return render(request, 'createdEvent.html')

@@ -14,10 +14,10 @@ from . import forms
 
 def groups(request):
     # The code in this function is the startercode for the group search
-    groupList = models.Group.objects.order_by('-group_id')[:]
+    # groupList = models.Group.objects.order_by('-group_id')[:]
 
-    return render(request, "groups/viewAllGroups.html", {'groupList': groupList})
-
+    # return render(request, "groups/viewAllGroups.html", {'groupList': groupList})
+    return render(request, "groups/viewAllGroups.html")
 
 def Search(request):
     if 'search' in request.GET:
@@ -32,6 +32,18 @@ def Search(request):
 def searchResults(request):
     return render(request, "groups/searchResults.html")
 
+
+def individualGroup(request):
+    return render(request, "groups/individualGroup.html")
+
+def joinedGroup(request):
+    return render(request, "groups/joinedGroup.html")
+
+def createGroupPost(request):
+    return render(request, "groups/createGroupPost.html")
+    
+def myGroup(request):
+    return render(request, "groups/myGroup.html")
 
 def groupView(request, group_id):
     joinGroupForm = forms.joinGroupForm()

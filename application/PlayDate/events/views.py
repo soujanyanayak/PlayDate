@@ -15,8 +15,9 @@ from bs4 import BeautifulSoup
 # Create your views here.
 
 def publicevents(request):
-    publicevent = Publicevent.objects.all()
-    return render(request,"publicevents.html",{'publicevent':publicevent})
+    # publicevent = Publicevent.objects.all()
+    # return render(request,"publicevents.html",{'publicevent':publicevent})
+    return render(request,"publicevents.html")
 
 def membersevents(request):
     return render(request,"membersevents.html")
@@ -29,6 +30,9 @@ def memberEvent1(request):
 
 def signUpSucceed(request):
     return render(request,"signUpSucceed.html")
+
+def myEvent(request):
+    return render(request,"myEvent.html")
 
 @csrf_exempt
 def createGroupEvent(request):
@@ -52,6 +56,12 @@ def createGroupEvent(request):
 def filter(request):
     if request.method == 'POST':
         select= request.GET.get('select')
+
+
+def createEvent(request):
+    return render(request, 'createEvent.html')
+
+
         
 
 
@@ -83,11 +93,11 @@ def events(request):
                 lookups= Q(address__city__icontains=query) | Q(address__zipcode__icontains=query) | Q(address__country__icontains=query) | Q(address__street__icontains=query)
 
                 results= Publicevent.objects.filter(lookups).filter(Q(category__icontains = 'pets'))
-                
+                print(filter)
+            
             
             context={'results': results,
                      'submitbutton': submitbutton}
-           
             return render(request, 'events/events.html', context)
         
         
@@ -95,6 +105,45 @@ def events(request):
     else:
         return render(request, 'events/events.html')
     return render(request, 'events/events.html')
+# def events(request):
+#     if request.method == 'GET':
+#         query= request.GET.get('q')
+#         filter= request.GET.get('category')
+        
+#         submitbutton= request.GET.get('submit')
+#         print(query)
+        
+#         if query is not None:
+#             if filter=='All': 
+#            #query databse to check if matching city, zipcode, or street
+           
+#                 lookups= Q(address__city__icontains=query) | Q(address__zipcode__icontains=query) | Q(address__country__icontains=query) | Q(address__street__icontains=query)
+
+#                 results= Publicevent.objects.filter(lookups)
+            
+#             elif filter=='Kids': 
+#             #query databse to check if matching city, zipcode, or street
+            
+#                 lookups= Q(address__city__icontains=query) | Q(address__zipcode__icontains=query) | Q(address__country__icontains=query) | Q(address__street__icontains=query)
+
+#                 results= Publicevent.objects.filter(lookups).filter(Q(category__icontains = 'kids'))
+#                 print(filter)
+#             else:
+#                 lookups= Q(address__city__icontains=query) | Q(address__zipcode__icontains=query) | Q(address__country__icontains=query) | Q(address__street__icontains=query)
+
+#                 results= Publicevent.objects.filter(lookups).filter(Q(category__icontains = 'pets'))
+                
+            
+#             context={'results': results,
+#                      'submitbutton': submitbutton}
+           
+#             return render(request, 'events/events.html', context)
+        
+        
+        
+#     else:
+#         return render(request, 'events/events.html')
+#     return render(request, 'events/events.html')
     
 
 
