@@ -7,3 +7,6 @@ You are free to organize the contents of the folder as you see fit. But remember
 
 ## Please use the rest of the README.md to store important information for your team's application.
 
+Application url: http://34.83.255.32:8000/
+
+
