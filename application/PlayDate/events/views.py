@@ -56,6 +56,8 @@ def filter(request):
 
 def createEvent(request):
     return render(request, 'createEvent.html')
+
+
         
 
 

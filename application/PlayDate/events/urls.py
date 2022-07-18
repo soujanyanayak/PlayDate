@@ -9,12 +9,9 @@ urlpatterns = [
     # path('/my-events/', views.myevents, name='myevents'),
     # path('/my-events/createvent/', views.createGroupEvent, name='createGroupEvent'),
     path('filter', views.filter, name='filter'),
-<<<<<<< HEAD
     path('/create_events/', views.createEvent, name='createEvent'),
-=======
     path('/publicEvent1/', views.publicEvent1, name='publicEvent1'),
     path('/memberEvent1/', views.memberEvent1, name='memberEvent1'),
     path('/signUpSucceed/', views.signUpSucceed, name='signUpSucceed'),
 
->>>>>>> origin/development
 ]
