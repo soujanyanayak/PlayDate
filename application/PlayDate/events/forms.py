@@ -15,9 +15,5 @@ class GroupEventForm(forms.Form):
     state = forms.CharField(label='State', max_length=200)
     country = forms.CharField(label='Country', max_length=200)
     zipcode = forms.CharField(label='Zipcode', max_length=200)
-    datetime= forms.DateTimeField(input_formats=['%d/%m/%Y %H:%M'],
-        widget=forms.DateTimeInput(attrs={
-            'class': 'form-control datetimepicker-input',
-            'data-target': '#datetimepicker1'
-        }))
+    
 
