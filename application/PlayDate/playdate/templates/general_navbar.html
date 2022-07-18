@@ -1,5 +1,6 @@
 {% load static %}
 
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,14 +8,24 @@
     <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/style.css'%}"> -->
 </head>
 
+{% url 'about' as about %}
+{% url 'publicevents' as publicevents %}
+
+<style>
+    .active {
+    background-color:aqua;
+    color: aliceblue;
+    }
+    
+</style>
 <nav class="navbar navbar-expand-lg bg-light fixed-top">
     <div class="container-fluid">
         <a class="logo navbar-brand" href="/" style="font-family: 'Gill Sans', sans-serif;color:#0d6efd;">
             <h5><b>PlayDate</b></h5>
         </a>
         <ul class="navbar-nav mx-2 mb-lg-0">
-            <a class="nav-link active" aria-current="page" href="/events/public-events/">Public Events</a>
-            <a class="nav-link active" aria-current="page" href="/about">About</a>
+            <a class="nav-link {% if request.path == publicevents %} active {% endif %}" aria-current="page" href="/events/public-events/">Public Events</a>
+            <a class="nav-link {% if request.path == about %} active {% endif %}" aria-current="page" href="/about">About</a>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
                     aria-expanded="false" href="{% url 'about' %}"></a>
@@ -84,10 +95,11 @@
                 aboutList.classList.toggle("open");
             }
 
+
         </script>
         <ul class="navbar-nav mx-2 mb-lg-0">
-            <a class="signUp nav-link active" aria-current="page" href="/register">Sign Up</a>
-            <a class="logIn nav-link active" aria-current="page" href="/login">Log In</a>
+            <a class="signUp nav-link {% if request.path == register %} active {% endif %}" aria-current="page" href="/register">Sign Up</a>
+            <a class="logIn nav-link {% if request.path == login %} active {% endif %}" aria-current="page" href="/login">Log In</a>
         </ul>
     </div>
 

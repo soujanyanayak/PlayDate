@@ -15,8 +15,9 @@ from bs4 import BeautifulSoup
 # Create your views here.
 
 def publicevents(request):
-    publicevent = Publicevent.objects.all()
-    return render(request,"publicevents.html",{'publicevent':publicevent})
+    # publicevent = Publicevent.objects.all()
+    # return render(request,"publicevents.html",{'publicevent':publicevent})
+    return render(request,"publicevents.html")
 
 def membersevents(request):
     return render(request,"membersevents.html")
