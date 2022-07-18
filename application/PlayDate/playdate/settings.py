@@ -94,6 +94,13 @@ DATABASES = {
         'NAME': 'playdate',
         'USER': 'qin',
         'PASSWORD': '',
+<<<<<<< HEAD
+        'USER': 'victor',
+        'PASSWORD':'victor12345',
+        'HOST': '127.0.0.1',
+
+=======
+>>>>>>> origin/development
         'HOST': 'localhost',
         'PORT': '3306',
         'OPTIONS': {
