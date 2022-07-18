@@ -30,6 +30,9 @@ def memberEvent1(request):
 def signUpSucceed(request):
     return render(request,"signUpSucceed.html")
 
+def myEvent(request):
+    return render(request,"myEvent.html")
+
 @csrf_exempt
 def createGroupEvent(request):
     if request.method == 'POST':

@@ -3,48 +3,51 @@
 <html lang="en">
 
 
-    <head>
-        <meta charset="UTF-8" />
-        <title>create group</title>
-    </head>
+<head>
+    <meta charset="UTF-8" />
+    <title>create group</title>
+</head>
 
-    <body>
-        {% block content %} {% if user.is_authenticated %} {% load static %} {% include "registered_navbar.html" %}
-        {%else %}{% load static %} {% include "general_navbar.html" %} {% endif %}
-        <br />
-        <br />
-        <br />
-        <form method="POST">
-            <h1>create group</h1>
-            {% csrf_token %} {{createGroupForm}}
-            <button class="btn btn-primary pt-2" type="submit">Create Group</button>
-        </form>
-        {% endblock %}
-    </body>
+<body>
+    {% block content %} {% if user.is_authenticated %} {% load static %} {% include "registered_navbar.html" %}
+    {%else %}{% load static %} {% include "general_navbar.html" %} {% endif %}
+    <br />
+    <br />
+    <br />
+    <form method="POST">
+        <h1>Create Your Group</h1>
+        {% csrf_token %} {{createGroupForm}}
+        <button class="btn btn-primary pt-2" type="submit">Create Group</button>
+    </form>
+    {% endblock %}
+</body>
+
 </html>
 <style>
     body {
         background-color: #7ecae6;
     }
-    .card {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-    word-wrap: break-word;
-    background-color: #fff;
-    background-clip: border-box;
-    border: 0 solid rgba(0,0,0,.125);
-    border-radius: .25rem;
-}
-.main-body {
-    margin-top: 100px;
-    padding: 15px;
-}
 
-.card-body {
-    flex: 1 1 auto;
-    min-height: 1px;
-    padding: 1rem;
-}
+    .card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border: 0 solid rgba(0, 0, 0, .125);
+        border-radius: .25rem;
+    }
+
+    .main-body {
+        margin-top: 100px;
+        padding: 15px;
+    }
+
+    .card-body {
+        flex: 1 1 auto;
+        min-height: 1px;
+        padding: 1rem;
+    }
 </style>
