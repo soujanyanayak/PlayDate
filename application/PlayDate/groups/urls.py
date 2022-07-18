@@ -11,4 +11,6 @@ urlpatterns = [
     path('joinSuccess/', views.joinSuccess, name='joinSuccess'),
     path('individualGroup/', views.individualGroup, name='individualGroup'),
     path('myGroup/', views.myGroup, name='myGroup'),
+    path('joinedGroup/', views.joinedGroup, name='joinedGroup'),
+    path('createGroupPost/', views.createGroupPost, name='createGroupPost'),
 ]

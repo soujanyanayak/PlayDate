@@ -35,6 +35,12 @@ def searchResults(request):
 
 def individualGroup(request):
     return render(request, "groups/individualGroup.html")
+
+def joinedGroup(request):
+    return render(request, "groups/joinedGroup.html")
+
+def createGroupPost(request):
+    return render(request, "groups/createGroupPost.html")
     
 def myGroup(request):
     return render(request, "groups/myGroup.html")
