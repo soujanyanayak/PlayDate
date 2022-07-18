@@ -9,6 +9,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser, User
 from groups.models import  Group, Groupadmin
 from home.models import Address, Backendadmin
+from django.contrib.gis.db import models as geomodels
 
 
 #for general users
@@ -17,6 +18,7 @@ class Publicevent(models.Model):
     address = models.ForeignKey(Address, models.DO_NOTHING)
     event_url = models.CharField(max_length=1000)
     name = models.CharField(max_length=500)
+    # geometry= geomodels.PointField()
 
     category = models.CharField(max_length=10, blank=True, null=True)
 
