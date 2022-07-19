@@ -190,6 +190,9 @@ def myGroupsPage(request):
 def resetPassword(request):
         return render(request, 'resetPassword.html')
 
+def createdGroup(request):
+        return render(request, 'createdGroup.html')
+
 def contactSupport(request):
     csForm = forms.supportForm()
     print ('*******************************')

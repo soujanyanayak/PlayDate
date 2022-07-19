@@ -18,4 +18,5 @@ urlpatterns = [
     path('support/', views.contactSupport, name='contactSupport'),
     path('myGroupsPage/', views.myGroupsPage, name='myGroupsPage'),
     path('resetPassword/', views.resetPassword, name='resetPassword'),
+    path('createdGroup/', views.createdGroup, name="createdGroup")
 ]
