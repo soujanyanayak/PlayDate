@@ -40,26 +40,21 @@
 
     <div class="card mx-auto my-3" style="width: 30rem;">
         <div class="card-body">
-            <form class="register" style="width: 450px;" method="POST" action="">
+            <form class="register" style="width: 450px;" method="GET" action="/createdGroup">
 
                 <label for="groupname"><b>Group Name</b> </label><br>
                 <input type="text" name="groupname" id="groupname" autofocus /><br>
                 <label for="description"><b>Description</b> </label><br>
-                <input type="text" name="description" id="description" /><br>
+                <textarea name="description" id="description" ></textarea><br>
                 <label for="name">
                     <b>Select an image</b>
-                    <input type="file" id="file-input" accept="image/*" /><br>
-                </label><br>
+                </label>
+                <input type="file" id="file-input" accept="image/*" /><br>
                 <br>
-                <div class="col">
+                <a class="col" href="/createdGroup">
 
-                    <button class="btn btn-primary pt-2" type="submit">Create Group</button>
-                </div><br>
-                <div>
-                    <p>By continuing, you agree to PlayDate's <a href="/termsofuse">Terms of Use</a>
-                        and <a href="/privacy">Privacy Notice</a>.
-                    </p>
-                </div>
+                    <button class="btn btn-primary pt-2">Create Group</button>
+                </a>
             </form>
         </div>
     </div>
