@@ -15,8 +15,9 @@ from bs4 import BeautifulSoup
 # Create your views here.
 
 def publicevents(request):
-    publicevent = Publicevent.objects.all()
-    return render(request,"publicevents.html",{'publicevent':publicevent})
+    # publicevent = Publicevent.objects.all()
+    # return render(request,"publicevents.html",{'publicevent':publicevent})
+    return render(request,"publicevents.html")
 
 def membersevents(request):
     return render(request,"membersevents.html")
@@ -43,7 +44,7 @@ def createGroupEvent(request):
             state=request.POST.get('state'), 
             country=request.POST.get('country'),
             zipcode=request.POST.get('zipcode') )
-            ge=Event.objects.create(name=request.POST.get('name'),event_url=request.POST.get('event_url'), category=request.POST.get('category'),address= a)
+            ge=Event.objects.create(name=request.POST.get('name'),category=request.POST.get('category'),address= a)
 
             return HttpResponseRedirect('/thanks/')
     else:
@@ -59,8 +60,6 @@ def filter(request):
 
 def createEvent(request):
     return render(request, 'createEvent.html')
-
-
         
 
 

@@ -12,7 +12,7 @@
     {% endblock %}
 
     <br>
-    <h1>Events Page Will be done later!</h1>
+    <!-- <h1>Events Page Will be done later!</h1> -->
     <!-- <h1>Search Page</h1>
 
         <br/>
@@ -50,10 +50,16 @@
                     {% for result in results %}
                     <tr>
                         <td>
+                            <div>
+
+                                {{result.banner}}
+                                {% if result.banner.url != None %}
+                                    <img src="{{result.banner.url}}" alt= {{result.name}}/>
+                                {% endif %}
+                            </div>
+                    
                             <div class="event_name">
                                 {{result.name}}
-                                <p class="m-0"><a href={{result.event_url}} target="_blank" class="url">Register
-                                        here</a>
                             </div>
                         </td>
                         <td>
