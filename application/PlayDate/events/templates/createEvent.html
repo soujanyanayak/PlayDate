@@ -1,92 +1,74 @@
-{% load static %} {% include "header.html" %}
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-        <meta charset="UTF-8" />
-        <title>create event</title>
-</head>
+{% load static %}
+{% include "header.html" %}
 
 <body>
-{% block content %} {% if user.is_authenticated %} {% load static %} {% include "registered_navbar.html" %}
-{%else %}{% load static %} {% include "general_navbar.html" %} {% endif %}
-<br />
-<br />
-<br />
-<form method="POST">
-        <h1 style="text-align: center; margin-top: 50px; font-family: 'Gill Sans', sans-serif;color: #0d6efd;">
-                <b>Create Event</b>
-        </h1>
+        {% if user.is_authenticated %}
+        {% load static %}
+        {% include "registered_navbar.html" %}
+        {% else %}
+        {% load static %}
+        {% include "general_navbar.html" %}
+        {% endif %}
 
 
-        </section>
-        <div class="card mx-auto mt-2" style="width: 30rem;">
-        <div class="form-group">
-                <section
-                <label>
-                        Select an image
-                        <input type="file" id="file-input" accept="image/*" />
-                </label>
-                <label for="name"> Event Name </label>
-                <input type="text" name="name" id="name" autofocus />
+        <br />
+        <br />
+        <br />
+        <h4 class="logo navbar-brand text-center">
+                <b>Post An Event:</b>
+        </h4>
+
+        <div class="card mx-auto my-3" style="width: 30rem;">
+                <div class="card-body">
+                        <form class="register" style="width: 450px;" method="POST" action="">
+
+                                <label for="eventname"><b>Event Name</b> </label><br>
+                                <input type="text" name="eventname" id="eventname" autofocus /><br>
+                                <label for="description"><b>Description</b> </label><br>
+                                <input type="text" name="description" id="description" /><br>
+                                <label for="date"> <b>Date </b></label><br>
+                                <input type="text" name="date" id="date" /><br>
+                                <label for="time"> <b>Time</b> </label><br>
+                                <input type="text" name="time" id="time" /><br>
+                                <label for="Address"><b>Street address</b></label><br>
+                                <input type="text" name="address" id="address" /><br>
+                                <label for="City"> <b>City</b></label><br>
+                                <input type="text" name="city" id="city" /><br>
+                                <label for="State"> <b>State</b> </label><br>
+                                <input type="text" name="State" id="State" /><br>
+                                <label for="zipcode"> <b>Zipcode</b></label><br>
+                                <input type="text" name="Zipcode" id="Zipcode" /><br><br>
+                                <label for="name">
+                                        <b>Select an image</b>
+                                        <input type="file" id="file-input" accept="image/*" /><br>
+                                </label><br>
+                                <br>
+                                <div class="col">
+                                        <button class="btn btn-primary pt-2" type="submit">
+                                                Post Event
+                                        </button>
+                                </div><br>
+                                <div>
+                                        <p>By continuing, you agree to PlayDate's <a href="/termsofuse">Terms of Use</a>
+                                                and <a href="/privacy">Privacy Notice</a>.
+                                        </p>
+                                </div>
+                        </form>
+                </div>
         </div>
-        <div class="form-group">
-                <label for="description"> Description </label>
-                <input type="text" name="description" id="description" />
-        </div>
-        <div class="form-group">
-                <label for="date"> Date </label>
-                <input type="text" name="date" id="date" />
+>>>>>>> origin/development
 
-        </div>
-
-
-                <div class="form-group">
-                        <label for="time">Time of Event </label>
-                        <input type="text" name="time" id="time" />
-
+        <footer class="gsfooter mt-auto bg-light py-1 d-none d-md-flex sticky-bottom">
+                <div class="container-fluid text-center text-md-left">
+                        <span class="text-dark ">
+                                <a href="/termsofuse">Terms of Use | </a><a href="/privacy">Privacy Notice | </a><a
+                                        href="/helpPage">Contact
+                                        Us</a><br>
+                        </span>
+                        <span class="text-dark">Copyright © 2022 TheBabySitters. All rights reserved.</span>
                 </div>
 
-        <div class="form-group">
-                <label for="Address">Street address </label>
-                <input type="text" name="address" id="address" />
-        </div>
-        <div class="form-group">
-                <label for="City"> Enter City </label>
-                <input type="text" name="city" id="city" />
-        </div>
-        <div class="form-group">
-                <label for="Country"> Country </label>
-                <input type="text" name="Country" id="Country" />
-        </div>
-        <div class="form-group">
-                <label for="zipcode"> Zipcode </label>
-                <input type="text" name="Zipcode" id="Zipcode" />
-        </div>
-
-        <form action="" method="post">{% csrf_token %}
-                {{ form.as_p }}
-
-        </form>
-        <form method="POST">
-
-        <section class="profile-card">
-                <div class="img-container">
-
-                </div>
-
-        </section>
-        </main>
-        <script src="index.js"></script>
-</body>
-
-</html>
-{% csrf_token %} {{createEventForm}}
-<button class="btn btn-primary pt-2" type="submit">share</button>
-
-</form>
-{% endblock %}
+        </footer>
 </body>
 
 </html>
