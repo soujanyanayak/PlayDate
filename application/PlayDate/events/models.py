@@ -9,7 +9,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser, User
 from groups.models import  Group, Groupadmin
 from home.models import Address, Backendadmin
-from django.contrib.gis.db import models as geomodels
+# from django.contrib.gis.db import models as geomodels
 
 
 #for general users
