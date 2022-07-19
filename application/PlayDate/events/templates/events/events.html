@@ -1,18 +1,10 @@
 {% include "header.html" %}
 
 <body>
-    {% block content %}
-    {% if user.is_authenticated %}
-    {% load static %}
-    {% include "registered_navbar.html" %}
-    {% else %}
-    {% load static %}
-    {% include "general_navbar.html" %}
-    {% endif %}
-    {% endblock %}
+    {% block content %} {% if user.is_authenticated %} {% load static %} {% include "registered_navbar.html" %} {%else%}
+    {% load static %} {% include "general_navbar.html" %} {% endif %} {% endblock %}
 
-    <br>
-    <!-- <h1>Events Page Will be done later!</h1> -->
+    <br />
     <!-- <h1>Search Page</h1>
 
         <br/>
@@ -21,16 +13,9 @@
             <input type="submit" name="submit" value="Search"/>
         </form> -->
     <div class="container"></div>
-    {% if submitbutton == 'Search' and request.GET.q != '' %}
-    {% if results %}
-
-
-
+    {% if submitbutton == 'Search' and request.GET.q != '' %} {% if results %}
 
     <div class="result-body">
-
-
-
         <!-- <div class="form-group col-sm-8 col-md-6" action="{% url 'events' %}" method="GET" value="{{request.GET.category}}">
 
                     <div class="form-check">
@@ -50,24 +35,35 @@
                     {% for result in results %}
                     <tr>
                         <td>
-                            <div>
-
-                                {{result.banner}}
-                                {% if result.banner.url != None %}
-                                    <img src="{{result.banner.url}}" alt= {{result.name}}/>
-                                {% endif %}
+                            {% if result.banner.url != None %}
+                            <div class="event_banner">
+                                <img src="{{result.banner.url}}" style="width: 5vw; height: 3vh" alt="" />
                             </div>
-                    
+                            {% else %}
+                            <div class="event_banner">
+                                <img
+                                    src="/media/publicevents_banner/default.jpeg"
+                                    style="width: 5vw; height: 3vh"
+                                    alt=""
+                                />
+                            </div>
+                            {% endif %}
+                        </td>
+
+                        <td>
                             <div class="event_name">
-                                {{result.name}}
+                                <a href="/events/publicEvent1" target="_blank" class="url">{{result.name}}</a>
+                                <p class="m-0"></p>
                             </div>
                         </td>
                         <td>
                             <div class="widget">
-
-                                <p class="text-muted m-0"> <span class="location"> {{result.address.street}},
-                                        {{result.address.city}}, {{result.address.state}}, {{result.address.country}} -
-                                        {{result.address.zipcode}}</span></p>
+                                <p class="text-muted m-0">
+                                    <span class="location">
+                                        {{result.address.street}}, {{result.address.city}}, {{result.address.state}},
+                                        {{result.address.country}} - {{result.address.zipcode}}</span
+                                    >
+                                </p>
                             </div>
                         </td>
                     </tr>
@@ -76,15 +72,5 @@
             </table>
         </div>
     </div>
-
-
-    {% else %}
-    No events found
-    {% endif %}
-    {% endif %}
-    </div>
-
-
-
-    {% include "footer.html" %}
+    {% else %} No events found {% endif %} {% endif %} {% include "footer.html" %}
 </body>

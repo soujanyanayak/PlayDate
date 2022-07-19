@@ -15,4 +15,5 @@ urlpatterns = [
     path('/signUpSucceed/', views.signUpSucceed, name='signUpSucceed'),
     path('/createEvent/', views.createEvent, name='createEvent'),
     path('/my-events/', views.myEvent, name='myEvent'),
+    path('/createPublicEvent/', views.createPublicEvent, name='createPublicEvent'),
 ]
