@@ -74,7 +74,8 @@ def loginPage(request):
 
 def logoutPage(request):
     logout(request)
-    return render(request, 'home.html')
+    # return render(request, 'home.html')
+    return redirect('home')
 
 
 def registrationPage(request):
