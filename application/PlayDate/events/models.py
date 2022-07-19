@@ -8,27 +8,25 @@
 from distutils.command.upload import upload
 from django.db import models
 from django.contrib.auth.models import AbstractUser, User
-from groups.models import  Group, Groupadmin
+from groups.models import Group, Groupadmin
 from home.models import Address, Backendadmin
 # from django.contrib.gis.db import models as geomodels
 
 
-#for general users
+# for general users
 class Publicevent(models.Model):
     public_event_id = models.AutoField(primary_key=True)
     address = models.ForeignKey(Address, models.DO_NOTHING)
     name = models.CharField(max_length=500)
 
-    banner = models.ImageField(upload_to="publicevents_banner", default=None, blank=True)
+    banner = models.ImageField(
+        upload_to="publicevents_banner", default=None, blank=True)
     # geometry= geomodels.PointField()
 
     category = models.CharField(max_length=10, blank=True, null=True)
-    description = models.CharField(max_length=1000, blank=True, null=True)
-    datetime = models.DateTimeField()
 
     class Meta:
         db_table = 'PublicEvent'
-
 
 
 class Location(models.Model):
@@ -41,13 +39,16 @@ class Location(models.Model):
     class Meta:
         db_table = 'Location'
 
+
 class Event(models.Model):
     event_id = models.IntegerField(primary_key=True)
     address = models.ForeignKey(Address, models.DO_NOTHING)
     user = models.ForeignKey(User, models.DO_NOTHING)
-    backend_admin = models.ForeignKey(Backendadmin, models.DO_NOTHING, blank=True, null=True)
+    backend_admin = models.ForeignKey(
+        Backendadmin, models.DO_NOTHING, blank=True, null=True)
     group = models.ForeignKey(Group, models.DO_NOTHING, blank=True, null=True)
-    group_admin = models.ForeignKey(Groupadmin, models.DO_NOTHING, blank=True, null=True)
+    group_admin = models.ForeignKey(
+        Groupadmin, models.DO_NOTHING, blank=True, null=True)
     desc = models.CharField(max_length=1000, blank=True, null=True)
     name = models.CharField(max_length=200, blank=True, null=True)
     datetime = models.DateTimeField(blank=True, null=True)
@@ -55,6 +56,7 @@ class Event(models.Model):
     class Meta:
         # managed = False
         db_table = 'Event'
+
 
 class Comment(models.Model):
     comment_id = models.IntegerField(primary_key=True)
