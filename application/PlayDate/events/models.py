@@ -23,6 +23,8 @@ class Publicevent(models.Model):
     # geometry= geomodels.PointField()
 
     category = models.CharField(max_length=10, blank=True, null=True)
+    description = models.CharField(max_length=1000, blank=True, null=True)
+    datetime = models.DateTimeField()
 
     class Meta:
         db_table = 'PublicEvent'
