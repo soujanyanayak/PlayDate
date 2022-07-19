@@ -25,6 +25,7 @@ SECRET_KEY = 'django-insecure-!r*3sqia3va)uf@erx+wh)yadah)w@ty=41k@%klok@!6%j2v&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+
 ALLOWED_HOSTS = []
 
 
@@ -41,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'taggit',
 ]
 
 MIDDLEWARE = [
@@ -89,10 +91,9 @@ WSGI_APPLICATION = 'playdate.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'playdatedb',
-        'USER': 'root',
-        'PASSWORD':'sou@12345',
-        'HOST': '127.0.0.1',
+        'NAME': 'playdate',
+        'USER': 'tester00',
+        'PASSWORD': 'GreenOrange098#@!',
         'HOST': 'localhost',
         'PORT': '3306',
         'OPTIONS': {
@@ -135,12 +136,23 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
+# this represents where static files are in the urls; eg: 127.0.0.1/static/kermit.png
 STATIC_URL = '/static/'
+# this represents where static files are in our project, so its in PlayDate/static/
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
+
+# Base url to serve media files
+MEDIA_URL = '/media/'
+
+# Path where media is stored
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# The following makes tag searching case-insensitive
+TAGGIT_CASE_INSENSITIVE = True

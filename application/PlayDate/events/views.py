@@ -1,11 +1,13 @@
 # from cgitb import lookup
+from multiprocessing import Event
 from unicodedata import category
 from unittest import result
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.db.models import Q
-from events.models import  Publicevent, Address
-from itertools import chain
+from events.forms import GroupEventForm, PublicEventForm
+from events.models import Publicevent, Address, Event
+from django.views.decorators.csrf import csrf_exempt
 
 import requests
 from bs4 import BeautifulSoup
@@ -13,96 +15,155 @@ from bs4 import BeautifulSoup
 # Create your views here.
 
 
-# def searchevents(city):
-#     state=''
-
-#     URL = "https://www.eventbrite.com/d/"+state+"--"+city+"/dog-events/"
-    
-#     page = requests.get(URL)
-
-#     soup = BeautifulSoup(page.content, "html.parser")
-
-#     results=soup.find_all("div", {"class": "eds-event-card-content__content"})
-#     events=[]
-#     #print(page.text)
-#     #print("\n\n\n\n\n")
-#     for item in results:
-#         #print(item.prettify())
-#         links = item.find_all('a')
-#         blog_titles = item.findAll('h3', attrs={"class":"eds-event-card-content__title eds-text-color--ui-800 eds-text-bl eds-text-weight--heavy"})
-#         venue = item.findAll("div", {"data-subcontent-key":"location"})
-#         #print(links)
-#         url=''
-#         location=''
-#         for link in links:
-#             if "href" in link.attrs:
-#                 url=link.attrs['href']
-#         for loc in venue:
-#             location=loc.text
-#         for title in blog_titles:
-#             if str(title.text).find('Dog') != -1:
-#                 event={}
-#                 event['title']= str(title.text)
-#                 event['url']=str(url)
-#                 event['location']=str(location)
-#                 event['source']="Eventbrite"
-#                 events.append(event)
-#     return events
+def publicevents(request):
+    # publicevent = Publicevent.objects.all()
+    # return render(request,"publicevents.html",{'publicevent':publicevent})
+    return render(request, "publicevents.html")
 
 
-def createEvent(request):
-    return render(request, "events/createEvent.html")
+def membersevents(request):
+    return render(request, "membersevents.html")
+
+
+def publicEvent1(request):
+    return render(request, "publicEvent1.html")
+
+
+def memberEvent1(request):
+    return render(request, "memberEvent1.html")
+
+
+def signUpSucceed(request):
+    return render(request, "signUpSucceed.html")
+
+
+def myEvent(request):
+    return render(request, "myEvent.html")
+
+
+def createPublicEvent(request):
+    form = PublicEventForm()
+    if request.method == 'POST':
+        form = PublicEventForm(request.POST, request.FILES)
+        if form.is_valid():
+            instancePE = form.save(commit=False)
+            instancePE.banner = None
+            instancePE.banner = request.FILES['banner']
+            instancePE.save()
+
+            PublicEvent = Publicevent.objects.get(
+                public_event_id=instancePE.public_event_id)
+            return render(request, 'events/createPublicEventSuccess.html', {'PublicEvent': PublicEvent})
+
+    return render(request, 'events/createPublicEventForm.html', {'publicEventForm': form})
+
+
+@csrf_exempt
+def createGroupEvent(request):
+    if request.method == 'POST':
+        form = GroupEventForm(request.POST)
+        if form.is_valid():
+            a = Address.objects.create(street=request.POST.get('street'),
+                                       city=request.POST.get('city'),
+                                       state=request.POST.get('state'),
+                                       country=request.POST.get('country'),
+                                       zipcode=request.POST.get('zipcode'))
+            ge = Event.objects.create(name=request.POST.get(
+                'name'), category=request.POST.get('category'), address=a)
+
+            return HttpResponseRedirect('/thanks/')
+    else:
+        form = GroupEventForm()
+
+    return render(request, "createEvent.html", {'form': form})
 
 
 def filter(request):
     if request.method == 'POST':
-        select= request.GET.get('select')
-        
+        select = request.GET.get('select')
 
 
+def createEvent(request):
+    return render(request, 'createEvent.html')
 
+
+# Returns Search result for events
 def events(request):
     if request.method == 'GET':
-        query= request.GET.get('q')
-        filter= request.GET.get('category')
-        
-        submitbutton= request.GET.get('submit')
+        query = request.GET.get('q')
+        filter = request.GET.get('category')
+
+        submitbutton = request.GET.get('submit')
         print(query)
-        
+
         if query is not None:
-            if filter=='All': 
-           #query databse to check if matching city, zipcode, or street
-           
-                lookups= Q(address__city__icontains=query) | Q(address__zipcode__icontains=query) | Q(address__country__icontains=query) | Q(address__street__icontains=query)
+            if filter == 'All':
+               # query databse to check if matching city, zipcode, or street
 
-                results= Publicevent.objects.filter(lookups)
-            
-            elif filter=='Kids': 
-            #query databse to check if matching city, zipcode, or street
-            
-                lookups= Q(address__city__icontains=query) | Q(address__zipcode__icontains=query) | Q(address__country__icontains=query) | Q(address__street__icontains=query)
+                lookups = Q(address__city__icontains=query) | Q(address__zipcode__icontains=query) | Q(
+                    address__country__icontains=query) | Q(address__street__icontains=query)
 
-                results= Publicevent.objects.filter(lookups).filter(Q(category__icontains = 'kids'))
+                results = Publicevent.objects.filter(lookups)
+
+            elif filter == 'Kids':
+                # query databse to check if matching city, zipcode, or street
+
+                lookups = Q(address__city__icontains=query) | Q(address__zipcode__icontains=query) | Q(
+                    address__country__icontains=query) | Q(address__street__icontains=query)
+
+                results = Publicevent.objects.filter(
+                    lookups).filter(Q(category__icontains='kids'))
                 print(filter)
             else:
-                lookups= Q(address__city__icontains=query) | Q(address__zipcode__icontains=query) | Q(address__country__icontains=query) | Q(address__street__icontains=query)
+                lookups = Q(address__city__icontains=query) | Q(address__zipcode__icontains=query) | Q(
+                    address__country__icontains=query) | Q(address__street__icontains=query)
 
-                results= Publicevent.objects.filter(lookups).filter(Q(category__icontains = 'pets'))
+                results = Publicevent.objects.filter(
+                    lookups).filter(Q(category__icontains='pets'))
                 print(filter)
-            
-            
-            context={'results': results,
-                     'submitbutton': submitbutton}
+
+            context = {'results': results,
+                       'submitbutton': submitbutton}
             return render(request, 'events/events.html', context)
-        
-        
-        
+
     else:
         return render(request, 'events/events.html')
     return render(request, 'events/events.html')
-    
+# def events(request):
+#     if request.method == 'GET':
+#         query= request.GET.get('q')
+#         filter= request.GET.get('category')
+
+#         submitbutton= request.GET.get('submit')
+#         print(query)
+
+#         if query is not None:
+#             if filter=='All':
+#            #query databse to check if matching city, zipcode, or street
+
+#                 lookups= Q(address__city__icontains=query) | Q(address__zipcode__icontains=query) | Q(address__country__icontains=query) | Q(address__street__icontains=query)
+
+#                 results= Publicevent.objects.filter(lookups)
+
+#             elif filter=='Kids':
+#             #query databse to check if matching city, zipcode, or street
+
+#                 lookups= Q(address__city__icontains=query) | Q(address__zipcode__icontains=query) | Q(address__country__icontains=query) | Q(address__street__icontains=query)
+
+#                 results= Publicevent.objects.filter(lookups).filter(Q(category__icontains = 'kids'))
+#                 print(filter)
+#             else:
+#                 lookups= Q(address__city__icontains=query) | Q(address__zipcode__icontains=query) | Q(address__country__icontains=query) | Q(address__street__icontains=query)
+
+#                 results= Publicevent.objects.filter(lookups).filter(Q(category__icontains = 'pets'))
 
 
+#             context={'results': results,
+#                      'submitbutton': submitbutton}
+
+#             return render(request, 'events/events.html', context)
 
 
-
+#     else:
+#         return render(request, 'events/events.html')
+#     return render(request, 'events/events.html')

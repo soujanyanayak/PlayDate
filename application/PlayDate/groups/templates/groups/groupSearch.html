@@ -1,0 +1,80 @@
+{% include "header.html" %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Group Search</title>
+    </head>
+    <body>
+        {% block content %} {% if user.is_authenticated %} {% load static %} {% include "registered_navbar.html" %}
+        {%else%} {% load static %} {% include "general_navbar.html" %} {% endif %} {% if user.is_authenticated %}
+
+        <div class="card searchBar" style="position: absolute; top: 20%; left: 40%">
+            <h1>Search!</h1>
+            <form method="GET">
+                {% csrf_token %}
+                <input type="text" name="search" placeholder="Search.." />
+                <button class="btn btn-primary me-4" type="submit">Search</button>
+                <a href="/groups/createGroup" class="btn btn-primary me-1" style="width: 10rem">Create a Group!</a>
+            </form>
+        
+        <div class="col card mx-2 my-2" style="width: 18rem;">
+            <img src="{% static 'media/groupstock-unsplash.jpg' %}" class="card-img-top  mt-2" width="300px"
+                height="300px" alt="...">
+            <div class="card-body">
+                <p class="card-text">Bikers and Dogs Group</p><br>
+                <a href="#" class="btn btn-primary">View details</a><br>
+            </div>
+        </div>
+    </div>
+        {% if groups %}
+        <div class="results" style="position: absolute; top: 30%; left: 40%">
+            {% for group in groups %}
+            <ul>
+                <li>
+                    <a href="{% url 'groupView' group_id=group.group_id %}">{{group.group_name}}</a>
+                </li>
+            </ul>
+
+            {% endfor %}
+        </div>
+        {% endif %} {% else %}
+        <div
+            class="notLoggedIn"
+            style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border: 5px dotted blue"
+        >
+            <h1>You need to be logged in to search!</h1>
+            <h4 style="text-align: center">
+                <a href="/register/">🐱Register here!</a>•Already registered?•<a href="/login/">Login Here!🐱</a>
+            </h4>
+        </div>
+
+        {% endif %}{% include "footer.html" %} {% endblock %}
+    </body>
+</html>
+<style>
+    body {
+        background-color: #7ecae6;
+    }
+    .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 0 solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+}
+.main-body {
+    margin-top: 100px;
+    padding: 15px;
+}
+
+.card-body {
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 1rem;
+}
+</style>
