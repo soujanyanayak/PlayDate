@@ -192,6 +192,9 @@ def resetPassword(request):
 
 def createdGroup(request):
         return render(request, 'createdGroup.html')
+        
+def createdEvent(request):
+    return render(request, 'createdEvent.html')
 
 def contactSupport(request):
     csForm = forms.supportForm()
