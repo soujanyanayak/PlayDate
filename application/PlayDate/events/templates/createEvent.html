@@ -1,7 +1,7 @@
 {% load static %}
 {% include "header.html" %}
 
-<body>
+<body style="background-color: #9de2ff;">
         {% if user.is_authenticated %}
         {% load static %}
         {% include "registered_navbar.html" %}
@@ -15,7 +15,7 @@
         <br />
         <br />
         <h4 class="logo navbar-brand text-center">
-                <b>Post An Event:</b>
+                <b>Post New Event:</b>
         </h4>
 
         <div class="card mx-auto my-3" style="width: 30rem;">
@@ -56,7 +56,6 @@
                         </form>
                 </div>
         </div>
->>>>>>> origin/development
 
         <footer class="gsfooter mt-auto bg-light py-1 d-none d-md-flex sticky-bottom">
                 <div class="container-fluid text-center text-md-left">
