@@ -19,6 +19,7 @@ def groups(request):
     # return render(request, "groups/viewAllGroups.html", {'groupList': groupList})
     return render(request, "groups/viewAllGroups.html")
 
+
 def Search(request):
     if 'search' in request.GET:
         query = request.GET['search'].split()
@@ -29,16 +30,25 @@ def Search(request):
     return render(request, "groups/groupSearch.html")
 
 
+# STATIC: PROTOTYPE USE ONLY
 def searchResults(request):
     return render(request, "groups/searchResults.html")
+
+# STATIC: PROTOTYPE USE ONLY
 
 
 def individualGroup(request):
     return render(request, "groups/individualGroup.html")
-    
+
+# STATIC: PROTOTYPE USE ONLY
+
+
 def myGroup(request):
     return render(request, "groups/myGroup.html")
 
+
+# This view is the main driver for groups; it is by far the biggest view
+# It has three parts: 1 for a group member, 1 for an non-member, and 1 for the non-user
 def groupView(request, group_id):
     joinGroupForm = forms.joinGroupForm()
     group = models.Group.objects.get(

@@ -1,3 +1,9 @@
+# ░█░█░█▀▄░█░░
+# ░█░█░█▀▄░█░░
+# ░▀▀▀░▀░▀░▀▀▀
+# This file dictates the main paths of our project
+# Each of these paths connect to a different app of our project.
+# It also connects the static and media files
 from django.contrib import admin
 from django.urls import include, path
 from django.conf import settings

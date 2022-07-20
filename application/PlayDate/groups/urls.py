@@ -1,3 +1,6 @@
+# ░█░█░█▀▄░█░░
+# ░█░█░█▀▄░█░░
+# ░▀▀▀░▀░▀░▀▀▀
 from django.urls import path
 
 from . import views
@@ -9,6 +12,8 @@ urlpatterns = [
     path('search/', views.Search, name='groupSearch'),
     path('search/results/', views.searchResults, name='groupSearchResults'),
     path('joinSuccess/', views.joinSuccess, name='joinSuccess'),
+    # static: for prototype use
     path('individualGroup/', views.individualGroup, name='individualGroup'),
+    # static: for prototype use
     path('myGroup/', views.myGroup, name='myGroup'),
 ]

@@ -1,8 +1,16 @@
+# ░█▄█░█▀█░█▀▄░█▀▀░█░░░█▀▀
+# ░█░█░█░█░█░█░█▀▀░█░░░▀▀█
+# ░▀░▀░▀▀▀░▀▀░░▀▀▀░▀▀▀░▀▀▀
+
+
 from django.db import models
 from django.contrib.auth.models import User
 from taggit.managers import TaggableManager
 # from events.models import Event
 # Create your models here.
+
+# This ties to the Groups table
+# The tags is used by Django-Taggit and creates two additional fields
 
 
 class Group(models.Model):
@@ -18,6 +26,8 @@ class Group(models.Model):
 
     # Django-Taggit
     tags = TaggableManager()
+
+# Refactor this to Groupuser
 
 
 class Member(models.Model):
@@ -39,9 +49,13 @@ class Member(models.Model):
 #    create_date = models.DateTimeField()
 #    group_size = models.IntegerField()
 #
+
+
     class Meta:
-#        # managed = False
-       db_table = 'Group'
+        #        # managed = False
+        db_table = 'Group'
+
+# This is equivalent to Member
 
 
 class Groupuser(models.Model):
@@ -52,6 +66,8 @@ class Groupuser(models.Model):
         # managed = False
         db_table = 'GroupUser'
         unique_together = (('group_user_id', 'user'),)
+
+# Not Implemented yet
 
 
 class Groupadmin(models.Model):
