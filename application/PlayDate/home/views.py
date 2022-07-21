@@ -1,3 +1,10 @@
+# home/views.py
+#
+#   This file stores the views for all the URLs in the home application. The views
+# are how the content of each URL is generated - sometimes just rendering an html
+# template, sometimes requiring information validation or database access (through
+# forms and models.)
+
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.core.mail import send_mail
@@ -6,13 +13,11 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
 from . import models
 from . import forms
-# Create your views here.
 
-# This is used to manage and track sessions.
+# Session Creation
+#  This is used to manage and track sessions.
 # Session information is serialized via JSON_Serializer and stored in django_session
 # needs fine-tuning in order to better track sessions for unlogged and logged users.
-
-
 def sessionCreation(request):
     if not request.session.session_key:
         request.session.create()
@@ -22,7 +27,8 @@ def sessionCreation(request):
         print("session created for IP: ",
               request.session['visitorIP'], " with tracking_key:", request.session.session_key)
 
-
+# /[serv]/
+#  Do we need the commented code?
 def home(request):
     sessionCreation(request)
     print(request.session.session_key)
@@ -55,7 +61,8 @@ def home(request):
 
     return render(request, 'home.html')
 
-
+# /[serv]/login
+# TODO: Render invalid password 
 def loginPage(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -66,18 +73,16 @@ def loginPage(request):
         if user is not None:
             login(request, user)
             return redirect('home')
-            # return render(request, 'login.html')
 
     context = {}
     return render(request, 'login.html')
 
-
+# /[serv]/logout/
 def logoutPage(request):
     logout(request)
-    # return render(request, 'home.html')
     return redirect('home')
 
-
+# /[serv]/register/
 def registrationPage(request):
     sessionCreation(request)
     # print(request.session.session_key)
@@ -85,10 +90,12 @@ def registrationPage(request):
     user_form = forms.userRegistrationForm()
     accountForm = forms.accountForm()
     if request.method == 'POST':
+        # Prepare the session and the forms.
         sessionCreation(request)
         user_form = forms.userRegistrationForm(request.POST)
         accountForm = forms.accountForm(request.POST)
         profileForm = forms.profileForm(request.POST)
+        # Check for Validation errors and send them back to the page
         if not user_form.is_valid():
             print (user_form.errors)
             return render(request, 'register.html', {'user_form': user_form, 'accountForm': accountForm, 'feedback': "Error", 'error': user_form.errors})
@@ -99,6 +106,7 @@ def registrationPage(request):
             print (profileForm.errors)
             return render(request, 'register.html', {'user_form': user_form, 'accountForm': accountForm, 'feedback': "Error", 'error': profileForm.errors})
         else:
+            # Save the user, the account, and log in the new user
             user = user_form.save()
             account = accountForm.save(commit=False)
             account.accountID = user
@@ -115,6 +123,7 @@ def registrationPage(request):
                 profile.profileID = request.user
                 profile.save()
 
+                # this next section seems superfluous...
                 userData = request.user
                 userInfo = User.objects.get(username=username)
                 accountInfo = models.Account.objects.get(accountID=userInfo.id)
@@ -130,10 +139,12 @@ def registrationPage(request):
 
                 return render(request, "home.html", {'userID': userID, 'fname': fname, 'lname': lname, 'email': email, 'gender': gender, 'dob': dob, 'message': "You've successfully created an account. Welcome to PlayDate!"})
             else:
+                # There was an error authenticating the newly registered user.
                 return render(request, "invalidLogin.html")
+    # If just a GET request, then send them the html.
     return render(request, 'register.html', {'user_form': user_form, 'accountForm': accountForm})
 
-
+# /[serv]/profileEdit/
 def profileEditPage(request):
     profile = models.Profile.objects.get(profileID=request.user)
     print(profile.avatar)
@@ -156,51 +167,159 @@ def profileEditPage(request):
         profileForm = forms.profileForm()
     return render(request, 'profileEdit.html', {'profileForm': profileForm, 'profile': profile})
 
-
+# /[serv]/profile
+# TODO: Link with back end
 def profilePage(request):
     # profile = models.Profile.objects.get(profileID=request.user)
     # # print(profile)
     # return render(request, 'profilePage.html', {'profile': profile})
     return render(request, 'profilePage.html')
 
-
+# /[serv]/profile/[int]
+# TODO: Will need dependents too.
 def profileView(request, profile_id):
     profile = models.Profile.objects.get(profileID=profile_id)
     account = models.Account.objects.get(accountID=profile_id)
     return render(request, 'profileView.html', {'profile': profile, 'account': account})
 
-
+# NOT RETRIEVABLE
 def individuleInfoPage(request):
     return render(request, 'individuleInfo.html')
 
-
+# /[serv]/helpPage/
+# TODO: Needs to be connected with backend
+# See: ContactSupport
 def helpPage(request):
-    return render(request, 'helpPage.html')
+    if request.method == "GET":
+        if request.user.is_authenticated:
+            name = request.user.first_name + ' ' + request.user.last_name
+            name = name + ' (' + request.user.username + ')'
+            email = request.user.email
+            print ("Support GOT")
+            print ("Name: "+name)
+            print ("Email: "+email)
+            return render(request, 'helpPage.html', { 'name': name, 'email': email })
+        return render(request, 'helpPage.html')
+    else:
+        print ('*******************************')
+        print ('Support Contact form Submitted by ' + request.user.get_username())
+        if request.method == 'POST':
+            data = {
+                'name': request.POST['name'],
+                'contact': request.POST['email'],
+                'type': request.POST['category'],
+                'subject': request.POST['subject'],
+                'details': request.POST['message']}
+            csForm = forms.supportForm(data)
+            # validate the form:
+            #  Not actually necessary, but is proper.
+            if csForm.is_valid():
+                print('Form is valid.')
+                ticket = csForm.save(commit=False)
 
+                # Grab Registered user data
+                if request.user.is_authenticated:
+                    ticket.accountID = request.user
+                    print ('User is authenticated: ' + request.user.username)
 
+                # Grab General User Data
+                ipAddr = request.META['REMOTE_ADDR']
+                print ('IP Address: ' + str(ipAddr))
+                try: # Grabbing specific users may fail
+                    print('Trying to fill General User...')
+                    userQuery = models.generalUser.objects.get(ip=ipAddr)
+                    print ('Query Success...')
+                    userInfo = userQuery.first()
+                    print ('Using general user: ' + userInfo)
+                except: # If we cannot find the general user, make one.
+                    print ('Exception Caught - Query Error')
+                    userInfo = models.generalUser(ip=ipAddr)
+                    userInfo.save()
+                    print ('Using new General User: ' + userInfo.ip)
+                else:
+                    print ("General User found")
+                finally:
+                    ticket.general = userInfo
+                    # Grab Support Staff Data
+                    try: # No Support Staff will throw an exception
+                        print('Trying to fill support staff...')
+                        staffQuery = models.Supportstaff.objects.all()
+                        print('Query Success...')
+                        staffInfo = staffQuery.first()
+                        print ('Using Staff: ' + staffInfo.staff_email +'\n')
+                        status = 'Success'
+                        ticket.staff = staffInfo
+                    except:
+                        print ("No staff to send support request to")
+                        status = 'No Staff'
+                    finally:
+                        ticket.save()
+                        print(ticket)
+                        # If we did find staff, attempt the email
+                        if status == 'Success':
+                            email_subject = 'PlayDate Support #' + str(ticket.request_id) + ': ' + ticket.name
+                            email_content = email_subject + '\n'
+                            email_content += 'User: '
+                            if request.user.is_authenticated:
+                                email_content += request.user.get_username()
+                            else:
+                                email_content += ipAddr
+                            email_content += '\nEmail: ' + ticket.accountID.email + '\n'
+                            email_content += 'Category: ' + ticket.get_type_display() + '\n'
+                            email_content += 'Details: \n\t' + ticket.details + '\n\n'
+                            email_from = 'support@playdate.com'
+                            email_to = staffInfo.staff_email
+                            print('Email Description: ')
+                            print("Subject: " + email_subject)
+                            print("Content: " + email_content)
+                            print("From: " + email_from)
+                            print("To: " + email_to)
+                            # Note: this function will not work until SMTP server set up.
+                            # For now, fail silently.
+                            send_mail(
+                                email_subject,
+                                email_content, 
+                                email_from,
+                                [email_to],
+                                fail_silently=True
+                            )
+                        # Return the user to the contact support page with a status to be displayed.
+                        return render(request, 'helpPage.html', { 'name': csForm, 'status': status})
+        return render(request, 'helpPage.html')
+
+# /[serv]/termsofuse/
 def termsofuse(request):
     return render(request, 'termsofuse.html')
 
-
+# /[serv]/privacy/
 def privacy(request):
     return render(request, 'privacy.html')
 
-
+# /[serv]/comeSoon/
 def comesoonPage(request):
     return render(request, 'comeSoon.html')
 
+# /[serv]/myGroupsPage
+#  TODO: This should be moved to groups application.
 def myGroupsPage(request):
     return render(request, 'myGroupsPage.html')
 
+# /[serv]/resetPassword/
 def resetPassword(request):
         return render(request, 'resetPassword.html')
 
+# /[serv]/createdGroup/
+# TODO: Should be moved to Groups
 def createdGroup(request):
         return render(request, 'createdGroup.html')
         
+# /[serv]/createdEvent
+# TODO: Should be moved to Events
 def createdEvent(request):
     return render(request, 'createdEvent.html')
 
+# NOT RETRIEVABLE
+# TODO: Move into help page
 def contactSupport(request):
     csForm = forms.supportForm()
     print ('*******************************')
@@ -208,6 +327,8 @@ def contactSupport(request):
     if request.method == 'POST':
         print (request.POST)
         csForm = forms.supportForm(request.POST)
+        # validate the form:
+        #  Not actually necessary, but is proper.
         if csForm.is_valid():
             print('Form is valid.')
             ticket = csForm.save(commit=False)
@@ -220,13 +341,13 @@ def contactSupport(request):
             # Grab General User Data
             ipAddr = request.META['REMOTE_ADDR']
             print ('IP Address: ' + str(ipAddr))
-            try:
+            try: # Grabbing specific users may fail
                 print('Trying to fill General User...')
                 userQuery = models.generalUser.objects.get(ip=ipAddr)
                 print ('Query Success...')
                 userInfo = userQuery.first()
                 print ('Using general user: ' + userInfo)
-            except:
+            except: # If we cannot find the general user, make one.
                 print ('Exception Caught - Query Error')
                 userInfo = models.generalUser(ip=ipAddr)
                 userInfo.save()
@@ -236,7 +357,7 @@ def contactSupport(request):
             finally:
                 ticket.general = userInfo
                 # Grab Support Staff Data
-                try: 
+                try: # No Support Staff will throw an exception
                     print('Trying to fill support staff...')
                     staffQuery = models.Supportstaff.objects.all()
                     print('Query Success...')
@@ -250,6 +371,7 @@ def contactSupport(request):
                 finally:
                     ticket.save()
                     print(ticket)
+                    # If we did find staff, attempt the email
                     if status == 'Success':
                         email_subject = 'PlayDate Support #' + str(ticket.request_id) + ': ' + ticket.name
                         email_content = email_subject + '\n';
@@ -268,6 +390,8 @@ def contactSupport(request):
                         print("Content: " + email_content)
                         print("From: " + email_from)
                         print("To: " + email_to)
+                        # Note: this function will not work until SMTP server set up.
+                        # For now, fail silently.
                         send_mail(
                             email_subject,
                             email_content, 
@@ -275,5 +399,6 @@ def contactSupport(request):
                             [email_to],
                             fail_silently=True
                         )
+                    # Return the user to the contact support page with a status to be displayed.
                     return render(request, 'contactSupport.html', { 'csForm': csForm, 'status': status})
     return render(request, 'contactSupport.html', {'csForm': csForm})

@@ -1,3 +1,11 @@
+# home/urls.py
+#
+#   This file contains the url mapping for pages within the home application.
+#   Inside of urlpatterns, the first variable is the url - stick whatever is
+# written here onto 'http://[server_address]/home/[url_pattern]' and going to
+# that url will take you to the view defined be the second variable. 
+# See home/views.py for more information on each of these pages.
+
 from django.urls import path
 from django.contrib.auth import views as auth_views
 
