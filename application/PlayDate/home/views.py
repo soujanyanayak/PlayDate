@@ -89,7 +89,16 @@ def registrationPage(request):
         user_form = forms.userRegistrationForm(request.POST)
         accountForm = forms.accountForm(request.POST)
         profileForm = forms.profileForm(request.POST)
-        if user_form.is_valid() and accountForm.is_valid() and profileForm.is_valid():
+        if not user_form.is_valid():
+            print (user_form.errors)
+            return render(request, 'register.html', {'user_form': user_form, 'accountForm': accountForm, 'feedback': "Error", 'error': user_form.errors})
+        elif not accountForm.is_valid():
+            print (accountForm.errors)
+            return render(request, 'register.html', {'user_form': user_form, 'accountForm': accountForm, 'feedback': "Error", 'error': accountForm.errors})
+        elif not profileForm.is_valid():
+            print (profileForm.errors)
+            return render(request, 'register.html', {'user_form': user_form, 'accountForm': accountForm, 'feedback': "Error", 'error': profileForm.errors})
+        else:
             user = user_form.save()
             account = accountForm.save(commit=False)
             account.accountID = user
@@ -119,13 +128,9 @@ def registrationPage(request):
                 gender = accountInfo.gender
                 dob = accountInfo.dob
 
-                return render(request, "home.html", {'userID': userID, 'fname': fname, 'lname': lname, 'email': email, 'gender': gender, 'dob': dob})
+                return render(request, "home.html", {'userID': userID, 'fname': fname, 'lname': lname, 'email': email, 'gender': gender, 'dob': dob, 'message': "You've successfully created an account. Welcome to PlayDate!"})
             else:
                 return render(request, "invalidLogin.html")
-        else:
-            print (user_form.errors)
-            return render(request, 'register.html', {'user_form': user_form, 'accountForm': accountForm, 'error': user_form.errors})
-
     return render(request, 'register.html', {'user_form': user_form, 'accountForm': accountForm})
 
 

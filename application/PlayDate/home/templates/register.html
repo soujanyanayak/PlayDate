@@ -26,6 +26,7 @@
                 <label for="username">
                     <b>{{user_form.username.label}}</b><br>
                     {{user_form.username}}<br>
+                    {{ error.username }}
                 </label><br>
                 <label for="name">
                     <b>{{user_form.first_name.label}}</b><br>
@@ -36,10 +37,12 @@
                 <label for="email">
                     <b>{{user_form.email.label}}</b><br>
                     {{user_form.email}}<br>
+                    {{ error.email }}
                 </label><br>
                 <label for="password1">
                     <b>{{user_form.password1.label}}</b><br>
                     {{user_form.password1}}<br>
+                    {{ error.password }}
                 </label><br>
                 <label for="password2">
                     <b>Re-enter Password</b><br>
