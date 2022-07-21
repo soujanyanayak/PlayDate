@@ -62,6 +62,7 @@ def home(request):
     return render(request, 'home.html')
 
 # /[serv]/login
+# TODO: Render invalid password 
 def loginPage(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -189,7 +190,102 @@ def individuleInfoPage(request):
 # TODO: Needs to be connected with backend
 # See: ContactSupport
 def helpPage(request):
-    return render(request, 'helpPage.html')
+    if request.method == "GET":
+        if request.user.is_authenticated:
+            name = request.user.first_name + ' ' + request.user.last_name
+            name = name + ' (' + request.user.username + ')'
+            email = request.user.email
+            print ("Support GOT")
+            print ("Name: "+name)
+            print ("Email: "+email)
+            return render(request, 'helpPage.html', { 'name': name, 'email': email })
+        return render(request, 'helpPage.html')
+    else:
+        print ('*******************************')
+        print ('Support Contact form Submitted by ' + request.user.get_username())
+        if request.method == 'POST':
+            data = {
+                'name': request.POST['name'],
+                'contact': request.POST['email'],
+                'type': request.POST['category'],
+                'subject': request.POST['subject'],
+                'details': request.POST['message']}
+            csForm = forms.supportForm(data)
+            # validate the form:
+            #  Not actually necessary, but is proper.
+            if csForm.is_valid():
+                print('Form is valid.')
+                ticket = csForm.save(commit=False)
+
+                # Grab Registered user data
+                if request.user.is_authenticated:
+                    ticket.accountID = request.user
+                    print ('User is authenticated: ' + request.user.username)
+
+                # Grab General User Data
+                ipAddr = request.META['REMOTE_ADDR']
+                print ('IP Address: ' + str(ipAddr))
+                try: # Grabbing specific users may fail
+                    print('Trying to fill General User...')
+                    userQuery = models.generalUser.objects.get(ip=ipAddr)
+                    print ('Query Success...')
+                    userInfo = userQuery.first()
+                    print ('Using general user: ' + userInfo)
+                except: # If we cannot find the general user, make one.
+                    print ('Exception Caught - Query Error')
+                    userInfo = models.generalUser(ip=ipAddr)
+                    userInfo.save()
+                    print ('Using new General User: ' + userInfo.ip)
+                else:
+                    print ("General User found")
+                finally:
+                    ticket.general = userInfo
+                    # Grab Support Staff Data
+                    try: # No Support Staff will throw an exception
+                        print('Trying to fill support staff...')
+                        staffQuery = models.Supportstaff.objects.all()
+                        print('Query Success...')
+                        staffInfo = staffQuery.first()
+                        print ('Using Staff: ' + staffInfo.staff_email +'\n')
+                        status = 'Success'
+                        ticket.staff = staffInfo
+                    except:
+                        print ("No staff to send support request to")
+                        status = 'No Staff'
+                    finally:
+                        ticket.save()
+                        print(ticket)
+                        # If we did find staff, attempt the email
+                        if status == 'Success':
+                            email_subject = 'PlayDate Support #' + str(ticket.request_id) + ': ' + ticket.name
+                            email_content = email_subject + '\n'
+                            email_content += 'User: '
+                            if request.user.is_authenticated:
+                                email_content += request.user.get_username()
+                            else:
+                                email_content += ipAddr
+                            email_content += '\nEmail: ' + ticket.accountID.email + '\n'
+                            email_content += 'Category: ' + ticket.get_type_display() + '\n'
+                            email_content += 'Details: \n\t' + ticket.details + '\n\n'
+                            email_from = 'support@playdate.com'
+                            email_to = staffInfo.staff_email
+                            print('Email Description: ')
+                            print("Subject: " + email_subject)
+                            print("Content: " + email_content)
+                            print("From: " + email_from)
+                            print("To: " + email_to)
+                            # Note: this function will not work until SMTP server set up.
+                            # For now, fail silently.
+                            send_mail(
+                                email_subject,
+                                email_content, 
+                                email_from,
+                                [email_to],
+                                fail_silently=True
+                            )
+                        # Return the user to the contact support page with a status to be displayed.
+                        return render(request, 'helpPage.html', { 'name': csForm, 'status': status})
+        return render(request, 'helpPage.html')
 
 # /[serv]/termsofuse/
 def termsofuse(request):

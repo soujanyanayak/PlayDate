@@ -111,6 +111,7 @@ class Requestsupport(models.Model):
     staff = models.ForeignKey('Supportstaff', models.DO_NOTHING, blank=True, null=True)
     contact = models.CharField(max_length=52)
     name = models.CharField(max_length=100)
+    subject = models.CharField(max_length=100)
     type = models.CharField(max_length=3, choices=SUPPORT_TYPE_CHOICES, default=SUPPORT_TYPE_ONBOARD)
     details = models.TextField(max_length=500)
 
