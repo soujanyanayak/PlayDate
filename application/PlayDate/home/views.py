@@ -73,6 +73,18 @@ def loginPage(request):
         if user is not None:
             login(request, user)
             return redirect('home')
+        else:
+            retVals = {
+                'username': username, 
+                'password': password, 
+                'error': True,
+                'modalTitle': 'Invalid Login',
+                'modalText': 'The username and password combination that you entered was invalid. Please try again. If this continues, please contact support by clicking the "Contact Us" link at the bottom of the page.',
+                'modalBtnText': "Close",
+                'modalImmediate': True
+            }
+            return render(request, 'login.html', retVals)
+
 
     context = {}
     return render(request, 'login.html')
@@ -284,7 +296,17 @@ def helpPage(request):
                                 fail_silently=True
                             )
                         # Return the user to the contact support page with a status to be displayed.
-                        return render(request, 'helpPage.html', { 'name': csForm, 'status': status})
+                        retVals = {
+                            'name': data["name"],
+                            'email': data["contact"],
+                            'category': data["type"],
+                            'subject': data["subject"],
+                            'message': data["details"],
+                            'modalTitle': "Success!",
+                            'modalText': "Your support request has been successfully raised.",
+                            'modalBtnText': "Close",
+                            'modalImmediate': True}
+                        return render(request, 'helpPage.html', retVals)
         return render(request, 'helpPage.html')
 
 # /[serv]/termsofuse/
