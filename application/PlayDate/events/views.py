@@ -83,28 +83,36 @@ def filter(request):
     if request.method == 'POST':
         select = request.GET.get('select')
 
+
+# Definition to create new user event
 def createEvent(request):
     context={}
+    user=request.user
     if request.method == 'POST':
         eventform= eventForm(request.POST)
         addressform=addressForm(request.POST)
-        # eventform.category='pets'
-        # eventform.user=request.user
         
         if addressform.is_valid() and eventform.is_valid():
             address= addressform.save()
             print("**********")  
             event=eventform.save(commit=False)
+            event.user=user
             event.address=address
             event.save()
+            print(event.event_id)
     
-            return HttpResponseRedirect('/thanks/')
+            return HttpResponseRedirect('/events/%s/'%event.event_id)
     else:
         eventform=eventForm()
         addressform=addressForm()
     # context['form']=form
     return render(request, 'createEvent.html',{'eventform': eventform,'addressform':addressform})
 
+# Definition to view Event page
+def viewEvent(request, event_id):
+    event=Event.objects.get(event_id=event_id)
+    print(event.name)
+    return render(request, 'createdEvent.html', {'event' : event})
 
 # Returns Search result for events
 def events(request):

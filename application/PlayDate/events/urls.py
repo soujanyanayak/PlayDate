@@ -13,7 +13,8 @@ urlpatterns = [
     path('publicEvent1/', views.publicEvent1, name='publicEvent1'),
     path('memberEvent1/', views.memberEvent1, name='memberEvent1'),
     path('signUpSucceed/', views.signUpSucceed, name='signUpSucceed'),
-    path('createEvent/', views.createEvent, name='createEvent'),
-    path('my-events/', views.myEvent, name='myEvent'),
+    path('/createEvent/', views.createEvent, name='createEvent'), #create new user event
+    path('/my-events/', views.myEvent, name='myEvent'),
     path('createPublicEvent/', views.createPublicEvent, name='createPublicEvent'),
+    path('/<int:event_id>/', views.viewEvent, name ='viewEvent'), #view event page
 ]

@@ -28,7 +28,7 @@ class PublicEventForm(ModelForm):
 class eventForm(ModelForm):
     class Meta:
         model = Event
-        fields=['name', 'banner', 'category', 'desc','datetime','user']
+        fields=['name', 'banner', 'category', 'desc','datetime']
         labels={'name':('Event Name'),'banner':('Image'),'category':('category'),'desc':('desc'),'datetime':('datetime')}
         exclude = ()
         widgets = {
