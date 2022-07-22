@@ -5,12 +5,13 @@ from unittest import result
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.db.models import Q
+from home.forms import addressForm
+from events.forms import eventForm
 from events.forms import GroupEventForm, PublicEventForm
 from events.models import Publicevent, Address, Event
 from django.views.decorators.csrf import csrf_exempt
 
 import requests
-from bs4 import BeautifulSoup
 
 # Create your views here.
 
@@ -82,9 +83,27 @@ def filter(request):
     if request.method == 'POST':
         select = request.GET.get('select')
 
-
 def createEvent(request):
-    return render(request, 'createEvent.html')
+    context={}
+    if request.method == 'POST':
+        eventform= eventForm(request.POST)
+        addressform=addressForm(request.POST)
+        # eventform.category='pets'
+        # eventform.user=request.user
+        
+        if addressform.is_valid() and eventform.is_valid():
+            address= addressform.save()
+            print("**********")  
+            event=eventform.save(commit=False)
+            event.address=address
+            event.save()
+    
+            return HttpResponseRedirect('/thanks/')
+    else:
+        eventform=eventForm()
+        addressform=addressForm()
+    # context['form']=form
+    return render(request, 'createEvent.html',{'eventform': eventform,'addressform':addressform})
 
 
 # Returns Search result for events

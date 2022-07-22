@@ -46,3 +46,14 @@ class supportForm(ModelForm):
             'details':  ('Please provide detail of the issue')
         }
 
+class addressForm(ModelForm):
+    class Meta:
+        model = models.Address
+        fields = ['street', 'state', 'country','zipcode','city']
+        labels={
+            'street':('Street/Building'),
+            'state':('State'),
+            'country':('Country'),
+            'zipcode':('Zipcode'),
+            'city':('City')
+        }

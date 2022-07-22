@@ -41,7 +41,7 @@ class Location(models.Model):
 
 
 class Event(models.Model):
-    event_id = models.IntegerField(primary_key=True)
+    event_id = models.AutoField(primary_key=True)
     address = models.ForeignKey(Address, models.DO_NOTHING)
     user = models.ForeignKey(User, models.DO_NOTHING)
     backend_admin = models.ForeignKey(
@@ -49,9 +49,11 @@ class Event(models.Model):
     group = models.ForeignKey(Group, models.DO_NOTHING, blank=True, null=True)
     group_admin = models.ForeignKey(
         Groupadmin, models.DO_NOTHING, blank=True, null=True)
-    desc = models.CharField(max_length=1000, blank=True, null=True)
+    desc = models.TextField(blank=True, null=True)
     name = models.CharField(max_length=200, blank=True, null=True)
     datetime = models.DateTimeField(blank=True, null=True)
+    banner = models.ImageField(upload_to="publicevents_banner", default=None, blank=True)
+    category = models.CharField(max_length=10, blank=True, null=True)
 
     class Meta:
         # managed = False
