@@ -1,16 +1,17 @@
+# •••••••••••••••••••••••••••
 # ░█▄█░█▀█░█▀▄░█▀▀░█░░░█▀▀
 # ░█░█░█░█░█░█░█▀▀░█░░░▀▀█
 # ░▀░▀░▀▀▀░▀▀░░▀▀▀░▀▀▀░▀▀▀
 
-
+# Contributor(s): AndrewC,
+# Version: 1.2.0
+# Homepage: http://bedev.playdate.surge.sh/docs/groups/models
+# Description: These models reflect group tables and their related entities
+# •••••••••••••••••••••••••••
 from django.db import models
 from django.contrib.auth.models import User
 from taggit.managers import TaggableManager
 # from events.models import Event
-# Create your models here.
-
-# This ties to the Groups table
-# The tags is used by Django-Taggit and creates two additional fields
 
 
 class Group(models.Model):
@@ -19,18 +20,19 @@ class Group(models.Model):
     group_admin = models.ForeignKey(
         User, default=None, on_delete=models.CASCADE)
     create_date = models.DateTimeField(auto_now=True)
-    # Group_tags, as of now it is going to be space-delminited column of tags used for searching.
-    #group_tags = models.TextField(max_length=512, default=None, blank=True)
     group_desc = models.TextField(
         max_length=256, null=True, blank=True, default=None)
 
-    # Django-Taggit
-    tags = TaggableManager()
+    banner = models.ImageField(
+        upload_to="group_banner", default=None, blank=True)
 
-# Refactor this to Groupuser
+    # Django-Taggit: This ties to the Groups and Taggit Tables
+    # tags are delimited by commas
+    tags = TaggableManager()
 
 
 class Member(models.Model):
+    # Refactor this to Groupuser
     member_id = models.ForeignKey(User, default=None, on_delete=models.CASCADE)
     group_id = models.ForeignKey(
         Group, to_field='group_id', default=None, on_delete=models.CASCADE)
@@ -41,38 +43,9 @@ class Member(models.Model):
     #isAdmin = models.BooleanField(default=False)
 
 
-# class Group(models.Model):
-#    group_id = models.IntegerField(primary_key=True)
-#    group_admin = models.ForeignKey(Groupadmin, models.DO_NOTHING)
-#    group_name = models.CharField(max_length=45)
-#    group_desc = models.CharField(max_length=200)
-#    create_date = models.DateTimeField()
-#    group_size = models.IntegerField()
-#
-
-
-    class Meta:
-        #        # managed = False
-        db_table = 'Group'
-
-# This is equivalent to Member
-
-
-class Groupuser(models.Model):
-    group_user_id = models.IntegerField(primary_key=True)
-    user = models.ForeignKey(User, models.DO_NOTHING)
-
-    class Meta:
-        # managed = False
-        db_table = 'GroupUser'
-        unique_together = (('group_user_id', 'user'),)
-
-# Not Implemented yet
-
-
 class Groupadmin(models.Model):
     group_admin_id = models.IntegerField(primary_key=True)
-    group_user = models.ForeignKey(Groupuser, models.DO_NOTHING)
+    group_user = models.ForeignKey(Member, models.DO_NOTHING)
 
     class Meta:
         # managed = False
@@ -80,6 +53,16 @@ class Groupadmin(models.Model):
         unique_together = (('group_admin_id', 'group_user'),)
 
 
+# The code for Event is already written in events>models.py
+# class groupEvent(events.models.Event):
+
+# •••••••••••••••••••••••••••••••••••••••••••••••••••
+# ░█▀█░█▀▄░█▀▀░█░█░▀█▀░█░█░█▀▀░█▀▄░░░█▀▀░█▀█░█▀▄░█▀▀
+# ░█▀█░█▀▄░█░░░█▀█░░█░░▀▄▀░█▀▀░█░█░░░█░░░█░█░█░█░█▀▀
+# ░▀░▀░▀░▀░▀▀▀░▀░▀░▀▀▀░░▀░░▀▀▀░▀▀░░░░▀▀▀░▀▀▀░▀▀░░▀▀▀
+# •••••••••••••••••••••••••••••••••••••••••••••••••••
+
+# JoinGroup is a view function not a model class
 # class Joingroup(models.Model):
 #    join_group_id = models.IntegerField(primary_key=True)
 #    user = models.ForeignKey(User, models.DO_NOTHING)
@@ -91,6 +74,7 @@ class Groupadmin(models.Model):
 #        db_table = 'JoinGroup'
 #
 #
+# ManageGroupUser is a view function not a model class
 # class Managegroupuser(models.Model):
 #    manage_id = models.IntegerField(primary_key=True)
 #    group_admin = models.ForeignKey(Groupadmin, models.DO_NOTHING, blank=True, null=True)
@@ -101,3 +85,25 @@ class Groupadmin(models.Model):
 #        # managed = False
 #        db_table = 'ManageGroupUser'
 #
+# class Group(models.Model):
+#    group_id = models.IntegerField(primary_key=True)
+#    group_admin = models.ForeignKey(Groupadmin, models.DO_NOTHING)
+#    group_name = models.CharField(max_length=45)
+#    group_desc = models.CharField(max_length=200)
+#    create_date = models.DateTimeField()
+#    group_size = models.IntegerField()
+#
+#    class Meta:
+#        db_table = 'Group'
+
+
+# class Groupuser(models.Model):
+# Already implemented under 'Member'
+# This is equivalent to Member
+#    group_user_id = models.IntegerField(primary_key=True)
+#    user = models.ForeignKey(User, models.DO_NOTHING)
+#
+#    class Meta:
+#        # managed = False
+#        db_table = 'GroupUser'
+#        unique_together = (('group_user_id', 'user'),)

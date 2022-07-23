@@ -1,23 +1,20 @@
-#  _______ .______        ______    __    __  .______     _______.
-# /  _____||   _  \      /  __  \  |  |  |  | |   _  \   /       |
-# |  |  __  |  |_)  |    |  |  |  | |  |  |  | |  |_)  | |   (----`
-# |  | |_ | |      /     |  |  |  | |  |  |  | |   ___/   \   \
-# |  |__| | |  |\  \----.|  `--'  | |  `--'  | |  |   .----)   |
-# \______| | _| `._____| \______/   \______/  | _|   |_______/
-#
+#••••••••••••••••••••••••••••••••••••••••••#
+# ░█▀▀░█▀▄░█▀█░█░█░█▀█░░░█░█░▀█▀░█▀▀░█░█░█▀▀
+# ░█░█░█▀▄░█░█░█░█░█▀▀░░░▀▄▀░░█░░█▀▀░█▄█░▀▀█
+# ░▀▀▀░▀░▀░▀▀▀░▀▀▀░▀░░░░░░▀░░▀▀▀░▀▀▀░▀░▀░▀▀▀
+# Contributor(s): AndrewC,
+# Version: 1.5.0
+# Homepage: http://bedev.playdate.surge.sh/docs/groups/views
+# Description: A core functionality of playdate; the views in this file dictate how groups
+# are handled by our application including joining/leaving, posting events/comments,
+# CRUD operations on group entities, and groupAdmin functionalities.
+#•••••••••••••••••••••••••••••••••••••••••••#
+
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from . import models
 from . import forms
-
-
-def groups(request):
-    # The code in this function is the startercode for the group search
-    # groupList = models.Group.objects.order_by('-group_id')[:]
-
-    # return render(request, "groups/viewAllGroups.html", {'groupList': groupList})
-    return render(request, "groups/viewAllGroups.html")
 
 
 def Search(request):
@@ -29,26 +26,10 @@ def Search(request):
         return render(request, "groups/groupSearch.html", {'groups': groups})
     return render(request, "groups/groupSearch.html")
 
-
-# STATIC: PROTOTYPE USE ONLY
-def searchResults(request):
-    return render(request, "groups/searchResults.html")
-
-# STATIC: PROTOTYPE USE ONLY
-
-
-def individualGroup(request):
-    return render(request, "groups/individualGroup.html")
-
-# STATIC: PROTOTYPE USE ONLY
-
-
-def myGroup(request):
-    return render(request, "groups/myGroup.html")
-
-
 # This view is the main driver for groups; it is by far the biggest view
 # It has three parts: 1 for a group member, 1 for an non-member, and 1 for the non-user
+
+
 def groupView(request, group_id):
     joinGroupForm = forms.joinGroupForm()
     group = models.Group.objects.get(
@@ -67,26 +48,27 @@ def groupView(request, group_id):
     # This represents the part of the page for a member of the group.
     # Contains functionality for view/crud posts
     # if isMember == True:
-
     # The following 2 if-statements correspond to joining a group and leaving a group
-    if 'joinGroup' in request.POST:
-        print(request.method)
-        joinGroupForm = forms.joinGroupForm(request.POST)
-        instanceMember = joinGroupForm.save(commit=False)
-        instanceMember.group_id = models.Group.objects.get(
-            group_id=group_id)
-        instanceMember.member_id = request.user
-        instanceMember.save()
-        isMember = True
-        print(request.user, 'has joined group:', group.group_name)
-        return render(request, "groups/groups.html", {'group': group, 'member_list': member_list, 'isMember': isMember, })
-    if 'leaveGroup' in request.POST:
-        removeMember = models.Member.objects.filter(
-            group_id=group_id, member_id=request.user).delete()
-        isMember = False
-        print(request.user, 'has left group:', group.group_name)
-        return render(request, "groups/groups.html", {'group': group, 'member_list': member_list, 'isMember': isMember, })
-        # return redirect('joinSuccess') //This does not work but should be reimplemented because its better practice
+    if isMember == False:
+        if 'joinGroup' in request.POST:
+            print(request.method)
+            joinGroupForm = forms.joinGroupForm(request.POST)
+            instanceMember = joinGroupForm.save(commit=False)
+            instanceMember.group_id = models.Group.objects.get(
+                group_id=group_id)
+            instanceMember.member_id = request.user
+            instanceMember.save()
+            isMember = True
+            print(request.user, 'has joined group:', group.group_name)
+            return render(request, "groups/groups.html", {'group': group, 'member_list': member_list, 'isMember': isMember, })
+    if isMember == True:
+        if 'leaveGroup' in request.POST:
+            removeMember = models.Member.objects.filter(
+                group_id=group_id, member_id=request.user).delete()
+            isMember = False
+            print(request.user, 'has left group:', group.group_name)
+            return render(request, "groups/groups.html", {'group': group, 'member_list': member_list, 'isMember': isMember, })
+            # return redirect('joinSuccess') //This does not work but should be reimplemented because its better practice
 
     return render(request, "groups/groups.html", {'group': group, 'member_list': member_list, 'isMember': isMember})
 
@@ -95,11 +77,13 @@ def createGroup(request):
     createGroupForm = forms.createGroupForm()
     memberListForm = forms.memberListForm()
     if request.method == 'POST':
-        createGroupForm = forms.createGroupForm(request.POST)
+        createGroupForm = forms.createGroupForm(request.POST, request.FILES)
         memberListForm = forms.memberListForm(request.POST)
         if createGroupForm.is_valid() and memberListForm.is_valid():
             instanceGroup = createGroupForm.save(commit=False)
             instanceGroup.group_admin = request.user
+            instanceGroup.banner = None
+            instanceGroup.banner = request.FILES['banner']
             instanceGroup.save()
             # put the title in the tags
 
@@ -115,12 +99,49 @@ def createGroup(request):
 
             group = models.Group.objects.get(
                 group_id=instanceGroup.group_id)
+            member_list = models.Member.objects.filter(
+                group_id=instanceGroup.group_id)
+            # print(member_list.member_id)
+            isMember = True
             for titleWord in groupName:
                 group.tags.add(titleWord)
 
-            return render(request, 'groups/groups.html', {'group': group})
+            return render(request, 'groups/groups.html', {'group': group, 'member_list': member_list, 'isMember': isMember})
 
     return render(request, 'groups/createGroup.html', {'createGroupForm': createGroupForm, 'memberListForm': memberListForm})
+
+# •NOTE•
+# Remove the following 4 methods once main functionalities are implemented
+# and then reroute the URLs to the correct paths
+
+# STATIC: PROTOTYPE USE ONLY
+
+
+def searchResults(request):
+    return render(request, "groups/searchResults.html")
+
+# STATIC: PROTOTYPE USE ONLY
+
+
+def individualGroup(request):
+    return render(request, "groups/individualGroup.html")
+
+# STATIC: PROTOTYPE USE ONLY
+
+
+def myGroup(request):
+    return render(request, "groups/myGroup.html")
+
+# STATIC: PROTOTYPE USE ONLY
+
+
+def groups(request):
+    # The code in this function is the startercode for the group search
+    # groupList = models.Group.objects.order_by('-group_id')[:]
+
+    # return render(request, "groups/viewAllGroups.html", {'groupList': groupList})
+    return render(request, "groups/viewAllGroups.html")
+# ••••••
 
 
 def joinSuccess(request, group_id):
