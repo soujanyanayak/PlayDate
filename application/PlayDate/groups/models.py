@@ -24,7 +24,7 @@ class Group(models.Model):
         max_length=256, null=True, blank=True, default=None)
 
     banner = models.ImageField(
-        upload_to="group_banner", default=None, blank=True)
+        upload_to="group_banner", default="default.jpeg", blank=True)
 
     # Django-Taggit: This ties to the Groups and Taggit Tables
     # tags are delimited by commas

@@ -3,7 +3,7 @@
 # ░█░█░█▀▄░█░█░█░█░█▀▀░░░▀▄▀░░█░░█▀▀░█▄█░▀▀█
 # ░▀▀▀░▀░▀░▀▀▀░▀▀▀░▀░░░░░░▀░░▀▀▀░▀▀▀░▀░▀░▀▀▀
 # Contributor(s): AndrewC,
-# Version: 1.5.0
+# Version: 1.5.1
 # Homepage: http://bedev.playdate.surge.sh/docs/groups/views
 # Description: A core functionality of playdate; the views in this file dictate how groups
 # are handled by our application including joining/leaving, posting events/comments,
@@ -78,12 +78,18 @@ def createGroup(request):
     memberListForm = forms.memberListForm()
     if request.method == 'POST':
         createGroupForm = forms.createGroupForm(request.POST, request.FILES)
+        print("FILES", request.FILES)
         memberListForm = forms.memberListForm(request.POST)
         if createGroupForm.is_valid() and memberListForm.is_valid():
             instanceGroup = createGroupForm.save(commit=False)
             instanceGroup.group_admin = request.user
             instanceGroup.banner = None
-            instanceGroup.banner = request.FILES['banner']
+            # the if-stmt below is for when the groupCreator doesn't upload a group banner
+            if request.FILES == '':
+                instanceGroup.banner = request.FILES['']
+            # otherwise they did upload a banner
+            else:
+                instanceGroup.banner = request.FILES['banner']
             instanceGroup.save()
             # put the title in the tags
 
@@ -113,6 +119,12 @@ def createGroup(request):
 # •NOTE•
 # Remove the following 4 methods once main functionalities are implemented
 # and then reroute the URLs to the correct paths
+
+# DEV USE ONLY
+
+
+def testGroup(request):
+    return render(request, "groups/testGroup.html")
 
 # STATIC: PROTOTYPE USE ONLY
 

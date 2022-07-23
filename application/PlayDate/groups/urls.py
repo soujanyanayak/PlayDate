@@ -12,6 +12,8 @@ urlpatterns = [
     path('search/', views.Search, name='groupSearch'),
     path('search/results/', views.searchResults, name='groupSearchResults'),
     path('joinSuccess/', views.joinSuccess, name='joinSuccess'),
+    # For development use, this will be merged with the view Group page.
+    path('testGroup/', views.testGroup, name="test"),
     # static: for prototype use
     path('individualGroup/', views.individualGroup, name='individualGroup'),
     # static: for prototype use
