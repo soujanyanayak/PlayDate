@@ -13,6 +13,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.forms.widgets import DateInput
 from . import models
+from events.models import Event as eventModel
 
 
 class joinGroupForm(ModelForm):
@@ -43,3 +44,9 @@ class memberListForm(ModelForm):
     class Meta:
         model = models.Member
         fields = []
+
+
+class createGroupEventForm(ModelForm):
+    class Meta:
+        model = eventModel
+        fields = ['address', 'desc', 'name', 'banner', 'datetime']

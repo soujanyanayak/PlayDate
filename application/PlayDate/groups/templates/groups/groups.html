@@ -50,6 +50,8 @@
                 <h2>Main Group View</h2>
                 <!--Add posts/events etc-->
                 <!--Group Information-->
+
+                <!--For Members-->
                 {{group}}
                 <p>GroupID: {{group.group_id}}</p>
                 <p>Group Name: {{group.group_name}}</p>
@@ -68,6 +70,16 @@
                     <button name="leaveGroup" class="btn btn-primary pt-2" type="submit">Leave Group</button>
                 </form>
 
+                <form method="POST">
+                    {% csrf_token %}
+                    <button name="newPost" class="btn btn-primary pt-2" type="submit">Create Post</button>
+                </form>
+                <form method="POST">
+                    {% csrf_token %}
+                    <button name="newGroupEvent" class="btn btn-primary pt-2" type="submit">Create Event</button>
+                </form>
+
+                <!--For Non-Members-->
                 {% elif isMember == False %}
 
                 <form method="POST">
@@ -79,6 +91,14 @@
             </div>
             <!--🐱Right Column🐱-->
             <div class="column right" style="background-color: #ccc">
+                <p>•••••••••••••••••••••••••••••</p>
+                <h2 style="text-align: center">{{group.group_name}}</h2>
+                <p>•••••••••••••••••••••••••••••</p>
+                <p style="text-align: center"><small>Created on:{{group.create_date}}</small></p>
+                <p>•••••••••••••••••••••••••••••</p>
+                <p>{{group.group_desc}}</p>
+                <p>•••••••••••••••••••••••••••••</p>
+
                 <h2>Members</h2>
                 <!--Member table-->
                 {% if member_list %}

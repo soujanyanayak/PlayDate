@@ -62,6 +62,16 @@ def groupView(request, group_id):
             print(request.user, 'has joined group:', group.group_name)
             return render(request, "groups/groups.html", {'group': group, 'member_list': member_list, 'isMember': isMember, })
     if isMember == True:
+        if 'newPost' in request.POST:
+
+            print("New Post")
+
+            return render(request, "groups/groups.html", {'group': group, 'member_list': member_list, 'isMember': isMember})
+
+        if 'newGroupEvent' in request.POST:
+            print("New Group Event")
+            return HttpResponse("New Event")
+
         if 'leaveGroup' in request.POST:
             removeMember = models.Member.objects.filter(
                 group_id=group_id, member_id=request.user).delete()

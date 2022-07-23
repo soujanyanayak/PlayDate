@@ -21,7 +21,7 @@ class Group(models.Model):
         User, default=None, on_delete=models.CASCADE)
     create_date = models.DateTimeField(auto_now=True)
     group_desc = models.TextField(
-        max_length=256, null=True, blank=True, default=None)
+        max_length=2048, null=True, blank=True, default=None)
 
     banner = models.ImageField(
         upload_to="group_banner", default="default.jpeg", blank=True)

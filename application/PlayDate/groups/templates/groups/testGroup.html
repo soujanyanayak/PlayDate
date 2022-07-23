@@ -47,8 +47,35 @@
             </div>
             <!--🐱Middle Column🐱-->
             <div class="column middle" style="background-color: #bbb">
-                <h2>Column 2</h2>
-                <p>Some text..</p>
+                <h2>Main Group View</h2>
+                <!--Add posts/events etc-->
+                <!--Group Information-->
+                {{group}}
+                <p>GroupID: {{group.group_id}}</p>
+                <p>Group Name: {{group.group_name}}</p>
+                <p>Creation Date:{{group.create_date}}</p>
+                <p>Group Description:{{group.group_desc}}</p>
+                <p>
+                    Keywords: {% if group.tags.all %} {% for tag in group.tags.all %} {{tag}}, {% endfor %}{% else %}No
+                    Keywords {%endif %}
+                </p>
+                <p>Group size: {{member_list|length}} people</p>
+                <br />
+                {% if isMember == True %}
+
+                <form method="POST">
+                    {% csrf_token %}
+                    <button name="leaveGroup" class="btn btn-primary pt-2" type="submit">Leave Group</button>
+                </form>
+
+                {% elif isMember == False %}
+
+                <form method="POST">
+                    {% csrf_token %}
+                    <button name="joinGroup" class="btn btn-primary pt-2" type="submit">Join Group</button>
+                </form>
+
+                {% endif %}
             </div>
             <!--🐱Right Column🐱-->
             <div class="column right" style="background-color: #ccc">
@@ -78,6 +105,8 @@
                 {% endif %}
             </div>
         </div>
+
+        {% include "footer.html" %}
     </body>
 </html>
 
