@@ -4,9 +4,9 @@
 # are how the content of each URL is generated - sometimes just rendering an html
 # template, sometimes requiring information validation or database access (through
 # forms and models.)
-
+import json
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.core.mail import send_mail
 from ipware import get_client_ip
 from django.contrib.auth.models import User
@@ -180,12 +180,161 @@ def profileEditPage(request):
     return render(request, 'profileEdit.html', {'profileForm': profileForm, 'profile': profile})
 
 # /[serv]/profile
-# TODO: Link with back end
 def profilePage(request):
-    # profile = models.Profile.objects.get(profileID=request.user)
-    # # print(profile)
-    # return render(request, 'profilePage.html', {'profile': profile})
-    return render(request, 'profilePage.html')
+    # If GET, send the user, profile, account and dependents
+    if request.method == "GET":
+        if not request.user.is_authenticated:
+            return redirect("home")
+        else:
+            request.session.set_expiry(600)
+            profile = models.Profile.objects.get(profileID=request.user)
+            account = models.Account.objects.get(accountID=request.user)
+            try:
+                dependents = models.Dependent.objects.filter(profile=profile)
+            except:
+                dependents = None
+            finally:
+                print ("Profile-----------------------------")
+                print (profile)
+                print ("Account-----------------------------")
+                print (account)
+                print ("Dependents--------------------------")
+                print (dependents)
+                return render(request, 'profilePage.html', {'user': request.user, 'account': account, 'profile': profile, 'dependents': dependents})
+    # If Post, we will update User, Profile, and Account and send
+    # everything to the client with a success message
+    if request.method == "POST":
+        print(request.POST)
+        user = request.user
+        user.first_name = request.POST["inputFirstName"]
+        user.last_name = request.POST["inputLastName"]
+        user.email = request.POST["inputEmail"]
+        user.save()
+        profileObj = models.Profile.objects.get(profileID=request.user)
+        address = profileObj.address
+        if address is None:
+            address = models.Address()
+            address.save()
+            profileObj.address = address
+            profileObj.save()
+        address.country = request.POST["inputCountry"]
+        address.state = request.POST["inputState"]
+        address.zipcode = request.POST["inputZipCode"]
+        address.city = request.POST["inputCity"]
+        address.save()
+        account = models.Account.objects.get(accountID=request.user)
+        try:
+            dependents = models.Dependent.objects.filter(profile=profileObj)
+            print ("Dependents: ")
+            print (dependents)
+        except Exception as exc:
+            print (str(exc))
+            dependents = str(exc)
+        finally:
+            print ("Profile-----------------------------")
+            print (profileObj)
+            print ("Account-----------------------------")
+            print (account)
+            print ("Dependents--------------------------")
+            print (dependents)
+            retVals = {
+                'user': request.user, 
+                'account': account,
+                'profile': profileObj, 
+                'dependents': dependents,
+                'modalTitle': "Success!",
+                'modalText': "Successfully saved your Account Details.",
+                'modalBtnText': "Close",
+                'modalImmediate': True }
+            return render(request, 'profilePage.html', retVals)
+
+# AJAX Endpoint
+def dependents(request):
+    print( "Received Dependents Request")
+    # Expect the info of a dependent
+    if request.method == "POST":
+        data = json.loads(request.body)
+        print ("User: " + str(request.user) + " (Auth: " + str(request.user.is_authenticated) + ")")
+        print ("Data: ")
+        print(data)
+        if request.user.is_authenticated:
+            # Update the dependent model list as necessary
+            profile = models.Profile.objects.get(profileID=request.user)
+            depID = data['dependent']['id']
+            depData = {
+                'name': data['dependent']['name'],
+                'dob': data['dependent']['dob'],
+                'interests': data['dependent']['interests'],
+                'profile': profile.pk
+            }
+            if data['state'] == "DELETE":
+                print ("Mode: DELETE")
+                try:
+                    models.Dependent.objects.get(dependent_id=depID).delete()
+                    retVal = {
+                        'message': "Successfully deleted dependent"
+                    }
+                    print ("Dependent deletion successful")
+                    return JsonResponse(retVal, status=200)
+                except Exception as exc:
+                    retVal = {
+                        'message': 'An exception occurred during dependent deletion',
+                        'err': str(exc)
+                    }
+                    print ("Dependent deletion failed")
+                    print (retVal['err'])
+                    return JsonResponse(retVal, status=500)
+            elif data['state'] == "UPDATE":
+                print ("Mode: UPDATE")
+                try:
+                    dependent = models.Dependent.objects.get(dependent_id=depID)
+                    dependent.name = depData['name']
+                    dependent.dob = depData['dob']
+                    dependent.interests = depData['interests']
+                    dependent.save()
+                    retVal = {
+                        'message': "Successfully updated dependent", 
+                        'id': dependent.dependent_id,
+                        'name': dependent.name,
+                        'dob': dependent.dob,
+                        'interests': dependent.interests,
+                        'profile': dependent.profile.pk
+                    }
+                    print ("Dependent update successful")
+                    return JsonResponse(retVal, status=200)
+                except Exception as exc:
+                    retVal = {
+                        'message': 'An exception occurred during dependent update',
+                        'err': str(exc)
+                    }
+                    print ("Dependent update failed")
+                    print (retVal['err'])
+                    return JsonResponse(retVal, status=500)
+            else: 
+                print ("Mode: CREATE")
+                try:
+                    dependent = models.Dependent(name=depData['name'], dob=depData['dob'], interests=depData['interests'], profile=profile)
+                    dependent.save()
+                    retVal = {
+                        'message': "Successfully created dependent", 
+                        'id': dependent.dependent_id,
+                        'name': dependent.name,
+                        'dob': dependent.dob,
+                        'interests': dependent.interests,
+                        'profile': dependent.profile.pk
+                    }
+                    print ("Dependent creation successful @ id: " + str(dependent.dependent_id))
+                    return JsonResponse(retVal, status=200)
+                except Exception as exc:
+                    retVal = {
+                        'message': 'An exception occurred during dependent creation',
+                        'err': str(exc)
+                    }
+                    print ("Dependent creation failed")
+                    print (retVal['err'])
+                    return JsonResponse(retVal, status=500)
+        return JsonResponse({'message': "Please login."}, status=403)
+    return JsonResponse({ 'message': "Please use POST."}, status=403)
 
 # /[serv]/profile/[int]
 # TODO: Will need dependents too.
