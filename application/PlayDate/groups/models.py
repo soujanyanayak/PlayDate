@@ -47,10 +47,11 @@ class GroupEvent(models.Model):
     event_id = models.AutoField(primary_key=True)
     #address = models.ForeignKey(Address, models.DO_NOTHING)
     address = models.TextField(max_length=100, blank=True, null=True)
-    user = models.ForeignKey(User, models.DO_NOTHING)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     # backend_admin = models.ForeignKey(
     #    Backendadmin, models.DO_NOTHING, blank=True, null=True)
-    group = models.ForeignKey(Group, models.DO_NOTHING, blank=True, null=True)
+    group = models.ForeignKey(
+        Group, on_delete=models.CASCADE, blank=True, null=True)
     # group_admin = models.ForeignKey(
     #    Groupadmin, models.DO_NOTHING, blank=True, null=True)
     desc = models.TextField(blank=True, null=True)
@@ -85,10 +86,12 @@ class groupEventComment(models.Model):
     # Changed to auto field
     comment_id = models.AutoField(primary_key=True)
     event_id = models.ForeignKey(
-        GroupEvent, models.DO_NOTHING, blank=True, null=True)
+        GroupEvent, on_delete=models.CASCADE, blank=True, null=True)
     #comment_id = models.IntegerField(primary_key=True)
-    user = models.ForeignKey(User, models.DO_NOTHING, blank=True, null=True)
-    group = models.ForeignKey(Group, models.DO_NOTHING, blank=True, null=True)
+    user = models.ForeignKey(User,
+                             on_delete=models.CASCADE, blank=True, null=True)
+    group = models.ForeignKey(
+        Group, on_delete=models.CASCADE, blank=True, null=True)
     created_on = models.DateTimeField(auto_now=True)
     content = models.CharField(max_length=200, blank=True, null=True)
 
@@ -99,8 +102,10 @@ class groupEventComment(models.Model):
 
 class Post(models.Model):
     post_id = models.AutoField(primary_key=True)
-    user = models.ForeignKey(User, models.DO_NOTHING, blank=True, null=True)
-    group = models.ForeignKey(Group, models.DO_NOTHING, blank=True, null=True)
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, blank=True, null=True)
+    group = models.ForeignKey(
+        Group, on_delete=models.CASCADE, blank=True, null=True)
     created_on = models.DateTimeField(auto_now=True)
     post_title = models.CharField(max_length=128)
     post_content = models.TextField(max_length=256, blank=True, null=True)
@@ -113,10 +118,13 @@ class Post(models.Model):
 class groupPostComment(models.Model):
     # Changed to auto field
     comment_id = models.AutoField(primary_key=True)
-    post_id = models.ForeignKey(Post, models.DO_NOTHING, blank=True, null=True)
+    post_id = models.ForeignKey(
+        Post, on_delete=models.CASCADE, blank=True, null=True)
     #comment_id = models.IntegerField(primary_key=True)
-    user = models.ForeignKey(User, models.DO_NOTHING, blank=True, null=True)
-    group = models.ForeignKey(Group, models.DO_NOTHING, blank=True, null=True)
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, blank=True, null=True)
+    group = models.ForeignKey(
+        Group, on_delete=models.CASCADE, blank=True, null=True)
     created_on = models.DateTimeField(auto_now=True)
     content = models.CharField(max_length=200, blank=True, null=True)
 

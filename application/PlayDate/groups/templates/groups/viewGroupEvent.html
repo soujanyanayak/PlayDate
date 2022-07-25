@@ -72,9 +72,23 @@ Description: This is the view group event detail page. Ideally it would fused wi
                                 <!--Top Segment: Profile Pic, Username, Date Created-->
                                 <div class="d-flex flex-row align-items-center">
                                     <img src="{{profile.avatar.url}}" width="50" class="rounded-circle" />
-                                    <div class="d-flex flex-column ml-2"><span class="font-weight-bold">{{request.user.username}}</span> <small class="text-primary">{{event.address}}</small></div>
+                                    <div class="d-flex flex-column ml-2"><span class="font-weight-bold">{{event.user}}</span> <small class="text-primary">{{event.address}}</small></div>
                                 </div>
                                 <div class="d-flex flex-row mt-1 ellipsis"><small class="mr-2">Created on: {{event.created_on}}</small> <i class="fa fa-ellipsis-h"></i></div>
+                                <!-- Administrative Task Dropdown -->
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                        <form method="POST">
+                                            {% csrf_token %} {% if group.group_admin == user or event.user == user %}
+                                            <button name="editEvent" class="dropdown-item" type="submit">Edit</button>
+                                            <button name="deleteEvent" class="dropdown-item" type="submit">Delete</button>
+                                            {% endif %}
+                                            <button name="reportEvent" class="dropdown-item" type="submit">Report Content</button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!--Admin task end -->
                             </div>
                             <!--Group Event Banner Image-->
                             {% if event.banner.url != None %}
@@ -202,6 +216,9 @@ Description: This is the view group event detail page. Ideally it would fused wi
         </div>
 
         {% include "footer.html" %}
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     </body>
 </html>
 

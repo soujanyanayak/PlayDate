@@ -181,6 +181,27 @@ def viewGroupPost(request, group_id, post_id):
         print("DEV-CONSOLE: New Group Event Button has been Clicked")
         request.session['group_id'] = group.group_id
         return redirect('createGroupEvent')
+#########################
+    if 'editPost' in request.POST:
+        print("DEV-CONSOLE: 'New Group Event' Button has been Clicked")
+        request.session['group_id'] = group.group_id
+        return redirect('createGroupEvent')
+
+    # done
+    if 'deletePost' in request.POST:
+        print("deleting post...")
+        models.Post.objects.filter(post_id=post_id).delete()
+        print("post deleted")
+        request.session['group_id'] = group.group_id
+        allGroupPosts = models.Post.objects.filter(group_id=group_id)
+        return render(request, "groups/groups.html", {'group': group, 'member_list': member_list, 'isMember': isMember, 'groupEvents': groupEvents, 'groupPosts': allGroupPosts})
+
+    if 'reportPost' in request.POST:
+        request.session['group_id'] = group.group_id
+        # todo: need to figure out how to get the specific comment id and put it in sessions
+        # request.session['post_id'] = post.post_id
+        return redirect('viewGroupEvent')
+########################
 
     if 'leaveGroup' in request.POST:
         models.Member.objects.filter(
@@ -301,6 +322,27 @@ def viewGroupEvent(request, group_id, event_id):
         return render(request, "groups/groups.html", {'group': group, 'member_list': member_list, 'isMember': isMember, 'groupEvents': groupEvents, 'groupPosts': groupPosts})
         # return redirect('joinSuccess') //This does not work but should be reimplemented because its better practice
     # RSVP Button
+
+#########################
+    if 'editEvent' in request.POST:
+        print("DEV-CONSOLE: 'New Group Event' Button has been Clicked")
+        request.session['group_id'] = group.group_id
+        return redirect('createGroupEvent')
+
+    # done
+    if 'deleteEvent' in request.POST:
+        models.GroupEvent.objects.filter(event_id=event_id).delete()
+        request.session['group_id'] = group.group_id
+        allGroupEvents = models.GroupEvent.objects.filter(
+            group_id=group.group_id)
+        return render(request, "groups/groups.html", {'group': group, 'member_list': member_list, 'isMember': isMember, 'groupEvents': allGroupEvents, 'groupPosts': groupPosts})
+
+    if 'reportEvent' in request.POST:
+        request.session['group_id'] = group.group_id
+        # todo: need to figure out how to get the specific comment id and put it in sessions
+        # request.session['post_id'] = post.post_id
+        return redirect('viewGroupEvent')
+########################
     if 'RSVP' in request.POST:
         print(request.method)
         GroupRSVPForm = forms.GroupRSVPForm(request.POST)
@@ -429,7 +471,6 @@ def createGroupEvent(request):
 
             # Group/member/isMember is stored inside the session, the following clears the session incase
             # the user wants to create a post/event for a different group.
-            del request.session['group_id']
 
             return render(request, "groups/groups.html", {'group': group, 'member_list': member_list, 'isMember': isMember, 'groupEvents': groupEvents, 'groupPosts': groupPosts})
         elif not createGroupEventForm.is_valid():
