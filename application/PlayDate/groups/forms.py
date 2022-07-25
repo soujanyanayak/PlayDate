@@ -48,5 +48,50 @@ class memberListForm(ModelForm):
 
 class createGroupEventForm(ModelForm):
     class Meta:
-        model = eventModel
+        model = models.GroupEvent
         fields = ['address', 'desc', 'name', 'banner', 'datetime']
+        widgets = {
+            'address': forms.TextInput(attrs={'style': 'width:65vw;', 'placeholder': "e.g. 12201 Holloway Ave, San Francisco, CA, 94132"}),
+            'desc': forms.Textarea(attrs={'style': 'width:65vw;', 'placeholder': "Enter a brief description on what this event is all about."}),
+            'name': forms.TextInput(attrs={'style': 'width:65vw;', 'placeholder': "e.g. Kyle's 12th Birthday Party!"}),
+            'datetime': forms.DateInput(attrs={'type': 'date'}),
+
+            # 'banner': forms.ImageField(),
+
+        }
+
+
+class GroupRSVPForm(ModelForm):
+    # This is an empty form because users cannot edit the Member table
+    class Meta:
+        model = models.RSVP
+        fields = []
+
+
+class createGroupEventCommentForm(ModelForm):
+    class Meta:
+        model = models.groupEventComment
+        fields = ['content', ]
+        widgets = {
+            'content': forms.Textarea(attrs={'style': 'width: 100%; height:8vh', 'placeholder': "Your comment here."})
+        }
+
+
+class createGroupPostForm(ModelForm):
+    class Meta:
+        model = models.Post
+        fields = ['post_title', 'post_content', ]
+        widgets = {
+            'post_title': forms.TextInput(attrs={'style': 'width:65vw;', 'placeholder': "What is your post about?"}),
+            'post_content': forms.Textarea(attrs={'style': 'width:65vw;', 'placeholder': "Write your post so other members can see!"}),
+
+        }
+
+
+class createGroupCommentForm(ModelForm):
+    class Meta:
+        model = models.groupPostComment
+        fields = ['content', ]
+        widgets = {
+            'content': forms.Textarea(attrs={'style': 'width: 100%; height:8vh', 'placeholder': "Your comment here."})
+        }
