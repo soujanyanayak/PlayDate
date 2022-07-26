@@ -18,21 +18,28 @@
             <h5><b>Fun activities posted by our users:</b></h5>
         </div>
 
+        {% if events %}
         <div class="row">
+            {% for event in events %}
             <div class="col card mx-2 my-2" style="border-radius: 15px; width: 18rem;">
-                <img src="{% static 'media/oakland-zoo.jpg' %}" width="300px" height="300px" class="card-img-top  mt-2"
+                <img src={{event.banner}}  width="300px" height="300px" class="card-img-top  mt-2"
                     alt="...">
                 <div class="card-body">
-                    <p class="card-text">Let's go to Oakland Zoom this Saturday at 10 a.m.</p><br>
-                    <!-- Posted BY: <a href="#">Tom Taylor</a><br><br> -->
-                    Posted BY: Tom Taylor<br><br>
-                    <a href="#" class="btn btn-primary mx-5">View details</a>
-                    <a href="/events/signUpSucceed" class="btn btn-primary mx-4">Sign
-                        Up</a>
+                    <p class="card-text">{{event.name}}</p><br>
+                    Posted BY: <a href="#">{{event.user.first_name}} {{event.user.last_name}}</a><br><br>
+                    <br><br>
+                    <a href="/events/{{event.event_id}}" class="btn btn-primary mx-5">View details</a>
+                    <form method="POST" action="/events/register/{{event.event_id}}/">
+                        {% csrf_token %}
+                        <button name="rsvp"class="btn btn-primary pt-2" type="submit">Register</button>
+                    </form>
+                    <!-- <a href="/events/signUpSucceed" class="btn btn-primary mx-4">Sign
+                        Up</a> -->
                 </div>
             </div>
+            {% endfor %}
 
-            <div class="col card mx-2 my-2" style="border-radius: 15px; width: 18rem;">
+            <!-- <div class="col card mx-2 my-2" style="border-radius: 15px; width: 18rem;">
                 <img src="{% static 'media/ocean-view-park.jpg' %}" class="card-img-top  mt-2" width="300px"
                     height="300px" alt="...">
                 <div class="card-body">
@@ -50,14 +57,15 @@
                     alt="...">
                 <div class="card-body">
                     <p class="card-text">Take pets out for a fresh breath tomorrow afternoon.</p>
-                    <!-- Posted BY: <a href="#">Chris Jhonson</a><br><br> -->
+                    Posted BY: <a href="#">Chris Jhonson</a><br><br>
                     Posted BY: Chris Jhonson<br><br>
                     <a href="#" class="btn btn-primary mx-5">View details</a>
                     <a href="/events/signUpSucceed" class="btn btn-primary mx-4">Sign
                         Up</a>
                 </div>
-            </div>
+            </div> -->
         </div>
+        {% endif %}
         <div class="row mb-4">
             <div class="col card mx-2 my-2" style="border-radius: 15px; width: 18rem;">
                 <img src="{% static 'media/rain-splash.jpg' %}" class="card-img-top  mt-2" width="300px" height="300px"
@@ -101,18 +109,23 @@
         <div>
             <h5><b>Public activities for everyone:</b></h5>
         </div>
+        {% if events %}
+
         <div class="row">
+            {% for publicevent in publicevents %}
+            
             <div class="col card mx-2 my-2" style="width: 18rem;">
-                <img src="{% static 'media/san-leandro-aquatic-play.jpeg' %}" width="300px" height="300px"
+                <img src={{publicevent.banner}} width="300px" height="300px"
                     class="card-img-top  mt-2" alt="...">
                 <div class="card-body">
-                    <p class="card-text"><a href="/events/publicEvent1">Splashing & Swimming at the San Leandro Family
-                            Aquatic Center</a></p>
+                    <p class="card-text">{{publicevent.name}}</p>
                     <a href="/events/publicEvent1" class="btn btn-primary">View details</a>
                 </div>
             </div>
 
-            <div class="col card mx-2 my-2" style="width: 18rem;">
+            {% endfor %}
+
+            <!-- <div class="col card mx-2 my-2" style="width: 18rem;">
                 <img src="{% static 'media/outdoor-movies.jpeg' %}" class="card-img-top  mt-2" width="300px"
                     height="300px" alt="...">
                 <div class="card-body">
@@ -128,9 +141,10 @@
                     <p class="card-text">Indoor Ice Skating in Oakland at Oakland Ice</p><br>
                     <a href="#" class="btn btn-primary">View details</a>
                 </div>
-            </div>
+            </div> -->
         </div>
-        <div class="row mb-4">
+        {% endif %}
+        <!-- <div class="row mb-4">
             <div class="col card mx-2 my-2" style="width: 18rem;">
                 <img src="{% static 'media/cheers_oakland.jpeg' %}" class="card-img-top  mt-2" width="300px"
                     height="300px" alt="...">
@@ -157,7 +171,7 @@
                     <a href="#" class="btn btn-primary">View details</a>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
     </div>
     <footer class="text-center text-white bg-light sticky-bottom">

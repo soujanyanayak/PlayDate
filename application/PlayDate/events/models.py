@@ -17,13 +17,14 @@ from home.models import Address, Backendadmin
 class Publicevent(models.Model):
     public_event_id = models.AutoField(primary_key=True)
     address = models.ForeignKey(Address, models.DO_NOTHING)
-    name = models.CharField(max_length=500)
+    name = models.CharField(max_length=1000)
 
     banner = models.ImageField(
-        upload_to="publicevents_banner", default=None, blank=True)
+        upload_to="publicevents_banner", default='default.jpg', blank=True)
     # geometry= geomodels.PointField()
 
     category = models.CharField(max_length=10, blank=True, null=True)
+    desc = models.TextField(blank=True, null=True)
 
     class Meta:
         db_table = 'PublicEvent'
@@ -58,6 +59,14 @@ class Event(models.Model):
     class Meta:
         # managed = False
         db_table = 'Event'
+
+class EventRegistration(models.Model):
+    registration_id=models.AutoField(primary_key=True)
+    user = models.ForeignKey(User, models.DO_NOTHING, blank=True, null=True)
+    event = models.ForeignKey(Event, models.DO_NOTHING, blank=True, null=True)
+
+    class Meta:
+        db_table = 'EventRegistration'
 
 
 class Comment(models.Model):

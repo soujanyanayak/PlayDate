@@ -5,6 +5,7 @@ from unittest import result
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.db.models import Q
+from events.models import EventRegistration
 from home.forms import addressForm
 from events.forms import eventForm
 from events.forms import GroupEventForm, PublicEventForm
@@ -15,15 +16,24 @@ import requests
 
 # Create your views here.
 
-
+# Display public events for general user
 def publicevents(request):
     # publicevent = Publicevent.objects.all()
-    # return render(request,"publicevents.html",{'publicevent':publicevent})
-    return render(request, "publicevents.html")
+    # return render(request,"events/publicevents.html",{'publicevent':publicevent})
+    return render(request, "events/publicevents.html")
 
-
+# Display all the events for user to register
 def membersevents(request):
-    return render(request, "membersevents.html")
+    events=Event.objects.all()
+    publicevents= Publicevent.objects.all()
+    return render(request, "membersevents.html",{'events':events,'publicevents':publicevents})
+
+def eventRegistration(request,event_id):
+    user=request.user
+    if request.method == 'POST':
+        event=Event.objects.get(event_id=event_id)
+        event_registration=EventRegistration.objects.create(user=user,event=event)
+        return render(request,"memberEvent1.html",{'event':event,'registration_id':event_registration.registration_id})
 
 
 def publicEvent1(request):
@@ -89,13 +99,18 @@ def createEvent(request):
     context={}
     user=request.user
     if request.method == 'POST':
-        eventform= eventForm(request.POST)
+        eventform= eventForm(request.POST,request.FILES)
         addressform=addressForm(request.POST)
         
         if addressform.is_valid() and eventform.is_valid():
             address= addressform.save()
-            print("**********")  
             event=eventform.save(commit=False)
+            # image upload process
+            event.banner = None
+            if len(request.FILES) == 0:
+                event.banner = None
+            else:
+                event.banner = request.FILES['banner']
             event.user=user
             event.address=address
             event.save()
@@ -106,13 +121,13 @@ def createEvent(request):
         eventform=eventForm()
         addressform=addressForm()
     # context['form']=form
-    return render(request, 'createEvent.html',{'eventform': eventform,'addressform':addressform})
+    return render(request, 'events/createEvent.html',{'eventform': eventform,'addressform':addressform})
 
 # Definition to view Event page
 def viewEvent(request, event_id):
     event=Event.objects.get(event_id=event_id)
     print(event.name)
-    return render(request, 'createdEvent.html', {'event' : event})
+    return render(request, 'events/createdEvent.html', {'event' : event})
 
 # Returns Search result for events
 def events(request):
