@@ -521,7 +521,8 @@ def createGroup(request):
             for titleWord in groupName:
                 group.tags.add(titleWord)
 
-            return render(request, 'groups/groups.html', {'group': group, 'member_list': member_list, 'isMember': isMember})
+            return redirect('groupView', group_id=instanceGroup.group_id)
+            # return render(request, 'groups/groups.html', {'group': group, 'member_list': member_list, 'isMember': isMember})
 
     return render(request, 'groups/createGroup.html', {'createGroupForm': createGroupForm, 'memberListForm': memberListForm})
 
