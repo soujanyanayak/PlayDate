@@ -28,4 +28,5 @@ urlpatterns = [
     path('resetPassword/', views.resetPassword, name='resetPassword'),
     path('createdGroup/', views.createdGroup, name="createdGroup"),
     path('createdEvent/', views.createdEvent, name='createdEvent'),
+    path('dependents/', views.dependents, name='dependents'),
 ]

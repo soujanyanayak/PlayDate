@@ -5,12 +5,12 @@
     This template provides a notification popup that can be shown immediately 
   on page load, or to be popped up later.
 
-    To use this:
+    To use this from django:
     1. In your *.html template, add {{ include "notificationModal.html" }} 
     preferably just before including the footer.
     2. In your views.py, your render function should look like:
         return render(request, '*.html', {'modalTitle': [TITLE], ... })
-       That third variable set should include:
+       That third variable is a dictionary which should include:
        - 'modalTitle': The title you would like to be displayed in the top
                        bar of the modal popup.
        - 'modalText':  The text that should appear in the modal popup. This
@@ -24,6 +24,11 @@
                        soon as the page loads. If false, you can manually
                        trigger the the modal with
                        triggerModal();
+    
+    To use this on the javascript side:
+    - You can set the title, text, and button text using the setModal function:
+            setModal(modalTitle, modalText, modalBtnText);
+    - You will still need to display the modal by using showModal();
 
     If you have any questions, feel free to ask Will.
 {% endverbatim %} -->
@@ -47,8 +52,17 @@
     </div>
 </div>
 <script defer="true">
+
     function triggerModal() {
         $('#notificationModal').modal('toggle');
+    }
+    function showModal() {
+      $('#notificationModal').modal('show');
+    }
+    function setModal(modalTitle, modalText, modalBtnText) {
+      document.getElementById("modalTitle").innerText = modalTitle;
+      document.getElementById("modalText").innerText = modalText;
+      document.getElementById("modalBtn").innerText = modalBtnText;
     }
     document.getElementById("modalBtn").addEventListener("click", triggerModal);
     document.getElementById("modalTRBtn").addEventListener("click", triggerModal);

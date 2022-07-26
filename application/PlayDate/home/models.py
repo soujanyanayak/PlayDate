@@ -24,7 +24,7 @@ class Address(models.Model):
     street = models.CharField(max_length=100,default='NA')
     country = models.CharField(max_length=20,default='NA')
     city = models.CharField(max_length=45,default='NA')
-    zipcode = models.IntegerField()
+    zipcode = models.IntegerField(default=00000)
     state = models.CharField(max_length=45,default='NA')
 
     class Meta:
@@ -67,6 +67,10 @@ class Profile(models.Model):
         max_length=256, null=True, blank=True, default=None)
     avatar = models.ImageField(
         upload_to="uploads", default=None, blank=True)
+    address = models.ForeignKey(Address, null=True, default=None, on_delete=models.SET_DEFAULT)
+    verification = models.ImageField(
+        upload_to="verification", default=None, blank=True)
+    is_verified = models.BooleanField(auto_created=True, default=False)
 
     class Meta:
         db_table = 'Profile'
@@ -83,7 +87,7 @@ class Backendadmin(models.Model):
 
 
 class Dependent(models.Model):
-    dependent_id = models.IntegerField(primary_key=True)
+    dependent_id =  models.AutoField(primary_key=True)
     profile = models.ForeignKey('Profile', models.DO_NOTHING)
     name = models.CharField(max_length=45)
     dob = models.DateTimeField()
