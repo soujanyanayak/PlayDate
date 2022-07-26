@@ -79,16 +79,15 @@ div.scroll {
             <div class="row">
                 <div class="col-sm-12">
                     <div class="image-container bg2" style="background:url(https://cdn.pixabay.com/photo/2020/03/25/20/20/alpine-4968554_960_720.jpg)">  
-                        <img src="https://bootdey.com/img/Content/avatar/avatar6.png" class="avatar" alt="avatar"> 
+                        <img src={{event.banner}} class="avatar" alt="avatar"> 
                     </div>
                 </div>
                 <div class="col-sm-12">
-                  <h1>Hello</h1>
                     <div class="details">
-                        <h4><i class="fa fa-sheild"></i></h4>
-                        <div>Created by: John Smith</div>
-                        <div>Description: We are going on a hike</div>
-                        <h5>Event Date: July 21, 2022</h5>
+                        <h4>{{event.name}}<i class="fa fa-sheild"></i></h4>
+                        <div>Created by: {{event.user.first_name}} {{event.user.last_name}}</div>
+                        <div>Description: {{event.desc}}</div>
+                        <h5>Event Date: {{event.datetime}}</h5>
                         <div class="tag">Tags: hiking  hikers</div>
                         <div class="mg-top-10">
                             <a href="#" class="btn btn-success" id="btn">Attend Event</a>
@@ -102,7 +101,7 @@ div.scroll {
   </div>
 </div>
 
-
+<!-- to do: Seed event attendees from database -->
 <div class="container">
   <h2 class="groupMembers">Event Attendees:</h2>
   <div class="scroll">

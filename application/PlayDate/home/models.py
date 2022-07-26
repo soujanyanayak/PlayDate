@@ -21,11 +21,11 @@ from django.contrib.auth.models import AbstractUser, User
 
 class Address(models.Model):
     address_id = models.AutoField(primary_key=True)
-    street = models.CharField(max_length=100,default='NA')
-    country = models.CharField(max_length=20,default='NA')
-    city = models.CharField(max_length=45,default='NA')
+    street = models.CharField(max_length=100, default='NA')
+    country = models.CharField(max_length=20, default='NA')
+    city = models.CharField(max_length=45, default='NA')
     zipcode = models.IntegerField(default=00000)
-    state = models.CharField(max_length=45,default='NA')
+    state = models.CharField(max_length=45, default='NA')
 
     class Meta:
         db_table = 'Address'
@@ -67,7 +67,11 @@ class Profile(models.Model):
         max_length=256, null=True, blank=True, default=None)
     avatar = models.ImageField(
         upload_to="uploads", default=None, blank=True)
-    address = models.ForeignKey(Address, null=True, default=None, on_delete=models.SET_DEFAULT)
+    address = models.ForeignKey(
+        Address, null=True, default=None, on_delete=models.SET_DEFAULT)
+    verification = models.ImageField(
+        upload_to="verification", default=None, blank=True)
+    is_verified = models.BooleanField(auto_created=True, default=False)
 
     class Meta:
         db_table = 'Profile'
@@ -76,15 +80,15 @@ class Profile(models.Model):
 class Backendadmin(models.Model):
     backend_admin_id = models.IntegerField(primary_key=True)
     user = models.ForeignKey(User, models.DO_NOTHING)
+
     class Meta:
         # managed = False
         db_table = 'BackendAdmin'
         unique_together = (('backend_admin_id', 'user'),)
 
 
-
 class Dependent(models.Model):
-    dependent_id =  models.AutoField(primary_key=True)
+    dependent_id = models.AutoField(primary_key=True)
     profile = models.ForeignKey('Profile', models.DO_NOTHING)
     name = models.CharField(max_length=45)
     dob = models.DateTimeField()
@@ -107,18 +111,23 @@ class Requestsupport(models.Model):
         (SUPPORT_TYPE_OTHER, "Other")
     ]
     request_id = models.AutoField(primary_key=True)
-    accountID = models.ForeignKey(User, models.DO_NOTHING, blank=True, null=True)
-    general = models.ForeignKey(generalUser, models.DO_NOTHING, blank=True, null=True)
-    staff = models.ForeignKey('Supportstaff', models.DO_NOTHING, blank=True, null=True)
+    accountID = models.ForeignKey(
+        User, models.DO_NOTHING, blank=True, null=True)
+    general = models.ForeignKey(
+        generalUser, models.DO_NOTHING, blank=True, null=True)
+    staff = models.ForeignKey(
+        'Supportstaff', models.DO_NOTHING, blank=True, null=True)
     contact = models.CharField(max_length=52)
     name = models.CharField(max_length=100)
     subject = models.CharField(max_length=100)
-    type = models.CharField(max_length=3, choices=SUPPORT_TYPE_CHOICES, default=SUPPORT_TYPE_ONBOARD)
+    type = models.CharField(
+        max_length=3, choices=SUPPORT_TYPE_CHOICES, default=SUPPORT_TYPE_ONBOARD)
     details = models.TextField(max_length=500)
 
     class Meta:
         # managed = False
         db_table = 'RequestSupport'
+
 
 class Supportstaff(models.Model):
     staff_id = models.IntegerField(primary_key=True)
