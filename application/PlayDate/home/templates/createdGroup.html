@@ -100,7 +100,7 @@
               <div class="tag">Tags: hiking hikers</div>
               <div class="mg-top-10">
                 <a href="#" class="btn btn-success" id="btn">Join Group</a>
-                <a href="/events/createEvent" class="btn btn-success" id="btn">Create Group Event</a>
+                <a href="/events/createEvent/" class="btn btn-success" id="btn">Create Group Event</a>
               </div>
             </div>
           </div>
@@ -116,6 +116,20 @@
   <h2 class="groupMembers">Group Members:</h2>
   <div class="scroll">
     <div class="members">
+
+      <div id="me" class="member">
+        <div class="row">
+          <div class="col-md-2 col-sm-2">
+            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="user" class="profile-photo-lg">
+          </div>
+          <div class="name">
+            <h5>You</h5>
+            <p>Cat: Zelda</p>
+            <a id="me" class="btn btn-danger dismiss-notification"  onclick="myFunction(this.id)">Remove member</a>                
+          </div>
+        </div>
+      </div>
+
       <div id="member1" class="member">
         <div class="row">
           <div class="pic">
@@ -247,7 +261,7 @@
 
 <h2 class="groupEvents">Group Events:</h2>
 <div class="col card mx-2 my-2" style="width: 20rem;">
-  <img src="{% static 'media/hike.jpeg' %}" width="300px" height="300px" class="card-img-top  mt-2" alt="...">
+  <img src="https://cdn.pixabay.com/photo/2020/03/25/20/20/alpine-4968554_960_720.jpg" width="300px" height="300px" class="card-img-top  mt-2" alt="...">
   <div class="card-body">
     <p class="card-text">Hiking</p>
     <a href="/createdEvent" class="btn btn-primary">View details</a>
@@ -255,21 +269,28 @@
 </div>
 <script>
   const btn = document.getElementById('btn');
-
-  //Change button text on click
-  btn.addEventListener('click', function handleClick() {
-    if (btn.textContent === "Join Group") {
-      btn.textContent = "Joined " + "\u2713";
-      btn.style.backgroundColor = "Blue";
+  const me = document.getElementById("me")
+    if(btn.textContent === "Join Group"){
+        document.getElementById("me").style.display="none"; 
     }
-    else {
-      btn.textContent = 'Join Group';
-      btn.style.backgroundColor = "Green";
+
+    //Change button text on click
+    btn.addEventListener('click', function handleClick() {
+    if(btn.textContent === "Join Group"){
+        btn.textContent = "Joined " + "\u2713";
+        btn.style.backgroundColor = "Blue";
+        document.getElementById("me").style.display="block"; 
     }
-  });
+    else{
+        btn.textContent = 'Join Group';
+        btn.style.backgroundColor = "Green";
+        document.getElementById("me").style.display="none"; 
+    }});
 
-
-  function myFunction(id) {
-    document.getElementById(id).style.display = "none";
+    function myFunction(id) { 
+	    document.getElementById(id).style.display="none";
+        if(id=== "me"){
+            btn.textContent = 'Attend Event'
+        } 
   }
 </script>
