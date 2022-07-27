@@ -30,62 +30,28 @@
             <h5><b>Public activities for everyone:</b></h5>
         </div>
         <div class="row">
-            <div class="col card mx-2 my-2" style="width: 18rem;">
-                <img src="{% static 'media/san-leandro-aquatic-play.jpeg' %}" width="300px" height="300px"
-                    class="card-img-top  mt-2" alt="...">
-                <div class="card-body">
-                    <p class="card-text"><a href="/events/publicEvent1">Splashing & Swimming at the San Leandro Family
-                            Aquatic Center</a></p>
-                    <a href="/events/publicEvent1" class="btn btn-primary">View details</a>
-                </div>
+            {% for event in publicevents %}
+                <div class="col card mx-2 my-2" style="width: 18rem;">
+                    <img src={{event.banner.url}} width="300px" height="300px"
+                        class="card-img-top  mt-2" alt="...">
+                    <div class="card-body">
+                        <p class="card-text">
+                            <!-- <a href="/events/publicEvent1">{{event.name}}</a></p> -->
+                            <h5>{{event.name}}</h5>
+                        <!-- <a href="/events/publicEvent1" class="btn btn-primary">View details</a> -->
+                        <div>
+                            <p class="text-center px-5">{{event.desc}}</p>
+                        </div>
+                        <div>
+                            <p>Location:</p>
+                            <p>{{event.address.street}}<br> {{event.address.city}} <br>{{event.address.state}} - {{event.address.zipcode}}</p>
+                        </div>
+                        
+                        
+                    </div>
+                
             </div>
-
-            <div class="col card mx-2 my-2" style="width: 18rem;">
-                <img src="{% static 'media/outdoor-movies.jpeg' %}" class="card-img-top  mt-2" width="300px"
-                    height="300px" alt="...">
-                <div class="card-body">
-                    <p class="card-text">East Bay Outdoor Summer Movie Round-Up</p><br>
-                    <a href="#" class="btn btn-primary">View details</a>
-                </div>
-            </div>
-
-            <div class="col card mx-2 my-2" style="width: 18rem;">
-                <img src="{% static 'media/oakland-ice-kids-skate.jpeg' %}" class="card-img-top mt-2" width="300px"
-                    height="300px" alt="...">
-                <div class="card-body">
-                    <p class="card-text">Indoor Ice Skating in Oakland at Oakland Ice</p><br>
-                    <a href="#" class="btn btn-primary">View details</a>
-                </div>
-            </div>
-        </div>
-        <div class="row mb-4">
-            <div class="col card mx-2 my-2" style="width: 18rem;">
-                <img src="{% static 'media/cheers_oakland.jpeg' %}" class="card-img-top  mt-2" width="300px"
-                    height="300px" alt="...">
-                <div class="card-body">
-                    <p class="card-text">Cheer On Oakland Roots Soccer Team</p><br>
-                    <a href="#" class="btn btn-primary">View details</a><br>
-                </div>
-            </div>
-
-            <div class="col card mx-2 my-2" style="width: 18rem;">
-                <img src="{% static 'media/u-pick-blueberries.jpeg' %}" class="card-img-top  mt-2" width="300px"
-                    height="300px" alt="...">
-                <div class="card-body">
-                    <p class="card-text">U-Pick Blueberries at Duckworth Family Farm in Sebastopol</p>
-                    <a href="#" class="btn btn-primary">View details</a>
-                </div>
-            </div>
-
-            <div class="col card mx-2 my-2" style="width: 18rem;">
-                <img src="{% static 'media/san-ramon.jpeg' %}" class="card-img-top  mt-2" width="300px" height="300px"
-                    alt="...">
-                <div class="card-body">
-                    <p class="card-text">San Ramon Olympic Pool & Aquatic Park</p><br>
-                    <a href="#" class="btn btn-primary">View details</a>
-                </div>
-            </div>
-        </div>
+            {% endfor %}
     </div>
     <footer class="text-center text-white bg-light sticky-bottom">
         <!-- Grid container -->

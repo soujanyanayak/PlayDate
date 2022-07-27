@@ -19,9 +19,9 @@ import requests
 
 # Display public events for general user
 def publicevents(request):
-    # publicevent = Publicevent.objects.all()
+    publicevents = Publicevent.objects.all()
     # return render(request,"events/publicevents.html",{'publicevent':publicevent})
-    return render(request, "events/publicevents.html")
+    return render(request, "events/publicevents.html",{'publicevents': publicevents})
 
 # Display all the events for user to register
 def membersevents(request):

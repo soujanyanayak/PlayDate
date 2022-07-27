@@ -18,13 +18,12 @@ class Publicevent(models.Model):
     public_event_id = models.AutoField(primary_key=True)
     address = models.ForeignKey(Address, models.DO_NOTHING)
     name = models.CharField(max_length=1000)
-
     banner = models.ImageField(
         upload_to="publicevents_banner", default='default.jpg', blank=True)
     # geometry= geomodels.PointField()
-
     category = models.CharField(max_length=10, blank=True, null=True)
     desc = models.TextField(blank=True, null=True)
+    datetime = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         db_table = 'PublicEvent'

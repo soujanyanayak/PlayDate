@@ -26,7 +26,7 @@
         <div class="row">
             {% endif %}
             <div class="col-md-4 card mx-2 my-2" style="border-radius: 15px; width: 26rem;">
-                <img src={{event.banner}} width="300px" height="300px" class="card-img-top  mt-2" alt="...">
+                <img src={{event.banner.url}} width="300px" height="300px" class="card-img-top  mt-2" alt="...">
                 <div class="card-body">
                     <p class="card-text">{{event.name}}</p><br>
                     Posted BY: <a href="#">{{event.user.first_name}} {{event.user.last_name}}</a><br><br>
@@ -53,13 +53,13 @@
         <div>
             <h5><b>Public activities for everyone:</b></h5>
         </div>
-        {% if events %}
+        {% if publicevents %}
 
         <div class="row">
             {% for publicevent in publicevents %}
 
             <div class="col card mx-2 my-2" style="width: 18rem;">
-                <img src={{publicevent.banner}} width="300px" height="300px" class="card-img-top  mt-2" alt="...">
+                <img src={{publicevent.banner.url}} width="300px" height="300px" class="card-img-top  mt-2" alt="...">
                 <div class="card-body">
                     <p class="card-text">{{publicevent.name}}</p>
                     <a href="/events/publicEvent1" class="btn btn-primary">View details</a>
