@@ -19,27 +19,40 @@
         </div>
 
         {% if events %}
+        {% for event in events %}
+        {% load mathfilters %}
+        {% with numerator=event.event_id denominator=3 %}
+        {% if numerator|mod:denominator == 1 %}
         <div class="row">
-            {% for event in events %}
-            <div class="col card mx-2 my-2" style="border-radius: 15px; width: 18rem;">
-                <img src={{event.banner}}  width="300px" height="300px" class="card-img-top  mt-2"
-                    alt="...">
+            {% endif %}
+            <div class="col-md-4 card mx-2 my-2" style="border-radius: 15px; width: 26rem;">
+                <img src={{event.banner}} width="300px" height="300px" class="card-img-top  mt-2" alt="...">
                 <div class="card-body">
                     <p class="card-text">{{event.name}}</p><br>
                     Posted BY: <a href="#">{{event.user.first_name}} {{event.user.last_name}}</a><br><br>
                     <br><br>
-                    <a href="/events/{{event.event_id}}" class="btn btn-primary mx-5">View details</a>
-                    <form method="POST" action="/events/register/{{event.event_id}}/">
-                        {% csrf_token %}
-                        <button name="rsvp"class="btn btn-primary pt-2" type="submit">Register</button>
-                    </form>
+                    <div class="row">
+                        <a href="/events/{{event.event_id}}" class="col-4 btn btn-primary mx-4">View details</a>
+                        <form method="POST" action="/events/register/{{event.event_id}}/" class="col mx-4">
+                            {% csrf_token %}
+                            <button name="rsvp" class="btn btn-primary pt-2" type="submit">Register</button>
+                        </form>
+                    </div>
+
+
                     <!-- <a href="/events/signUpSucceed" class="btn btn-primary mx-4">Sign
                         Up</a> -->
                 </div>
             </div>
-            {% endfor %}
+            {% if numerator|mod:denominator == 0 %}
+        </div>
+        {% endif %}
+        {% endwith %}
+        {% endfor %}
 
-            <!-- <div class="col card mx-2 my-2" style="border-radius: 15px; width: 18rem;">
+        {% endif %}
+
+        <!-- <div class="col card mx-2 my-2" style="border-radius: 15px; width: 18rem;">
                 <img src="{% static 'media/ocean-view-park.jpg' %}" class="card-img-top  mt-2" width="300px"
                     height="300px" alt="...">
                 <div class="card-body">
@@ -64,8 +77,8 @@
                         Up</a>
                 </div>
             </div> -->
-        </div>
-        {% endif %}
+
+
         <!-- <div class="row mb-4">
             <div class="col card mx-2 my-2" style="border-radius: 15px; width: 18rem;">
                 <img src="{% static 'media/rain-splash.jpg' %}" class="card-img-top  mt-2" width="300px" height="300px"
@@ -110,10 +123,9 @@
 
         <div class="row">
             {% for publicevent in publicevents %}
-            
+
             <div class="col card mx-2 my-2" style="width: 18rem;">
-                <img src={{publicevent.banner}} width="300px" height="300px"
-                    class="card-img-top  mt-2" alt="...">
+                <img src={{publicevent.banner}} width="300px" height="300px" class="card-img-top  mt-2" alt="...">
                 <div class="card-body">
                     <p class="card-text">{{publicevent.name}}</p>
                     <a href="/events/publicEvent1" class="btn btn-primary">View details</a>
