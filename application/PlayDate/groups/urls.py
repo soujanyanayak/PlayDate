@@ -20,6 +20,7 @@ urlpatterns = [
 
 
     # DEV USE ONLY
+    path('gTest/', views.groupStaticTest, name='groupStaticTest'),
     path('joinSuccess/', views.joinSuccess, name='joinSuccess'),
     # For development use, this will be merged with the view Group page.
     path('testGroup/', views.testGroup, name="test"),

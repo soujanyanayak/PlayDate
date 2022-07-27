@@ -13,7 +13,7 @@
             <input type="text" name="q" value="{{request.GET.q}}" placeholder="city"/>
             <input type="submit" name="submit" value="Search"/>
         </form> -->
-<!-- Empty Search sends you home -->
+    <!-- Empty Search sends you home -->
     {% if submitbutton == 'Search' and request.GET.q == '' %}
     <div>Hello There nothing in here</div>
     <meta http-equiv="Refresh" content="0; url='/" />
@@ -39,31 +39,54 @@
     <!-- result found -->
 
     <div class="grid-container">
+        <div style=" padding: 30px 0px 0px 0px;">
+            <h5><b>Public activities for everyone:</b></h5>
+        </div>
+        <div style=" padding: 30px 0px 0px 0px; float: right;">
+            
+            <label class="small mb-1" for="filter">Filter</label>
+            <select id="filter" name="filter" value="">
+                <option value="ALL">All</option>
+                <option value="AL">Catagories</option>
+                <option value="AL">Tags</option>
+                <option value="AL">Location</option>
+
+            </select>
+        </div>
+    </div>
+    <div class="grid-container">
+
 
         <table class="table widget-26">
             <tbody>
                 {% for result in results %}
 
 
-                <div class="gal-detail thumb">
+                <div class="col card mx-2 my-2" style="width: 18rem;">
                     {% if result.banner.url != None %}
-                    <div class="event_banner">
-                        <img src="{{result.banner.url}}" alt="" width="150px" height="150px" />
-                    </div>
+
+                    <img src="{{result.banner.url}}" alt="" class="card-img-top mt-2" width="300px" height="300px" />
+
                     {% else %}
-                    <div class="event_banner">
-                        <img src="/media/publicevents_banner/default.jpeg" style="width: 5vw; height: 3vh" alt="" />
-                    </div>
+
+                    <img src="/media/publicevents_banner/default.jpeg" class="card-img-top mt-2" width="300px"
+                        height="300px" alt="..." />
+
                     {% endif %}
                     <div class="event_name">
                         <a href="/events/publicEvent1" target="_blank" class="url">{{result.name}}</a>
                         <p class="m-0"></p>
                     </div>
-                    <span class="location">
-                        {{result.address.street}}, {{result.address.city}},
-                        {{result.address.state}},
-                        {{result.address.country}} - {{result.address.zipcode}}</span>
+                    <p>
+                        <span lass="card-text">
+                            {{result.address.street}}, {{result.address.city}},
+                            {{result.address.state}},
+                            {{result.address.country}} - {{result.address.zipcode}}
+                        </span>
                     </p>
+                    <div class="card-body">
+                        <a href="/events/publicEvent1" class="btn btn-primary">View details</a>
+                    </div>
                 </div>
                 {% endfor %}
             </tbody>
@@ -73,12 +96,12 @@
 
     {% else %}
     <!-- Crazy input not found -->
-  
+
     <div class="grid-container">
 
-                <div class="gal-detail thumb" style="font-size: 130%;">
-                   <Header>No results found please try again</Header>
-                </div>
+        <div class="gal-detail thumb" style="font-size: 130%;">
+            <Header>No results found please try again</Header>
+        </div>
 
     </div>
 
@@ -89,7 +112,7 @@
 <style>
     body {
         margin-top: 20px;
-        background: #eee;
+        background-color: #9de2ff;
     }
 
     .portfolioFilter a {
@@ -127,7 +150,9 @@
         padding-top: 10px;
         width: 100%;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-        border-radius: 5px;
+        border-radius: 15px;
+        width: 18rem;
+
     }
 
     .thumb-img {
@@ -152,15 +177,25 @@
         margin: 10px auto;
     }
 
-    @media(min-width:35em) {
+    .grid-container {
+        width: 95%;
+        max-width: 1200px;
+        margin: auto;
+        display: grid;
+
+        grid-gap: 1em;
+        grid-template-columns: repeat(3, minmax(15em, 1fr));
+
+    }
+
+    @media(min-width:100em) {
         .grid-container {
             width: 95%;
             max-width: 1200px;
             margin: auto;
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             grid-gap: 1em;
-            grid-template-columns: repeat(auto-fit, minmax(15em, 1fr));
 
         }
     }
