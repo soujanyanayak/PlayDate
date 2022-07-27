@@ -181,6 +181,7 @@ def profileEditPage(request):
 
 # /[serv]/profile
 def profilePage(request):
+    verForm = forms.profileVerificationForm()
     # If GET, send the user, profile, account and dependents
     if request.method == "GET":
         if not request.user.is_authenticated:
@@ -200,7 +201,7 @@ def profilePage(request):
                 print (account)
                 print ("Dependents--------------------------")
                 print (dependents)
-                return render(request, 'profilePage.html', {'user': request.user, 'account': account, 'profile': profile, 'dependents': dependents})
+                return render(request, 'profilePage.html', {'user': request.user, 'account': account, 'profile': profile, 'dependents': dependents, 'verForm': verForm})
     # If Post, we will update User, Profile, and Account and send
     # everything to the client with a success message
     if request.method == "POST":
@@ -242,6 +243,7 @@ def profilePage(request):
                 'account': account,
                 'profile': profileObj, 
                 'dependents': dependents,
+                'verForm': verForm,
                 'modalTitle': "Success!",
                 'modalText': "Successfully saved your Account Details.",
                 'modalBtnText': "Close",
@@ -335,6 +337,22 @@ def dependents(request):
                     return JsonResponse(retVal, status=500)
         return JsonResponse({'message': "Please login."}, status=403)
     return JsonResponse({ 'message': "Please use POST."}, status=403)
+
+# /[serv]/verificationUpload
+def verificationUpload(request):
+    if not request.user.is_authenticated:
+        return redirect("home")
+    if request.method == "POST":
+        verForm = forms.profileVerificationForm(request.POST, request.FILES)
+        if verForm.is_valid():
+            verProfile = models.Profile.objects.get(profileID=request.user)
+            if len(request.FILES) == 0:
+                verProfile.verification = None
+            else:
+                verProfile.verification = request.FILES['verification']
+            verProfile.save()
+    return redirect("profilePage")
+
 
 # /[serv]/profile/[int]
 # TODO: Will need dependents too.

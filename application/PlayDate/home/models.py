@@ -7,6 +7,7 @@
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 from django.contrib.auth.models import AbstractUser, User
+from django.core.validators import FileExtensionValidator
 
 
 # Create your models here.
@@ -67,11 +68,12 @@ class Profile(models.Model):
         max_length=256, null=True, blank=True, default=None)
     avatar = models.ImageField(
         upload_to="uploads", default=None, blank=True)
-    address = models.ForeignKey(
-        Address, blank=True, null=True, default=None, on_delete=models.SET_DEFAULT)
+    address = models.ForeignKey(Address, blank=True, null=True, default=None, on_delete=models.SET_DEFAULT)
     verification = models.ImageField(
-        upload_to="verification", default=None, blank=True)
+        upload_to="verification", default=None, blank=True,
+        validators=[FileExtensionValidator( ['png', 'jpg', 'jpeg', 'gif', 'apng', 'tiff', 'avif', 'webp'] )])
     is_verified = models.BooleanField(auto_created=True, default=False)
+    date_verified = models.DateTimeField(null=True, default=None)
 
     class Meta:
         db_table = 'Profile'

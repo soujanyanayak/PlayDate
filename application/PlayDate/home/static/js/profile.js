@@ -490,6 +490,39 @@ function getUTC(date) {
                     date.getUTCMinutes(), date.getUTCSeconds());
 }
 
+// Validate an image
+// Checks for size and file extension
+// NOTE: Checking the extension of a file
+//  does not guarantee that the file is
+//  actually that type. 
+function validateImage(inputId) {
+    let imgElement = document.getElementById(inputId);
+    let submittable = true;
+    if (imgElement.files.length == 1) {
+        imgFile = imgElement.files.item(0);
+        imgSize = imgFile.size;
+        imgExtension = imgFile.name.split('.').pop();
+        allowedTypes = "apng,avif,gif,jpeg,jpg,png,webp";
+
+        // Check for image too big
+        if (imgSize > 6.5 * 1048578){
+            imgElement.value = "";
+            submitted = false;
+            setModal("Image Too Large", "Your file is "+imgSize+" bytes. The max files size is "+(6.5*1048578)+" bytes. Please select another image.", "Ok");
+            showModal();
+        }
+
+        // Check for proper extension
+         else if (!allowedTypes.includes(imgExtension)) {
+            imgElement.value = "";
+            submitted = false;
+            setModal("Image Wrong Type", "Your image is a "+imgExtension+" file. PlayDate only supports apng, avif, gif, jpeg, jpg, png, and webp formats. Please select another image.", "Ok");
+            showModal();
+        }        
+    }
+    return submittable;
+}
+
 // When the page loads, we need to set the state dropdown.
 window.addEventListener("DOMContentLoaded", ()=> {
     // Set the state drop down to the correct state.

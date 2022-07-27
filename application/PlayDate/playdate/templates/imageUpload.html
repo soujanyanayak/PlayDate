@@ -1,0 +1,170 @@
+{% comment %}
+// imageUpload.html
+//  This template includes the html and the js to include a 
+//  stylable image upload input. 
+//
+// When using this template, you should emulate the following:
+// {% include 'imageUpload.html' with 
+//      iuID="0" 
+//      iuAttribute="verification"
+//      iuValEvent="btnCtrl" 
+//      iuNoFileText="No image provided"
+//      iuButtonText="Upload File" %}
+// NOTE: this is presented on multiple lines for readability. When using it,
+//  you will need to compress the include tag to a single line.
+//
+// iuID:--------------------------------------------------------------------
+//  An identifier to separate multiple imageUpload includes in the same file
+//
+// iuAttribute:-------------------------------------------------------------
+//  The name of the attribute of the form that relates to this attribute.
+//  For example, if you form verificationForm which includes a 'verification'
+//  imageField, imageUploadAttribute would be 'verification'.  
+//
+// iuValEvent:-------------------------------------------------------OPTIONAL
+//  A javascript function which takes as an argument a dictionary containing
+//  the validation status, and returns false if selection should be cleared. 
+//  For example, if you had to disable a button based on whether a valid file 
+//  has been chosen, you could write the following function in a .js file 
+//  referenced by your .html, then pass 'btnCtrl' as iuValEvent.
+//
+//      function btnCtrl(fileStatus) {
+//          let invalid = !fileStatus.valid;
+//          document.getElementById("btnId").disabled = invalid;
+//          if (invalid){
+//              alert(fileStatus.error.summary);
+//          }
+//          return fileStatus.valid;
+//      }
+//
+//  It helps to think of the argument being passed in as follows:
+//
+//      fileStatus = {
+//          valid: Whether the file is the right type and size
+//          // IF !valid, fileStatus will also include
+//          error: {
+//              summary: Summary of the error
+//              text: A longer description of the error
+//          }
+//      }
+//
+//  If iuValEvent is not provided, then invalid files will be removed,
+//  and errors will be presented to user by alert();
+//
+// iuNoFileText:-----------------------------------------------------OPTIONAL
+//  The text that should be displayed when no valid image has been provided.
+//  If not specified, iuNoFileText defaults to "No Image Provided".
+//
+// iuButtonText:-----------------------------------------------------OPTIONAL
+//  The text that appears on the button that launches the file explorer. This
+//  defaults to "Upload File".
+{% endcomment %}
+<script>
+    // upl IDs
+    const uplLabelId_{{iuID}} = "uplLabel_{{iuID}}";
+    const uplButtonId_{{iuID}} = "uplButton_{{iuID}}";
+    const uplInputId_{{iuID}} = "id_{{iuAttribute}}";
+
+    // triggerSelect
+    //  Very simple event handler for our button to trigger the input.click
+    function triggerSelect_{{iuID}}() {
+        document.getElementById(uplInputId_{{iuID}}).click();
+    }
+
+    // genericValEvent:
+    //  Errors will be presented to the user by alert() and removed from the
+    //  input.
+    function genericValEvent_{{iuID}}(fileStatus){
+        if (!fileStatus.valid) {
+            alert(fileStatus.error.text);
+            return false;
+        }
+    }
+
+    // verify:
+    //  Validates the file for size and extensions, then calls the event
+    //  handler.
+    function verify_{{iuID}}() {
+
+        let uplLabel = document.getElementById(uplLabelId_{{iuID}});
+        let uplButton = document.getElementById(uplButtonId_{{iuID}});
+        let uplInput = document.getElementById(uplInputId_{{iuID}});
+
+        let lblText = "{{iuNoFileText|default:"No Image Provided"}}";
+        let fileStatus = { valid: true };
+
+        // Check for any files
+        if (uplInput.files.length == 0) {
+            fileStatus= {
+                valid: false,
+                error: {
+                    summary: "No File Provided",
+                    text: "No files have been selected. Please choose one."
+                }
+            };
+        
+        // Check for too many files
+        } else if (uplInput.files.length > 1) {
+            fileStatus= {
+                valid: false,
+                error: {
+                    summary: "Too Many Files Provided",
+                    text: "Several files were selected. Please choose just one."
+                }
+            };
+        } else {
+            imgFile = uplInput.files.item(0);
+            imgSize = imgFile.size;
+            imgExtension = imgFile.name.split('.').pop();
+            allowedTypes = "apng,avif,gif,jpeg,jpg,png,webp";
+
+            // Check for image too big
+            if (imgSize > 6.5 * 1048578){
+                fileStatus= {
+                    valid: false,
+                    error: {
+                        summary: "Image Too Large",
+                        text: "The file you chose is "+imgSize+" bytes large. The max file size is "+(6.5*1048578)+" bytes. Please select another image."
+                    }
+                }
+            }
+
+            // Check for proper extension
+            else if (!allowedTypes.includes(imgExtension)) {
+                fileStatus= {
+                    valid: false,
+                    error: {
+                        summary: "Image Wrong Type",
+                        text: "Your image is a "+imgExtension+" file. PlayDate only supports apng, avif, gif, jpeg, jpg, png, and webp formats. Please select another image."
+                    }
+                }
+            }        
+        }
+
+        // Call the event handler, then edit our control as needed
+        {% if iuValEvent %} let keepFile = {{ iuValEvent }}(fileStatus); 
+        {% else %} let keepfile = genericValEvent_{{iuID}}(fileStatus); {% endif %}
+        if (!keepFile) {
+            // Clear the file selection
+            uplInput.value = "";
+        } else {
+            lblText = uplInput.files.item(0).name;
+            if (lblText.length > 32) {
+                let lblExt = lblText.split('.').pop();
+                let shortenAmount = lblExt.length + 3;
+                lblText = lblText.substring(0,32-shortenAmount) + "..." + lblExt;
+            }
+        }
+        uplLabel.innerText = lblText;
+    }
+    
+    window.addEventListener("DOMContentLoaded", ()=> {
+        document.getElementById(uplInputId_{{iuID}}).addEventListener("change", verify_{{iuID}});
+        document.getElementById(uplButtonId_{{iuID}}).addEventListener("click", triggerSelect_{{iuID}});
+    });
+</script>
+<div class="uplContainer d-flex flex-column-reverse" id="uplContainer_{{iuID}}"> 
+    <label class="uplLabel" id="uplLabel_{{iuID}}">{{iuNoFileText|default:"No Image Selected"}}</label>
+    <button class="uplButton btn btn-secondary" id="uplButton_{{iuID}}" type="button" onclick="triggerSelect_{{iuID}}">{{iuButtonText|default:"Upload Image"}}</button>
+    <input class="invisible w-25" type="file" name="{{iuAttribute}}" accept="image/*" id="id_{{iuAttribute}}">
+</div>

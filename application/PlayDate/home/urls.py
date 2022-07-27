@@ -29,4 +29,5 @@ urlpatterns = [
     path('createdGroup/', views.createdGroup, name="createdGroup"),
     path('createdEvent/', views.createdEvent, name='createdEvent'),
     path('dependents/', views.dependents, name='dependents'),
+    path('verificationUpload/', views.verificationUpload, name='verificationUpload')
 ]
