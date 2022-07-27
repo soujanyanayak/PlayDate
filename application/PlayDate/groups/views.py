@@ -13,6 +13,7 @@ import random
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.models import User
+from django.db.models import Q
 from home.models import Profile
 from . import models
 from . import forms
@@ -23,10 +24,21 @@ from . import forms
 def Search(request):
     # sampleGroups defines a random list of groups to be suggested to the user.
     # groups = list(models.Group.objects.all())
-    if len(list(models.Group.objects.all())) > 2:
-        sampleGroups = random.sample(list(models.Group.objects.all()), 3)
-    else:
-        sampleGroups = []
+    sampleGroups = []
+    try:
+        groupMembersList = random.sample(
+            list(models.Member.objects.filter(~Q(member_id=request.user.id))), 3)
+        print(groupMembersList)
+
+    except:
+        groupMemberList = []
+    for i in groupMembersList:
+        print(i)
+        sampleGroups.append(
+            models.Group.objects.get(group_id=i.group_id_id))
+
+    #print("sample:", sampleGroups)
+
     # print(sampleGroups)
 
     if 'search' in request.GET:

@@ -53,17 +53,21 @@ class Event(models.Model):
     desc = models.TextField(blank=True, null=True)
     name = models.CharField(max_length=200, blank=True, null=True)
     datetime = models.DateTimeField(blank=True, null=True)
-    banner = models.ImageField(upload_to="publicevents_banner", default=None, blank=True)
+    banner = models.ImageField(
+        upload_to="publicevents_banner", default=None, blank=True)
     category = models.CharField(max_length=10, blank=True, null=True)
 
     class Meta:
         # managed = False
         db_table = 'Event'
 
+
 class EventRegistration(models.Model):
-    # registration_id=models.AutoField(primary_key=True)
-    user = models.ForeignKey(User, models.DO_NOTHING, blank=True, null=True)
-    event = models.ForeignKey(Event, models.DO_NOTHING, blank=True, null=True)
+    registration_id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(User, models.DO_NOTHING,
+                             default=None, blank=True, null=True)
+    event = models.ForeignKey(Event, models.DO_NOTHING,
+                              default=None, blank=True, null=True)
 
     class Meta:
         db_table = 'EventRegistration'
