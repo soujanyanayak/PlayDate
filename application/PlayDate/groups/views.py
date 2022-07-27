@@ -9,7 +9,7 @@
 # are handled by our application including joining/leaving, posting events/comments,
 # CRUD operations on group entities, and groupAdmin functionalities.
 #•••••••••••••••••••••••••••••••••••••••••••#
-
+import random
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.models import User
@@ -20,13 +20,18 @@ from . import forms
 
 
 def Search(request):
+    # sampleGroups defines a random list of groups to be suggested to the user.
+    #groups = list(models.Group.objects.all())
+    sampleGroups = random.sample(list(models.Group.objects.all()), 3)
+    # print(sampleGroups)
+
     if 'search' in request.GET:
         query = request.GET['search'].split()
         print("\nQuery:", query)
         groups = models.Group.objects.filter(tags__name__in=query).distinct()
         print(groups)
-        return render(request, "groups/groupSearch.html", {'groups': groups})
-    return render(request, "groups/groupSearch.html")
+        return render(request, "groups/groupSearch.html", {'groups': groups, 'sampleGroups': sampleGroups})
+    return render(request, "groups/groupSearch.html", {'sampleGroups': sampleGroups})
 
 
 def myGroup(request):
@@ -575,7 +580,7 @@ def individualGroup(request):
 # STATIC: PROTOTYPE USE ONLY
 
 
-def groups(request):
+def groupStaticTest(request):
     # The code in this function is the startercode for the group search
     # groupList = models.Group.objects.order_by('-group_id')[:]
 

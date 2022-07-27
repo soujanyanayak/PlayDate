@@ -15,14 +15,10 @@ Description: Searching for groups. This page may be integrated into the search b
         <title>Group Search</title>
     </head>
     <body>
-        {% if user.is_authenticated %} {% load static %} {% include "registered_navbar.html" %} {%else%} {%load static%}
-        {% include "general_navbar.html" %} {% endif %} {% if user.is_authenticated %}
+        {% if user.is_authenticated %} {% load static %} {% include "registered_navbar.html" %} {%else%} {%load static%} {% include "general_navbar.html" %} {% endif %} {% if user.is_authenticated %}
 
         <!--FIXTHIS: This needs to be centered-->
-        <div
-            class="card searchBar"
-            style="width: 50vw; position: absolute; padding: 1%; top: 15vh; left: 25%; border: solid blue 3px"
-        >
+        <div class="card searchBar" style="width: 50vw; position: absolute; padding: 1%; top: 15vh; left: 25%; border: solid blue 3px">
             <h1>Search!</h1>
             <form method="GET">
                 {% csrf_token %}
@@ -31,7 +27,6 @@ Description: Searching for groups. This page may be integrated into the search b
                 <a href="/groups/createGroup" class="btn btn-primary me-1" style="width: 10rem">Create a Group!</a>
             </form>
         </div>
-
         {% if groups %}
         <div class="card" style="border: solid blue 1px; width: 50vw; position: absolute; top: 30%; left: 25%">
             {% for group in groups %}
@@ -44,23 +39,14 @@ Description: Searching for groups. This page may be integrated into the search b
                         </div>
                         {% else %}
                         <div class="col-sm-5">
-                            <img
-                                src="/media/publicevents_banner/default.jpeg"
-                                style="width: 20vw; height: 20vh"
-                                alt=""
-                            />
+                            <img src="/media/publicevents_banner/default.jpeg" style="width: 20vw; height: 20vh" alt="" />
                         </div>
 
                         {% endif %}
                     </td>
                     <td style="">
-                        <div
-                            class="col-sm-7"
-                            style="align-content: left; width: 28vw; height: 20vh; text-align: left; margin: 0 auto"
-                        >
-                            <a href="{% url 'groupView' group_id=group.group_id %}" style="text-align: left"
-                                ><strong>{{group.group_name}}</strong></a
-                            >
+                        <div class="col-sm-7" style="align-content: left; width: 28vw; height: 20vh; text-align: left; margin: 0 auto">
+                            <a href="{% url 'groupView' group_id=group.group_id %}" style="text-align: left"><strong>{{group.group_name}}</strong></a>
                             <p>{{group.group_desc}}</p>
                         </div>
                     </td>
@@ -70,6 +56,29 @@ Description: Searching for groups. This page may be integrated into the search b
         </div>
         <br />
         <br />
+        {% endif %} {% if sampleGroups %}
+        <div class="row" style="position: relative; margin-top: 30vh; margin-left: 15%; width: 70%">
+            {% for sampleGroup in sampleGroups %}
+            <div class="col card mx-2 my-2" style="width: 18rem; border: solid blue">
+                {% if group.banner.url != None %}
+                <div class="col-sm-5">
+                    <img src="{{group.banner.url}}" class="card-img-top mt-2" style="width: 20vw; height: 20vh" alt="" />
+                </div>
+                {% else %}
+                <div class="col-sm-5">
+                    <img src="/media/publicevents_banner/default.jpeg" class="card-img-top mt-2" style="width: 20vw; height: 20vh" alt="" />
+                </div>
+
+                {% endif %}
+                <div class="card-body">
+                    <a href="{% url 'groupView' group_id=sampleGroup.group_id %}" class="card-text"><strong>{{sampleGroup.group_name}}</strong></a>
+                    <a href="{% url 'groupView' group_id=sampleGroup.group_id %}" class="btn btn-primary ms-5">Group Page</a>
+                    <p>{{sampleGroup.group_desc}}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
         {% endif %}
         <!--
         <div class="results" style="position: absolute; top: 30%; left: 40%">
@@ -84,14 +93,9 @@ Description: Searching for groups. This page may be integrated into the search b
         </div>
         -->
         {% else %}
-        <div
-            class="notLoggedIn"
-            style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border: 5px dotted blue"
-        >
+        <div class="notLoggedIn" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border: 5px dotted blue">
             <h1>You need to be logged in to search!</h1>
-            <h4 style="text-align: center">
-                <a href="/register/">🐱Register here!</a>•Already registered?•<a href="/login/">Login Here!🐱</a>
-            </h4>
+            <h4 style="text-align: center"><a href="/register/">🐱Register here!</a>•Already registered?•<a href="/login/">Login Here!🐱</a></h4>
         </div>
 
         {% endif %}
