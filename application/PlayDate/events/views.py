@@ -7,6 +7,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.db.models import Q
 from events.models import EventRegistration
 from home.forms import addressForm
+from home.models import User
 from events.forms import eventForm
 from events.forms import GroupEventForm, PublicEventForm
 from events.models import Publicevent, Address, Event
@@ -24,7 +25,12 @@ def publicevents(request):
 
 # Display all the events for user to register
 def membersevents(request):
-    events=Event.objects.all()
+    user=request.user
+    eventregistrations=EventRegistration.objects.filter(user=user)
+    print(eventregistrations)
+    events=Event.objects.all().exclude(event_id__in = eventregistrations)
+    print(events)
+    
     publicevents= Publicevent.objects.all()
     return render(request, "membersevents.html",{'events':events,'publicevents':publicevents})
 
@@ -33,7 +39,7 @@ def eventRegistration(request,event_id):
     if request.method == 'POST':
         event=Event.objects.get(event_id=event_id)
         event_registration=EventRegistration.objects.create(user=user,event=event)
-        return render(request,"memberEvent1.html",{'event':event,'registration_id':event_registration.registration_id})
+        return render(request,"memberEvent1.html",{'event':event,'registration':event_registration})
 
 
 def publicEvent1(request):
@@ -49,7 +55,10 @@ def signUpSucceed(request):
 
 
 def myEvent(request):
-    return render(request, "myEvent.html")
+    user=request.user
+    eventregistrations=EventRegistration.objects.filter(user=user)
+    events=Event.objects.filter(user=user)
+    return render(request, "myEvent.html",{'registered_events':eventregistrations,'events':events})
 
 
 def createPublicEvent(request):
@@ -86,7 +95,7 @@ def createGroupEvent(request):
     else:
         form = GroupEventForm()
 
-    return render(request, "createEvent.html", {'form': form})
+    return render(request, "/events/createEvent.html", {'form': form})
 
 
 def filter(request):
@@ -115,6 +124,8 @@ def createEvent(request):
             event.address=address
             event.save()
             print(event.event_id)
+            event=Event.objects.get(event_id=event.event_id)
+            event_registration=EventRegistration.objects.create(user=user,event=event)
     
             return HttpResponseRedirect('/events/%s/'%event.event_id)
     else:
@@ -127,7 +138,18 @@ def createEvent(request):
 def viewEvent(request, event_id):
     event=Event.objects.get(event_id=event_id)
     print(event.name)
-    return render(request, 'events/createdEvent.html', {'event' : event})
+    user=request.user
+    registration=EventRegistration()
+    creator=0
+    try:
+        registration=EventRegistration.objects.filter(user__exact=user.user_id).filter(event__exact=event_id)
+    except:
+        print(registration)
+    if registration is not None:
+        creator=1
+    attendees=EventRegistration.objects.filter(event=event_id)
+    # print (registrations)
+    return render(request, 'events/createdEvent.html', {'event' : event, 'attendees': attendees,'creator':creator})
 
 # Returns Search result for events
 def events(request):

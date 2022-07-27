@@ -61,12 +61,13 @@ class Event(models.Model):
         db_table = 'Event'
 
 class EventRegistration(models.Model):
-    registration_id=models.AutoField(primary_key=True)
+    # registration_id=models.AutoField(primary_key=True)
     user = models.ForeignKey(User, models.DO_NOTHING, blank=True, null=True)
     event = models.ForeignKey(Event, models.DO_NOTHING, blank=True, null=True)
 
     class Meta:
         db_table = 'EventRegistration'
+        unique_together = ('event', 'user')
 
 
 class Comment(models.Model):

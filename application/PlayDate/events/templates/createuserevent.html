@@ -15,7 +15,7 @@
         <h1>Create event</h1>
 
         <div class="container">
-                <form method="POST" action="/events/public-events/createvent/">
+                <form method="POST" enctype="multipart/form-data" action="/events/public-events/createvent/">
                     {% csrf_token %}
                     <div class="form-group">
                         <label>Event Name </label>

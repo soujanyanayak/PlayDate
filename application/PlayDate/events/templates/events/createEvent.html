@@ -21,7 +21,7 @@
         <div class="card mx-auto my-3" style="width: 30rem;">
                 <div class="card-body">
                         <div class="register" style="width: 450px;">
-                                <form method="POST">
+                                <form method="POST" enctype="multipart/form-data">
                                         {% csrf_token %}
                                         <label for="eventname"><b>{{eventform.name.label}}</b><br>
                                                 {{eventform.name}}</label><br>
