@@ -23,7 +23,10 @@ from . import forms
 def Search(request):
     # sampleGroups defines a random list of groups to be suggested to the user.
     #groups = list(models.Group.objects.all())
-    sampleGroups = random.sample(list(models.Group.objects.all()), 3)
+    if len(models.Group.objects > 2):
+        sampleGroups = random.sample(list(models.Group.objects.all()), 3)
+    else:
+        sampleGroups = []
     # print(sampleGroups)
 
     if 'search' in request.GET:
