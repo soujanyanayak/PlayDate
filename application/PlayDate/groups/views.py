@@ -46,7 +46,8 @@ def Search(request):
         print("\nQuery:", query)
         groups = models.Group.objects.filter(tags__name__in=query).distinct()
         print(groups)
-        return render(request, "groups/groupSearch.html", {'groups': groups, 'sampleGroups': sampleGroups})
+        #return render(request, "groups/groupSearch.html", {'groups': groups, 'sampleGroups': sampleGroups})
+        return render(request, "groups/groupSearch.html", {'groups': groups})
     return render(request, "groups/groupSearch.html", {'sampleGroups': sampleGroups})
 
 

@@ -12,7 +12,7 @@
     {% endif %}
     {% endblock %}
     <br><br><br><br>
-    <div class="container">
+    <div class="wrapper">
         <div class="row">
             <div class="col-lg-6 mx-auto">
                 <h2>My Groups: </h2>
@@ -38,35 +38,34 @@
                         {% for group in groupList %}
                         <tr class="inner-box">
                             <td>
-                              {% if group.banner.url != None %}
-                             <div class="col-sm-5">
-                               <img src="{{group.banner.url}}" style="width: 20vw; height: 20vh" alt="" />
-                             </div>
-                              {% else %}
-                             <div class="col-sm-5">
-                               <img
-                                   src="/media/publicevents_banner/default.jpeg"
-                                   style="width: 20vw; height: 20vh"
-                                   alt=""
-                               />
-                             </div>
-      
-                        {% endif %}
+                                {% if group.banner.url != None %}
+                                <div class="col-sm-5">
+                                    <img src="{{group.banner.url}}" style="width: 20vw; height: 20vh" alt="" />
+                                </div>
+                                {% else %}
+                                <div class="col-sm-5">
+                                    <img src="/media/publicevents_banner/default.jpeg" style="width: 20vw; height: 20vh"
+                                        alt="" />
+                                </div>
+
+                                {% endif %}
 
                             </td>
                             <td>
                                 <div class="event-wrap">
-                                        <span><a href="/createdGroup"></a></span><br><br>
+                                    <span><a href="/createdGroup"></a></span><br><br>
                                     <div class="meta">
                                         <div class="group name">
-                                                <a href="{% url 'groupView' group_id=group.group_id %}"><strong>{{group.group_name}}</strong></a><br><br>
+                                            <a
+                                                href="{% url 'groupView' group_id=group.group_id %}"><strong>{{group.group_name}}</strong></a><br><br>
                                         </div>
 
                                         <div class="organizers">
-                                                <b>Group Admin:</b> <a href="{% url 'profileView' profile_id=group.group_admin.id %}">{{group.group_admin}}</a><br><br>
+                                            <b>Group Admin:</b> <a
+                                                href="{% url 'profileView' profile_id=group.group_admin.id %}">{{group.group_admin}}</a><br><br>
                                         </div>
                                         <div class="desc">
-                                                <b>Description:</b>{{group.group_desc}}<br><br>
+                                            <b>Description:</b>{{group.group_desc}}<br><br>
                                         </div>
                                         <!-- Implement member count later; running out of time right now
                                         <div class="Member Count">
@@ -77,12 +76,13 @@
                                 </div>
                             </td>
                             <td>
-                                <a href="{% url 'groupView' group_id=group.group_id %}" class="btn btn-primary">Group Page</a>
+                                <a href="{% url 'groupView' group_id=group.group_id %}" class="btn btn-primary">Group
+                                    Page</a>
                             </td>
                         </tr>
                         {% endfor %}
                         {% else %}
-                        
+
                         {% endif %}
                     </tbody>
                 </table>
@@ -91,45 +91,8 @@
         </div>
         <!-- /col end-->
     </div>
-    <footer class="text-center text-white bg-light sticky-bottom">
-        <!-- Grid container -->
-        <div class="container pt-3">
-            <!-- Section: Social media -->
-            <section>
-                <!-- Facebook -->
-                {% load static %}
-                <a href="#" class="mx-2"><img src="{% static 'media/facebook.png' %}"></a>
+    {% include "footer.html" %}
 
-                <!-- Instagram -->
-                <a href="#" class="mx-2"><img src="{% static 'media/instagram.png' %}"></a>
-
-                <!-- Twitter -->
-                <a href="#" class="mx-2"><img src="{% static 'media/twitter.png' %}"></a>
-
-                <!-- Tiktok -->
-                <a href="#" class="mx-2"><img src="{% static 'media/tiktok.png' %}"></a>
-
-                <!-- Reddit -->
-                <a href="#" class="mx-2"><img src="{% static 'media/reddit.png' %}"></a>
-
-                <!-- Github -->
-                <a href="#" class="mx-2"><img src="{% static 'media/github.png' %}"></a>
-            </section>
-            <!-- Section: Social media -->
-        </div>
-        <!-- Grid container -->
-
-        <!-- Copyright -->
-        <div class="text-center bg-light p-3">
-            <span class="text-dark ">
-                <a href="/termsofuse">Terms of Use | </a><a href="/privacy">Privacy Notice | </a><a
-                    href="/helpPage">Contact
-                    Us</a><br>
-            </span>
-            <span class="text-dark">Copyright © 2022 TheBabySitters. All rights reserved.</span>
-        </div>
-        <!-- Copyright -->
-    </footer>
 </body>
 
 
