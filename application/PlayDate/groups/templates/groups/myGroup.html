@@ -33,87 +33,57 @@
                         </tr>
                     </thead>
                     <tbody>
+
+                        {% if groupList %}
+                        {% for group in groupList %}
                         <tr class="inner-box">
                             <td>
-                                <div class="event-img">
-                                    <img src="{% static 'media/Uc_Village_Parents.jpg' %}" width="200px" height="200px"
-                                        class="card-img-top  mt-2" alt="...">
-                                </div>
+                              {% if group.banner.url != None %}
+                             <div class="col-sm-5">
+                               <img src="{{group.banner.url}}" style="width: 20vw; height: 20vh" alt="" />
+                             </div>
+                              {% else %}
+                             <div class="col-sm-5">
+                               <img
+                                   src="/media/publicevents_banner/default.jpeg"
+                                   style="width: 20vw; height: 20vh"
+                                   alt=""
+                               />
+                             </div>
+      
+                        {% endif %}
+
                             </td>
                             <td>
                                 <div class="event-wrap">
-                                    <span>Group of parents living in UC Village.</span><br><br>
+                                        <span><a href="/createdGroup"></a></span><br><br>
                                     <div class="meta">
+                                        <div class="group name">
+                                                <a href="{% url 'groupView' group_id=group.group_id %}"><strong>{{group.group_name}}</strong></a><br><br>
+                                        </div>
+
                                         <div class="organizers">
-                                            <b>Group Admin:</b> Tom Taylor<br><br>
+                                                <b>Group Admin:</b> <a href="{% url 'profileView' profile_id=group.group_admin.id %}">{{group.group_admin}}</a><br><br>
                                         </div>
-                                        <div class="category">
-                                            <span><b>Category:</b> RSVP'd Events</span><br><br>
+                                        <div class="desc">
+                                                <b>Description:</b>{{group.group_desc}}<br><br>
                                         </div>
+                                        <!-- Implement member count later; running out of time right now
+                                        <div class="Member Count">
+                                                <b>Member Count: </a><br><br>
+                                        </div>
+                                         -->
                                     </div>
                                 </div>
                             </td>
                             <td>
-                                <div class="location">
-                                    UC Village, Berkeley, CA 94706
-                                </div>
+                                <a href="{% url 'groupView' group_id=group.group_id %}" class="btn btn-primary">Group Page</a>
                             </td>
                         </tr>
-                        <tr class="inner-box">
-                            <td>
-                                <div class="event-img">
-                                    <img src="{% static 'media/hikers.jpg' %}" width="200px" height="200px"
-                                        class="card-img-top mt-2" alt="...">
-                                </div>
-                            </td>
-                            <td>
-                                <div class="event-wrap">
-                                    <span><a href="/createdGroup">Hikers with children living in
-                                            Albany.</a></span><br><br>
-                                    <div class="meta">
-                                        <div class="organizers">
-                                            <b>Group Admin:</b> <a href="/about/HelenLee">Helen Lee</a><br><br>
-                                        </div>
-                                    </div>
-                                    <div class="category">
-                                        <span><b>Category:</b> RSVP'd Events</span><br><br>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="location">
-                                    Albany, CA
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="inner-box">
-                            <td>
-                                <div class="event-img">
-                                    <img src="{% static 'media/kinders.jpg' %}" width="200px" height="200px"
-                                        class="card-img-top mt-2" alt="...">
-                                </div>
-                            </td>
-                            <td>
-                                <div class="event-wrap">
-                                    <span>Parents of Kindergardeners living in San Francisco Bay Area.</span><br><br>
-                                    <div class="meta">
-                                        <div class="organizers">
-                                            <b>Group Admin:</b> <a href="/about/HelenLee">Chris Jhonson</a><br><br>
-                                        </div>
-                                    </div>
-                                    <div class="category">
-                                        <span><b>Category:</b> Created By You!</span><br><br>
-                                    </div>
-                                    <a href="#" class="btn btn-primary mx-auto">Edit Event</a>
-                                    <a href="#" class="btn btn-primary mx-auto">Cancel Event</a>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="location">
-                                    San Francisco, CA
-                                </div>
-                            </td>
-                        </tr>
+                        {% endfor %}
+                        {% else %}
+                        
+                        {% endif %}
                     </tbody>
                 </table>
             </div>

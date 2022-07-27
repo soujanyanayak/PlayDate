@@ -28,6 +28,26 @@ def Search(request):
         return render(request, "groups/groupSearch.html", {'groups': groups})
     return render(request, "groups/groupSearch.html")
 
+
+def myGroup(request):
+    groupsMemberList = models.Member.objects.filter(member_id=request.user.id)
+    groupList = []
+    groupMemberCount = []
+    for x in groupsMemberList:
+        groupList.append(x.group_id)
+
+    print(groupList)
+
+    for y in groupList:
+        groupMemberCount.append(
+            (y, len(models.Member.objects.filter(group_id=y))))
+
+    print("groupMemberCount:", groupMemberCount)
+
+    # print(groupList)
+    return render(request, 'groups/myGroup.html', {'groupsMemberList': groupsMemberList, 'groupList': groupList, 'memberCount': groupMemberCount})
+
+
 # This view is the main driver for groups; it is by far the biggest view
 # It has three parts: 1 for a group member, 1 for an non-member, and 1 for the non-user
 
@@ -551,9 +571,6 @@ def individualGroup(request):
 
 # STATIC: PROTOTYPE USE ONLY
 
-
-def myGroup(request):
-    return render(request, "groups/myGroup.html")
 
 # STATIC: PROTOTYPE USE ONLY
 
