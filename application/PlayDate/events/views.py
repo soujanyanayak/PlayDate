@@ -7,7 +7,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.db.models import Q
 from events.models import EventRegistration
 from home.forms import addressForm
-from home.models import User
+from home.models import User, Profile
 from events.forms import eventForm
 from events.forms import GroupEventForm, PublicEventForm
 from events.models import Publicevent, Address, Event
@@ -105,8 +105,13 @@ def filter(request):
 
 # Definition to create new user event
 def createEvent(request):
-    context={}
+    # context={}
     user=request.user
+    regUser = None
+    if request.user.is_authenticated:
+        regUser = Profile.objects.get(profileID=user)
+    else:
+        regUser = None
     if request.method == 'POST':
         eventform= eventForm(request.POST,request.FILES)
         addressform=addressForm(request.POST)
@@ -123,7 +128,7 @@ def createEvent(request):
             event.user=user
             event.address=address
             event.save()
-            print(event.event_id)
+            # print(event.event_id)
             event=Event.objects.get(event_id=event.event_id)
             event_registration=EventRegistration.objects.create(user=user,event=event)
     
@@ -132,7 +137,8 @@ def createEvent(request):
         eventform=eventForm()
         addressform=addressForm()
     # context['form']=form
-    return render(request, 'events/createEvent.html',{'eventform': eventform,'addressform':addressform})
+   
+    return render(request, 'events/createEvent.html',{'eventform': eventform,'addressform':addressform, 'regUser':regUser})
 
 # Definition to view Event page
 def viewEvent(request, event_id):
