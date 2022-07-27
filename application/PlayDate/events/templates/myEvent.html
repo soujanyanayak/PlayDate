@@ -12,7 +12,7 @@
     {% endif %}
     {% endblock %}
     <br><br><br><br>
-    <div class="container">
+    <div class="wrapper">
         <div class="row">
             <div class="col-lg-6 mx-auto">
                 <h2>My Event Schedule: </h2>
@@ -24,7 +24,7 @@
 
         <!-- row end-->
 
-       
+
         <div class="row">
             <div class="col-lg-9 mx-auto">
                 <table class="table">
@@ -36,7 +36,7 @@
                             <th scope="col">Location</th>
                         </tr>
                     </thead>
-                    
+
                     <tbody>
                         {% if registered_events %}
                             {% for item in registered_events %}
@@ -65,86 +65,49 @@
                                             <!-- <div class="time">
                                                 <span><b>Time:</b> 10:00 AM</span><br><br>
                                             </div> -->
-                                            <div class="category">
-                                                {% if item.event.user != user%}
-                                                    <span><b>Category:</b> RSVP'd Events</span><br><br>
-                                                {% else %}
-                                                    <span><b>Category:</b> Created by You</span><br><br>
-                                                {% endif %}
-                                            </div>
-
+                                        <div class="category">
+                                            {% if item.event.user != user%}
+                                            <span><b>Category:</b> RSVP'd Events</span><br><br>
+                                            {% else %}
+                                            <span><b>Category:</b> Created by You</span><br><br>
+                                            {% endif %}
                                         </div>
+
                                     </div>
-                                </td>
-                                <td>
-                                    <div class="location">
-                                        {{item.event.address.street}} <br>{{item.event.address.city}}<br> {{item.event.address.state}}<br> {{item.event.address.country}}- {{item.event.address.zipcode}}
-                                    </div>
-                                </td>
-                            </tr>
-                            {% endfor %}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="location">
+                                    {{item.event.address.street}} <br>{{item.event.address.city}}<br>
+                                    {{item.event.address.state}}<br> {{item.event.address.country}}-
+                                    {{item.event.address.zipcode}}
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
 
                         {% else %}
-                            <tr class="inner-box">
-                                <td>
+                        <tr class="inner-box">
+                            <td>
 
-                                </td>
-                                <td>
-                                    <p> You have not signed up for any event</p>
-                                </td>
-                                
-                            </tr>
-                            
+                            </td>
+                            <td>
+                                <p> You have not signed up for any event</p>
+                            </td>
+
+                        </tr>
+
                         {% endif %}
-                
+
                     </tbody>
-                    
+
                 </table>
             </div>
 
         </div>
-        
+
     </div>
-    <footer class="text-center text-white bg-light sticky-bottom">
-        <!-- Grid container -->
-        <div class="container pt-3">
-            <!-- Section: Social media -->
-            <section>
-                <!-- Facebook -->
-                {% load static %}
-                <a href="#" class="mx-2"><img src="{% static 'media/facebook.png' %}"></a>
-
-                <!-- Instagram -->
-                <a href="#" class="mx-2"><img src="{% static 'media/instagram.png' %}"></a>
-
-                <!-- Twitter -->
-                <a href="#" class="mx-2"><img src="{% static 'media/twitter.png' %}"></a>
-
-                <!-- Tiktok -->
-                <a href="#" class="mx-2"><img src="{% static 'media/tiktok.png' %}"></a>
-
-                <!-- Reddit -->
-                <a href="#" class="mx-2"><img src="{% static 'media/reddit.png' %}"></a>
-
-                <!-- Github -->
-                <a href="#" class="mx-2"><img src="{% static 'media/github.png' %}"></a>
-            </section>
-            <!-- Section: Social media -->
-        </div>
-        <!-- Grid container -->
-
-        <!-- Copyright -->
-        <div class="text-center bg-light p-3">
-            <span class="text-dark ">
-                <a href="/termsofuse">Terms of Use | </a><a href="/privacy">Privacy Notice | </a><a
-                    href="/helpPage">Contact
-                    Us</a><br>
-            </span>
-            <span class="text-dark">Copyright © 2022 TheBabySitters. All rights reserved.</span>
-        </div>
-        <!-- Copyright -->
-    </footer>
-
+    {% include "footer.html" %}
 </body>
 
 </html>
