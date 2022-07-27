@@ -68,7 +68,7 @@ class Profile(models.Model):
     avatar = models.ImageField(
         upload_to="uploads", default=None, blank=True)
     address = models.ForeignKey(
-        Address, null=True, default=None, on_delete=models.SET_DEFAULT)
+        Address, blank=True, null=True, default=None, on_delete=models.SET_DEFAULT)
     verification = models.ImageField(
         upload_to="verification", default=None, blank=True)
     is_verified = models.BooleanField(auto_created=True, default=False)
