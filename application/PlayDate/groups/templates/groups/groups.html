@@ -194,18 +194,16 @@ The django data elements are stored in the context as well as in the session dat
                         <p style="text-align: center">Group size: {{member_list|length}} people</p>
                         <p style="text-align: center"><small>Keywords: {% if group.tags.all %} {% for tag in group.tags.all %} {{tag}}, {% endfor %}{% else %} No Keywords {%endif %}</small></p>
                         <p style="text-align: center">{{group.group_desc}}</p>
-                        {% if regUser.is_verified == True %}
+                        {% if regUser %}
                         <form method="POST" style="margin-left: 22vw">
                             {% csrf_token %} <button name="joinGroup" class="btn btn-primary me-1" style="width: 10rem; text-align: center" aria-current="true" type="submit"><i class="fas fa-lock fa-fw me-3"></i><span>Join Group</span></button>
-                            <button name="joinGroup" class="btn btn-primary me-1" style="width: 10rem; text-align: center" aria-current="true" type="submit"><i class="fas fa-lock fa-fw me-3"></i><span>Join Group</span></button>
                         </form>
-                        {% endif %} {% if regUser.is_verified != True%}
+                        {% elif regUser != True%}
 
                         <a name="joinGroup" href="/verificationError/" class="btn btn-primary me-1" style="width: 10rem; text-align: center" aria-current="true" type="submit"><i class="fas fa-lock fa-fw me-3"></i><span>Join Group</span></a>
-                        {% endif %}
                     </div>
                 </div>
-                {% else %}
+                {% endif %} {% else %}
                 <div class="container mt-5 mb-5" style="height: 100vh">
                     <h1 style="text-align: center">You need to be logged in to search!</h1>
                     <h4 style="text-align: center"><a href="/register/">🐱Register here!</a>•Already registered?•<a href="/login/">Login Here!🐱</a></h4>

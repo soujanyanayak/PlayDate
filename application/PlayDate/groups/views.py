@@ -70,14 +70,13 @@ def groupView(request, group_id):
     groupPosts = models.Post.objects.filter(group=group)
 
     # Check if the user is verified
-    regUser = None
-    isVerified = None
+    regUser = False
     if request.user.is_authenticated:
-        regUser = Profile.objects.get(profileID=request.user)
-        if regUser.is_verified == True:
-            isVerified = True
+        isVerified = Profile.objects.get(profileID=request.user)
+        if isVerified.is_verified == True:
+            regUser = True
     else:
-        isVerified = None
+        regUser = False
 
     # isMember first checks if the user is logged in, then checks the Member table for the (group_id, user_id), returns True is they are a member
     isMember = False
@@ -161,10 +160,10 @@ def groupView(request, group_id):
                 group_id=group_id, member_id=request.user).delete()
             isMember = False
             print(request.user, 'has left group:', group.group_name)
-            return render(request, "groups/groups.html", {'group': group, 'member_list': member_list, 'isMember': isMember, 'groupEvents': groupEvents, 'groupPosts': groupPosts})
+            return render(request, "groups/groups.html", {'group': group, 'member_list': member_list, 'isMember': isMember, 'groupEvents': groupEvents, 'groupPosts': groupPosts, 'regUser': regUser})
             # return redirect('joinSuccess') //This does not work but should be reimplemented because its better practice
 
-    return render(request, "groups/groups.html", {'group': group, 'member_list': member_list, 'isMember': isMember, 'groupEvents': groupEvents, 'groupPosts': groupPosts})
+    return render(request, "groups/groups.html", {'group': group, 'member_list': member_list, 'isMember': isMember, 'groupEvents': groupEvents, 'groupPosts': groupPosts, 'regUser': regUser})
 
 
 # Viewing a particular post so the user can comment and start a discussion.
