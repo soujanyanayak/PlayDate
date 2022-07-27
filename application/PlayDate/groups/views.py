@@ -22,8 +22,8 @@ from . import forms
 
 def Search(request):
     # sampleGroups defines a random list of groups to be suggested to the user.
-    #groups = list(models.Group.objects.all())
-    if len(models.Group.objects > 2):
+    # groups = list(models.Group.objects.all())
+    if len(list(models.Group.objects.all())) > 2:
         sampleGroups = random.sample(list(models.Group.objects.all()), 3)
     else:
         sampleGroups = []
