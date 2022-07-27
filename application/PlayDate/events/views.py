@@ -3,7 +3,7 @@ from multiprocessing import Event
 from unicodedata import category
 from unittest import result
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.db.models import Q
 from events.models import EventRegistration
 from home.forms import addressForm
@@ -146,6 +146,7 @@ def viewEvent(request, event_id):
     event=Event.objects.get(event_id=event_id)
     print(event.name)
     user=request.user
+    isEventAdmin = (event.user == user) or (event.group_admin == user) 
     registration=EventRegistration()
     creator=0
     try:
@@ -156,7 +157,11 @@ def viewEvent(request, event_id):
         creator=1
     attendees=EventRegistration.objects.filter(event=event_id)
     # print (registrations)
-    return render(request, 'events/createdEvent.html', {'event' : event, 'attendees': attendees,'creator':creator})
+    return render(request, 'events/createdEvent.html', {'event' : event, 'attendees': attendees,'creator':creator, 'user': user, 'isEventAdmin': isEventAdmin})
+
+def eventRegistrationEdit(request):
+    user = request.user
+    return JsonResponse({'message': 'Not yet implemented. Should be soon.'}, status=500)
 
 # Returns Search result for events
 def events(request):
