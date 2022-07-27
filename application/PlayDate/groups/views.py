@@ -13,6 +13,7 @@ import random
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.models import User
+from home.models import Profile
 from . import models
 from . import forms
 
@@ -65,6 +66,16 @@ def groupView(request, group_id):
     groupEvents = models.GroupEvent.objects.filter(group=group)
     groupPosts = models.Post.objects.filter(group=group)
 
+    # Check if the user is verified
+    regUser = None
+    isVerified = None
+    if request.user.is_authenticated:
+        regUser = Profile.objects.get(profileID=request.user)
+        if regUser.is_verified == True:
+            isVerified = True
+    else:
+        isVerified = None
+
     # isMember first checks if the user is logged in, then checks the Member table for the (group_id, user_id), returns True is they are a member
     isMember = False
     if request.user.is_authenticated:
@@ -83,6 +94,10 @@ def groupView(request, group_id):
     # | \|\__/| \|    |  ||__|  ||__)|__| \
     if isMember == False:
         if 'joinGroup' in request.POST:
+            # verification check
+            if regUser == None:
+                return redirect('verifyYourself')
+
             print(request.method)
             joinGroupForm = forms.joinGroupForm(request.POST)
             instanceMember = joinGroupForm.save(commit=False)
@@ -92,7 +107,7 @@ def groupView(request, group_id):
             instanceMember.save()
             isMember = True
             print(request.user, 'has joined group:', group.group_name)
-            return render(request, "groups/groups.html", {'group': group, 'member_list': member_list, 'isMember': isMember, 'groupEvents': groupEvents, 'groupPosts': groupPosts})
+            return render(request, "groups/groups.html", {'group': group, 'member_list': member_list, 'isMember': isMember, 'groupEvents': groupEvents, 'groupPosts': groupPosts, 'regUser': regUser})
 
     # _  _ __     __  __ __  __
     # |\/||_ |\/||__)|_ |__)(_
@@ -510,6 +525,12 @@ def createGroupEvent(request):
 def createGroup(request):
     createGroupForm = forms.createGroupForm()
     memberListForm = forms.memberListForm()
+    regUser = None
+    if request.user.is_authenticated:
+        regUser = Profile.objects.get(profileID=request.user)
+    else:
+        regUser = None
+    print("createGroup")
     if request.method == 'POST':
         createGroupForm = forms.createGroupForm(request.POST, request.FILES)
         print("FILES", request.FILES)
@@ -549,7 +570,7 @@ def createGroup(request):
             return redirect('groupView', group_id=instanceGroup.group_id)
             # return render(request, 'groups/groups.html', {'group': group, 'member_list': member_list, 'isMember': isMember})
 
-    return render(request, 'groups/createGroup.html', {'createGroupForm': createGroupForm, 'memberListForm': memberListForm})
+    return render(request, 'groups/createGroup.html', {'createGroupForm': createGroupForm, 'memberListForm': memberListForm, 'regUser': regUser})
 
 
 # ░█▀▄░█▀▀░█░█░░░░░█░█░█▀▀░█▀▀░░░█▀█░█▀█░█░░░█░█

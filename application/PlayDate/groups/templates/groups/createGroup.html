@@ -43,6 +43,7 @@ In order to style form elements please refer to forms.py where attributes such a
 
         <!--FIX-THIS: The top border is cut-off by the navbar-->
         <div class="card mx-auto my-3" style="padding-top: 5vh; border: solid blue; height: 90vh; width: 70vw">
+            {% if regUser.is_verified %}
             <div class="card-body">
                 <h1 style="text-align: center"><strong>Create a Group!</strong></h1>
                 <form class="register" enctype="multipart/form-data" style="align-items: center; width: 50vw" method="POST">
@@ -68,6 +69,17 @@ In order to style form elements please refer to forms.py where attributes such a
                     <button style="margin-left: 60%; margin-top: 1vh" class="btn btn-primary pt-2">Create Group</button>
                 </form>
             </div>
+            {% elif not user.is_authenticated %}
+            <div class="card-body">
+                <h1 style="text-align: center">You need to be logged in and verified to create a group!</h1>
+                <h4 style="text-align: center"><a href="/register/">🐱Register here!</a>•Already registered?•<a href="/login/">Login Here!🐱</a></h4>
+            </div>
+            {% elif user.is_authenticated and regUser.is_verified != True %}
+            <div class="card-body">
+                <h1 style="text-align: center">You need to be verified to create a group!</h1>
+                <h4 style="text-align: center"><a href="/profile/">🐱Upload Verification Here!</a><br />•Already Uploaded?• Wait for an admin to verify your account!🐱</h4>
+            </div>
+            {% endif %}
         </div>
         <br />
         <br />
