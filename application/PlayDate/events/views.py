@@ -56,9 +56,10 @@ def signUpSucceed(request):
 
 def myEvent(request):
     user=request.user
-    eventregistrations=EventRegistration.objects.filter(user=user)
     events=Event.objects.filter(user=user)
-    return render(request, "myEvent.html",{'registered_events':eventregistrations,'events':events})
+    eventregistrations=EventRegistration.objects.filter(user=user)
+    
+    return render(request, "myEvent.html",{'registered_events':eventregistrations,'events':events, 'user':user})
 
 
 def createPublicEvent(request):

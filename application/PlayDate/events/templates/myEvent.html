@@ -23,6 +23,8 @@
         </div><br>
 
         <!-- row end-->
+
+       
         <div class="row">
             <div class="col-lg-9 mx-auto">
                 <table class="table">
@@ -34,118 +36,74 @@
                             <th scope="col">Location</th>
                         </tr>
                     </thead>
+                    
                     <tbody>
-                        <tr class="inner-box">
-                            <th scope="row">
-                                <div class="event-date">
-                                    <p>16 November</p>
-                                </div>
-                            </th>
-                            <td>
-                                <div class="event-img">
-                                    <img src="{% static 'media/oakland-zoo.jpg' %}" width="200px" height="200px"
-                                        class="card-img-top  mt-2" alt="...">
-                                </div>
-                            </td>
-                            <td>
-                                <div class="event-wrap">
-                                    <span>Let's go to Oakland Zoo this Saturday at 10 a.m.</span><br><br>
-                                    <div class="meta">
-                                        <div class="organizers">
-                                            <b>Posted By:</b> Tom Taylor<br><br>
-                                        </div>
-                                        <div class="time">
-                                            <span><b>Time:</b> 10:00 AM</span><br><br>
-                                        </div>
-                                        <div class="category">
-                                            <span><b>Category:</b> RSVP'd Events</span><br><br>
-                                        </div>
+                        {% if registered_events %}
+                            {% for item in registered_events %}
+                            <tr class="inner-box">
+                                <th scope="row">
+                                    <div class="event-date">
+                                        <p>{{item.event.datetime}}</p>
+                                    </div>
+                                </th>
+                                <td>
+                                    <div class="event-img">
+                                        <img src="{% static 'media/oakland-zoo.jpg' %}" width="200px" height="200px"
+                                            class="card-img-top  mt-2" alt="...">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="event-wrap">
+                                        <span>
+                                            <a href="/events/{{item.event.event_id}}">{{item.event.name}}</a>
+                    
+                                            </span><br><br>
+                                        <div class="meta">
+                                            <div class="organizers">
+                                                <b>Posted By:</b> {{item.event.user.first_name}}<br><br>
+                                            </div>
+                                            <!-- <div class="time">
+                                                <span><b>Time:</b> 10:00 AM</span><br><br>
+                                            </div> -->
+                                            <div class="category">
+                                                {% if item.event.user != user%}
+                                                    <span><b>Category:</b> RSVP'd Events</span><br><br>
+                                                {% else %}
+                                                    <span><b>Category:</b> Created by You</span><br><br>
+                                                {% endif %}
+                                            </div>
 
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="location">
-                                    9777 Golf Links Rd, Oakland, CA 94605
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="inner-box">
-                            <th scope="row">
-                                <div class="event-date">
-                                    <p>18 November</p>
-                                </div>
-                            </th>
-                            <td>
-                                <div class="event-img">
-                                    <img src="{% static 'media/ocean-view-park.jpg' %}" width="200px" height="200px"
-                                        class="card-img-top mt-2" alt="...">
-                                </div>
-                            </td>
-                            <td>
-                                <div class="event-wrap">
-                                    <span><a href="/events/memberEvent1">Take Kids to Ocean View Park @ 5 p.m.
-                                            today.</a></span><br><br>
-                                    <div class="meta">
-                                        <div class="organizers">
-                                            <b>Posted By:</b> <a href="/about/HelenLee">Helen Lee</a><br><br>
-                                        </div>
-                                        <div class="time">
-                                            <span><b>Time:</b> 5:00 PM</span><br><br>
-                                        </div>
-                                        <div class="category">
-                                            <span><b>Category:</b> RSVP'd Events</span><br><br>
                                         </div>
                                     </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="location">
-                                    900 Buchanan St, Albany, CA 94706
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="inner-box">
-                            <th scope="row">
-                                <div class="event-date">
-                                    <p>20 November</p>
-                                </div>
-                            </th>
-                            <td>
-                                <div class="event-img">
-                                    <img src="{% static 'media/pets-out.jpg' %}" width="200px" height="200px"
-                                        class="card-img-top mt-2" alt="...">
-                                </div>
-                            </td>
-                            <td>
-                                <div class="event-wrap">
-                                    <span>Take pets out for a fresh breath tomorrow afternoon.</span><br><br>
-                                    <div class="meta">
-                                        <div class="organizers">
-                                            <b>Posted By:</b> Chris Jhonson<br>
-                                        </div>
-                                        <div class="time">
-                                            <span><b>Time:</b> 6:00 PM</span><br>
-                                        </div>
-                                        <div class="category">
-                                            <span><b>Category:</b> Created By You!</span><br><br>
-                                        </div>
-                                        <a href="#" class="btn btn-primary mx-auto">Edit Event</a>
-                                        <a href="#" class="btn btn-primary mx-auto">Cancel Event</a>
+                                </td>
+                                <td>
+                                    <div class="location">
+                                        {{item.event.address.street}} <br>{{item.event.address.city}}<br> {{item.event.address.state}}<br> {{item.event.address.country}}- {{item.event.address.zipcode}}
                                     </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="location">
-                                    Berkeley Marina, Berkeley, CA
-                                </div>
-                            </td>
-                        </tr>
+                                </td>
+                            </tr>
+                            {% endfor %}
+
+                        {% else %}
+                            <tr class="inner-box">
+                                <td>
+
+                                </td>
+                                <td>
+                                    <p> You have not signed up for any event</p>
+                                </td>
+                                
+                            </tr>
+                            
+                        {% endif %}
+                
                     </tbody>
+                    
                 </table>
             </div>
 
         </div>
+        
     </div>
     <footer class="text-center text-white bg-light sticky-bottom">
         <!-- Grid container -->
