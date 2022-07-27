@@ -13,12 +13,11 @@
 
 <style>
     .active {
-    /* background-color:rgb(150, 152, 152); */
-    color: rgb(0, 6, 10);
-    /* border-radius: 10px; */
-    text-decoration: underline;
+        /* background-color:rgb(150, 152, 152); */
+        color: rgb(0, 6, 10);
+        /* border-radius: 10px; */
+        text-decoration: underline;
     }
-    
 </style>
 <nav class="navbar navbar-expand-lg bg-light fixed-top">
     <div class="container-fluid">
@@ -26,8 +25,10 @@
             <h5><b>PlayDate</b></h5>
         </a>
         <ul class="navbar-nav mx-2 mb-lg-0">
-            <a class="nav-link {% if request.path == publicevents %} active {% endif %}" aria-current="page" href="/events/public-events/">Public Events</a>
-            <a class="nav-link {% if request.path == about %} active {% endif %}" aria-current="page" href="/about">About</a>
+            <a class="nav-link {% if request.path == publicevents %} active {% endif %}" aria-current="page"
+                href="/events/public-events/">Public Events</a>
+            <a class="nav-link {% if request.path == about %} active {% endif %}" aria-current="page"
+                href="/about">About</a>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
                     aria-expanded="false" href="{% url 'about' %}"></a>
@@ -55,8 +56,8 @@
                     <option value="Pets">Pets</option>
                 </select>
             </div>
-            <input class="form-control me-1" type="search" name="q" value="{{request.GET.q}}" placeholder="City, State, Zipcode"
-                aria-label="Search">
+            <input class="form-control me-1" type="search" name="q" value="{{request.GET.q}}"
+                placeholder="City, State, Zipcode" aria-label="Search">
             <button class="search-button-text btn btn-outline-success" name="submit" value="Search"
                 type="submit">&#128269;</button>
         </form>
@@ -100,8 +101,10 @@
 
         </script>
         <ul class="navbar-nav mx-2 mb-lg-0">
-            <a class="signUp nav-link {% if request.path == register %} active {% endif %}" aria-current="page" href="/register">Sign Up</a>
-            <a class="logIn nav-link {% if request.path == login %} active {% endif %}" aria-current="page" href="/login">Log In</a>
+            <a class="signUp nav-link {% if request.path == register %} active {% endif %}" aria-current="page"
+                href="/register">Sign Up</a>
+            <a class="logIn nav-link {% if request.path == login %} active {% endif %}" aria-current="page"
+                href="/login">Log In</a>
         </ul>
     </div>
 
