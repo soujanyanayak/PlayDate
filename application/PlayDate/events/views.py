@@ -14,6 +14,7 @@ from events.models import Publicevent, Address, Event
 from django.views.decorators.csrf import csrf_exempt
 
 import requests
+import json
 
 # Create your views here.
 
@@ -161,8 +162,43 @@ def viewEvent(request, event_id):
     return render(request, 'events/createdEvent.html', {'event' : event, 'attendees': attendees,'creator':creator, 'user': user, 'isEventAdmin': isEventAdmin})
 
 def eventRegistrationEdit(request):
-    user = request.user
-    return JsonResponse({'message': 'Not yet implemented. Should be soon.'}, status=500)
+    print( "Received Event Registration")
+    if request.method == "POST":
+        requestData = json.loads(request.body)
+        print ("User: " + str(request.user) + " (Auth: " + str(request.user.is_authenticated) + ")")
+        print ("Data: ")
+        print(requestData)
+        if request.user.is_authenticated:
+            responseData = { 'request': requestData }
+            if requestData['operation'] == "DELETE":
+                try: 
+                    print ("Received DELETE")
+                    rsvp = EventRegistration.objects.get(registration_id = requestData['rsvpID'])
+                    print ("Got RSVP")
+                    if rsvp.user == request.user or request.user == rsvp.event.user:
+                        # The proper accounts are triggering this RSVP deletion
+                        print ("Attempting DELETE")
+                        rsvp.delete()
+                        print("DELETE Successful!")
+                        return JsonResponse(responseData, status=200)
+                    else:
+
+                        # Deletion requested from improper user
+                        errDict = {
+                            'message': "Our records indicate that user "+str(request.user.pk)+" does not have permission to remove user "+str(rsvp.user.pk)+" from event "+str(rsvp.event.pk),
+                            'err': "Improper permission for requested task."
+                        } 
+                        responseData['error'] = errDict
+                        return JsonResponse(responseData, status=500)
+                except Exception as exc:
+                    errDict = {
+                        'message': 'An exception occurred during RSVP Deletion: '+str(type(exc)),
+                        'err': str(exc)
+                    }
+                    responseData['error'] = errDict
+                    return JsonResponse(responseData, status=500)
+        return JsonResponse({'message': "Please login."}, status=403)
+    return JsonResponse({ 'message': "Please use POST."}, status=403)
 
 # Returns Search result for events
 def events(request):
