@@ -13,10 +13,8 @@
 <body>
     {% block content %}
     {% if user.is_authenticated %}
-    {% load static %}
     {% include "registered_navbar.html" %}
     {% else %}
-    {% load static %}
     {% include "general_navbar.html" %}
     {% endif %}
     {% endblock %}
@@ -52,7 +50,7 @@
         ],
         csrf: { token: '{% csrf_token %}' },
         dpdtURL: '{% url "dependents" %}',
-        homeURL: '{$ url "home" %}'
+        homeURL: '{% url "home" %}'
         };
     </script>
 
@@ -368,6 +366,7 @@
             </div>
         </div>
     </div>
+    {% include "ajaxRequest.html" %}
     {% include "notificationModal.html" %}
     {% include "footer.html" %}
 </body>
