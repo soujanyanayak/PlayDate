@@ -26,7 +26,8 @@ def publicevents(request):
 # Display all the events for user to register
 def membersevents(request):
     user=request.user
-    eventregistrations=EventRegistration.objects.filter(user=user)
+    eventregistrations=EventRegistration.objects.filter(user=user).values_list('event')
+
     print(eventregistrations)
     events=Event.objects.all().exclude(event_id__in = eventregistrations)
     print(events)
