@@ -228,15 +228,10 @@ class DependentControl {
                 interests: this.data.client.interests
             }
         };
-        var compiledData = JSON.stringify(compiledVars);
-        var request = new XMLHttpRequest();
-        request.onload = function(response) {
-            dpdtController.transmitResponse(this);
+        let callback = function(data, status) {
+            dpdtController.transmitResponse(data, status);
         }
-        request.open("POST", loadVals.dpdtURL, true);
-        request.setRequestHeader('X-CSRFToken', loadVals.csrf.value);
-        request.setRequestHeader('CONTENT_TYPE', 'application/json');
-        request.send(compiledData);
+        sendAjax(compiledVars, loadVals.dpdtURL, callback);
     }
     
     /* dpdtCtrl.parseResponse(response) */
@@ -253,10 +248,10 @@ class DependentControl {
     // first time or using an update,
     //  we alter the dpdtCtrl to reflect the changes
     //  and notify the user.
-    parseResponse(response) {
-        if (response.status == 500){
+    parseResponse(data, status) {
+        if (status == 500){
             alert("There was an error on the server.")
-        } else if (response.status == 403) {
+        } else if (status == 403) {
             window.location.replace(loadVals.homeURL);
         } else {
             if (ajaxInfo.state == STATE.REMOVED) {
@@ -265,11 +260,10 @@ class DependentControl {
                 showModal();
             } else {
                 this.state = STATE.CHANGED;
-                var retVals = JSON.parse(response.response);
-                this.data.server.name = this.data.client.name = retVals.name;
-                this.data.server.dob = this.data.client.dob = new Date(retVals.dob);
-                this.data.server.interests = this.data.client.interests = retVals.interests;
-                this.data.server.id = this.data.client.id = retVals.id;
+                this.data.server.name = this.data.client.name = data.name;
+                this.data.server.dob = this.data.client.dob = new Date(data.dob);
+                this.data.server.interests = this.data.client.interests = data.interests;
+                this.data.server.id = this.data.client.id = data.id;
                 this.setButton(false);
                 setModal("Dependent Updated", this.data.client.name + " was updated.", "Ok");
                 showModal();
@@ -423,8 +417,8 @@ class DependentContainer {
     // Passes priority to the correct dpdtCtrl.
     // With the AJAX callback, info is saved in 
     // the ajaxInfo variable.
-    transmitResponse(response) {
-        this.dependents[ajaxInfo.id].parseResponse(response);
+    transmitResponse(data, status) {
+        this.dependents[ajaxInfo.id].parseResponse(data, status);
     }
 }
 
@@ -527,8 +521,6 @@ function validateImage(inputId) {
 window.addEventListener("DOMContentLoaded", ()=> {
     // Set the state drop down to the correct state.
     stateEl.value = loadVals.profile.address.state;
-    // Grab the CSRF token
-    loadVals.csrf.value = document.querySelector('[name=csrfmiddlewaretoken]').value;
     // Set up the dependent controller
     dpdtController = new DependentContainer("dpdtContainer"); 
     dpdtController.loadData();
