@@ -25,6 +25,7 @@ def Search(request):
     # sampleGroups defines a random list of groups to be suggested to the user.
     # groups = list(models.Group.objects.all())
     sampleGroups = []
+    groupMembersList = []
     try:
         groupMembersList = random.sample(
             list(models.Member.objects.filter(~Q(member_id=request.user.id))), 3)
@@ -46,7 +47,7 @@ def Search(request):
         print("\nQuery:", query)
         groups = models.Group.objects.filter(tags__name__in=query).distinct()
         print(groups)
-        #return render(request, "groups/groupSearch.html", {'groups': groups, 'sampleGroups': sampleGroups})
+        # return render(request, "groups/groupSearch.html", {'groups': groups, 'sampleGroups': sampleGroups})
         return render(request, "groups/groupSearch.html", {'groups': groups})
     return render(request, "groups/groupSearch.html", {'sampleGroups': sampleGroups})
 
