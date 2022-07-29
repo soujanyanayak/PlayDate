@@ -47,10 +47,17 @@
                                 </div>
                             </th>
                             <td>
+                                {% if item.event.banner.url != None %}
                                 <div class="event-img">
                                     <img src={{item.event.banner.url}} width="200px" height="200px"
                                         class="card-img-top  mt-2" alt="...">
                                 </div>
+                                {% else %}
+                                <div class="event-img">
+                                    <img src="/media/publicevents_banner/default.jpeg" width="200px" height="200px"
+                                        class="card-img-top  mt-2" alt="...">
+                                </div>
+                                {% endif %}
                             </td>
                             <td>
                                 <div class="event-wrap">
