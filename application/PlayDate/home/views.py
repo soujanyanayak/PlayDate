@@ -11,6 +11,8 @@ from django.core.mail import send_mail
 from ipware import get_client_ip
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
+from events.models import Event, EventRegistration
+from groups.models import Member
 from . import models
 from . import forms
 
@@ -357,9 +359,46 @@ def verificationUpload(request):
 # /[serv]/profile/[int]
 # TODO: Will need dependents too.
 def profileView(request, profile_id):
+    user = User.objects.get(id=profile_id)
+    print ("User: "+str(user.pk))
     profile = models.Profile.objects.get(profileID=profile_id)
+    print ("Profile: "+str(profile.pk))
+    address = profile.address
     account = models.Account.objects.get(accountID=profile_id)
-    return render(request, 'profileView.html', {'profile': profile, 'account': account})
+    print ("Account: "+str(account.pk))
+    dependents = models.Dependent.objects.filter(profile=profile)
+    print ("Dependents: "+str(len(dependents)))
+    createdEvents = Event.objects.filter(user=user)
+    print ("Events Created: "+str(len(createdEvents)))
+    regEvents = EventRegistration.objects.filter(user=user)
+    has_rsvp = False
+    rsvpEvents = []
+    numEvents = len(regEvents)
+    print ("Events registered: "+str(numEvents))
+    if numEvents > 0:
+        has_rsvp = True
+        for eventAttending in regEvents:
+            print (eventAttending.event.name+" "+str(eventAttending.event.datetime))
+            rsvpEvents.append(eventAttending.event)
+    print ("Has RSVP: "+str(has_rsvp))
+    print ("Events RSVPd: "+str(len(rsvpEvents)))
+
+    groupQS = Member.objects.filter(member_id=user)
+    
+    data = {
+        'pUser': user,
+        'profile': profile, 
+        'address': address,
+        'account': account,
+        'dependents': dependents,
+        'createdEvents': createdEvents,
+        'hasRSVP': has_rsvp,
+        'rsvpEvents': rsvpEvents,
+        'regEvents': regEvents,
+        'membership': groupQS
+    }
+    print(data)
+    return render(request, 'profileView.html', data)
 
 # NOT RETRIEVABLE
 def individuleInfoPage(request):
