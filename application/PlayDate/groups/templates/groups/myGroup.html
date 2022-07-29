@@ -18,7 +18,70 @@
                 <h2>My Groups: </h2>
             </div>
             <div class="col-lg-3">
+                {% if user.is_authenticated %}
+                <p>AH is_authenticated</p>
+                {% endif %}
+
+                {% if regUser.is_verified %}
+                <p>AH regUser.is_verified</p>
+                {% endif %}
+
+                {% if user.is_authenticated and regUser.is_verified%}
                 <a href="/groups/createGroup" class="btn btn-primary">Create Your Group</a>
+
+                {% elif user.is_authenticated and not regUser.is_verified %}
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    Create Your Group
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel">You're not Verified!</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Sorry, it seems you're not verified yet!<br>
+                                Please go to your <a href="/profile">Profile</a> to upload your identification photo for
+                                verification!
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    Create Your Group
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel">You're Not Logged In!</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Sorry, it seems you're not logged in yet. <br>
+                                Please Log In <a href="/register">Here</a>!
+                                If you don't have an account, you can also sign up <a href="/login">Here</a>!
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif%}
             </div>
         </div><br>
         <!-- row end-->
