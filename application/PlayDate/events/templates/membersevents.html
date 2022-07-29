@@ -26,7 +26,11 @@
         <div class="row">
             {% endif %}
             <div class="col-md-4 card mx-2 my-2" style="border-radius: 15px; width: 26rem;">
+                 {% if event.banner.url != None %}
                 <img src={{event.banner.url}} width="300px" height="300px" class="card-img-top  mt-2" alt="...">
+                {% else %}
+                <img src="/media/publicevents_banner/default.jpeg" width="300px" height="300px" class="card-img-top  mt-2" alt="...">
+                {% endif %}                   
                 <div class="card-body">
                     <p class="card-text">{{event.name}}</p><br>
                     Posted BY: <a href="#">{{event.user.first_name}} {{event.user.last_name}}</a><br><br>

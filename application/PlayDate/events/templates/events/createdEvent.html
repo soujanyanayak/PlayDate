@@ -78,9 +78,15 @@ div.scroll {
         <div class="panel panel-white profile-widget">
             <div class="row">
                 <div class="col-sm-12">
-                    <div class="image-container bg2" style="background:url(https://cdn.pixabay.com/photo/2020/03/25/20/20/alpine-4968554_960_720.jpg)">  
-                        <img src={{event.banner.url}} class="avatar" alt="avatar"> 
+                    {% if event.banner.url != None %}
+                    <div class="image-container bg2" style="background:url(https://cdn.pixabay.com/photo/2020/03/25/20/20/alpine-4968554_960_720.jpg)">
+                        <img src={{event.banner.url}} class="avatar" alt="avatar">
                     </div>
+                    {% else %}
+                    <div class="image-container bg2" style="background:url(https://cdn.pixabay.com/photo/2020/03/25/20/20/alpine-4968554_960_720.jpg)">
+                        <img src="/media/publicevents_banner/default.jpeg" class="avatar" alt="avatar">
+                    </div>
+                    {% endif %}
                 </div>
                 <div class="col-sm-12">
                     <div class="details">
