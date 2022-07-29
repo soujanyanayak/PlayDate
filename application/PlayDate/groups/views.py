@@ -56,6 +56,16 @@ def myGroup(request):
     groupsMemberList = models.Member.objects.filter(member_id=request.user.id)
     groupList = []
     groupMemberCount = []
+
+    # Check if the user is verified
+    regUser = False
+    if request.user.is_authenticated:
+        isVerified = Profile.objects.get(profileID=request.user)
+        if isVerified.is_verified == True:
+            regUser = True
+    else:
+        regUser = False
+
     for x in groupsMemberList:
         groupList.append(x.group_id)
 
@@ -68,7 +78,7 @@ def myGroup(request):
     print("groupMemberCount:", groupMemberCount)
 
     # print(groupList)
-    return render(request, 'groups/myGroup.html', {'groupsMemberList': groupsMemberList, 'groupList': groupList, 'memberCount': groupMemberCount})
+    return render(request, 'groups/myGroup.html', {'groupsMemberList': groupsMemberList, 'groupList': groupList, 'memberCount': groupMemberCount, 'regUser': regUser})
 
 
 # This view is the main driver for groups; it is by far the biggest view
