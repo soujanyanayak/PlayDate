@@ -60,8 +60,17 @@ def myEvent(request):
     user=request.user
     events=Event.objects.filter(user=user)
     eventregistrations=EventRegistration.objects.filter(user=user)
+
+    # Check if the user is verified
+    regUser = False
+    if request.user.is_authenticated:
+        isVerified = Profile.objects.get(profileID=request.user)
+        if isVerified.is_verified == True:
+            regUser = True
+    else:
+        regUser = False
     
-    return render(request, "myEvent.html",{'registered_events':eventregistrations,'events':events, 'user':user})
+    return render(request, "myEvent.html",{'registered_events':eventregistrations,'events':events, 'user':user, 'regUser': regUser})
 
 
 def createPublicEvent(request):

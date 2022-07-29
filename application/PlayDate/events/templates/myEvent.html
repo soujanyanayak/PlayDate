@@ -18,18 +18,10 @@
                 <h2>My Event Schedule: </h2>
             </div>
             <div class="col-lg-3">
-                {% if user.is_authenticated %}
-                <p>AH is_authenticated</p>
-                {% endif %}
-
-                {% if regUser.is_verified %}
-                <p>AH regUser.is_verified</p>
-                {% endif %}
-
-                {% if user.is_authenticated and regUser.is_verified%}
+                {% if user.is_authenticated and regUser%}
                 <a href="/events/createEvent" class="btn btn-primary">Post New Event</a>
 
-                {% elif user.is_authenticated and not regUser.is_verified %}
+                {% elif user.is_authenticated and not regUser %}
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                     Post New Event
                 </button>
