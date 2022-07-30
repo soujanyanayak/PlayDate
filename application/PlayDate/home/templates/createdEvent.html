@@ -78,19 +78,29 @@ div.scroll {
         <div class="panel panel-white profile-widget">
             <div class="row">
                 <div class="col-sm-12">
-                    <div class="image-container bg2" style="background:url(https://cdn.pixabay.com/photo/2020/03/25/20/20/alpine-4968554_960_720.jpg)">  
-                        <img src="https://bootdey.com/img/Content/avatar/avatar6.png" class="avatar" alt="avatar"> 
+                    {% if event.banner.url != None %}
+                    <div class="image-container bg2" style="background:url(https://cdn.pixabay.com/photo/2020/03/25/20/20/alpine-4968554_960_720.jpg)">
+                        <img src={{event.banner.url}} class="avatar" alt="avatar">
                     </div>
+                    {% else %}
+                    <div class="image-container bg2" style="background:url(https://cdn.pixabay.com/photo/2020/03/25/20/20/alpine-4968554_960_720.jpg)">
+                        <img src="/media/publicevents_banner/default.jpeg" class="avatar" alt="avatar">
+                    </div>
+                    {% endif %}
                 </div>
                 <div class="col-sm-12">
                     <div class="details">
-                        <h4>Hiking<i class="fa fa-sheild"></i></h4>
-                        <div>Created by: John Smith</div>
-                        <div>Description: We are going on a hike</div>
-                        <h5>Event Date: July 21, 2022</h5>
-                        <div class="tag">Tags: hiking  hikers</div>
+                        <h4>{{event.name}}<i class="fa fa-sheild"></i></h4>
+                        <div>Created by: {{event.user.first_name}} {{event.user.last_name}}</div>
+                        <div>Description: {{event.desc}}</div>
+                        <h5>Event Date: {{event.datetime}}</h5>
+                        <!-- <div class="tag">Tags: hiking  hikers</div> -->
                         <div class="mg-top-10">
+                          {% if creator == 0 %}
                             <a href="#" class="btn btn-success" id="btn">Attend Event</a>
+                          {% else %}
+                            <p>Registered</p>
+                          {% endif %}
                         </div>
                     </div>
                 </div>
@@ -101,13 +111,12 @@ div.scroll {
   </div>
 </div>
 
-
+<!-- to do: Seed event attendees from database -->
 <div class="container">
   <h2 class="groupMembers">Event Attendees:</h2>
   <div class="scroll">
-      <div class="members">
-        
-        <div id="me" class="member">
+      <div class="attendeesContainer">
+        <!-- <div id="me" class="member">
             <div class="row">
               <div class="col-md-2 col-sm-2">
                 <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="user" class="profile-photo-lg">
@@ -118,126 +127,99 @@ div.scroll {
                 <a id="me" class="btn btn-danger dismiss-notification"  onclick="myFunction(this.id)">Remove attendee</a>                
               </div>
             </div>
-          </div>
-
-          <div id="member1" class="member">
+          </div> -->
+          {% for attendee in attendees %}
+            <div id="attendee_{{attendee.user.pk}}" class="member">
               <div class="row">
                 <div class="pic">
                   <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="user" class="profile-photo-lg">
                 </div>
                 <div class="name">
-                  <h5>Bill Overbeck</h5>
-                  <p>Kids: John and Michael</p>
-                  <a id="member1" class="btn btn-danger dismiss-notification"  onclick="myFunction(this.id)">Remove attendee</a>
+                  <h5>{{attendee.user.first_name}}</h5>
+                  {% if attendee.user == user %}
+                  <!-- This attendee is me. -->
+                    {% if event.user == attendee.user or attendee.user == event.group_admin %}
+                    <!-- I am an event admin -->
+                    <!-- Buttons: 'Cancel Event' -->
+
+                    <!-- Not yet ready to implement 
+                    <a id="btnAttendee_{{attendee.user.pk}}" class="btn btn-danger"  
+                        onclick="cancelEvent({{ event.pk }})">Cancel Event</a>
+                    -->
+
+                    {% else %} 
+                    <!-- I am not an event admin-->
+                    <!-- Buttons: 'Cancel RSVP' --> 
+                    <a id="btnAttendee_{{attendee.user.pk}}" class="btn btn-danger"  
+                        onclick="cancelRSVP({{attendee.pk}}, 'btnAttendee_{{attendee.user.pk}}')">Cancel RSVP</a>
+
+                    {% endif %}
+                  {% else %}
+                  <!-- This attendee is another user -->
+                    {% if event.user == user or user == event.group_admin %}
+                    <!-- This attendee is RSVPd for my event -->
+                    <!-- Buttons: 'Remove Attendee' -->
+                    <a id="btnAttendee_{{attendee.user.pk}}" class="btn btn-danger"  
+                        onclick="cancelRSVP({{attendee.pk}}, 'btnAttendee_{{attendee.user.pk}}')">Remove attendee</a>
+
+                    {% else %} 
+                    <!-- This attendee is RSVPd for the event -->
+                    <!-- Buttons: 'View Profile' -->
+                    <a id="btnAttendee_{{attendee.user.pk}}" class="btn btn-secondary" href="/profile/{{attendee.user.pk}}">View Profile</a>
+
+                    {% endif %}
+                  {% endif %}
                 </div>
               </div>
             </div>
-            <div id="member2" class="member">
-              <div class="row">
-                <div class="col-md-2 col-sm-2">
-                  <img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="user" class="profile-photo-lg">
-                </div>
-                <div class="name">
-                  <h5>Emma Johnson</h5>
-                  <p>Kid: Peter</p>
-                  <a id="member2" class="btn btn-danger dismiss-notification"  onclick="myFunction(this.id)">Remove attendee</a>               
-                </div>
-              </div>
-            </div>
-            <div id="member3" class="member">
-              <div class="row">
-                <div class="col-md-2 col-sm-2">
-                  <img src="https://bootdey.com/img/Content/avatar/avatar5.png" alt="user" class="profile-photo-lg">
-                </div>
-                <div class="name">
-                  <h5>Nora Wilson</h5>
-                  <p>Dog: Spot </p>
-                  <a id="member3" class="btn btn-danger dismiss-notification"  onclick="myFunction(this.id)">Remove attendee</a>                
-                </div>
-              </div>
-            </div>
-            <div id="member4" class="member">
-              <div class="row">
-                <div class="col-md-2 col-sm-2">
-                  <img src="https://bootdey.com/img/Content/avatar/avatar4.png" alt="user" class="profile-photo-lg">
-                </div>
-                <div class="name">
-                  <h5>Diana Amber</h5>
-                  <p>Cat: Sam</p>
-                  <a id="member4" class="btn btn-danger dismiss-notification"  onclick="myFunction(this.id)">Remove attendee</a>                
-                </div>
-              </div>
-            </div>
-            <div id="member5" class="member">
-              <div class="row">
-                <div class="col-md-2 col-sm-2">
-                  <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="user" class="profile-photo-lg">
-                </div>
-                <div class="name">
-                  <h5>Addison Thomas</h5>
-                  <p>Kid: David </p>
-                  <p>Dog: Max </p>
-                  <a id="member5" class="btn btn-danger dismiss-notification"  onclick="myFunction(this.id)">Remove attendee</a>                
-                </div>
-              </div>
-            </div>
-            <div id="member6" class="member">
-              <div class="row">
-                <div class="col-md-2 col-sm-2">
-                  <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="user" class="profile-photo-lg">
-                </div>
-                <div class="name">
-                  <h5>Jonathon Thompson</h5>
-                  <p>Kids: Cindy and Lisa</p>
-                  <p>Dog: Rex</p>
-                  <a id="member6" class="btn btn-danger dismiss-notification"  onclick="myFunction(this.id)">Remove attendee</a>               
-                 </div>
-              </div>
-            </div>
-            <div id="member7" class="member">
-              <div class="row">
-                <div class="col-md-2 col-sm-2">
-                  <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="user" class="profile-photo-lg">
-                </div>
-                <div class="name">
-                  <h5>Olivia Steward</h5>
-                  <p>Kid: Heather</p>
-                  <a id="member7" class="btn btn-danger dismiss-notification"  onclick="myFunction(this.id)">Remove attendee</a>                
-                </div>
-              </div>
-            </div>
-              </div>
-            </div>
+          {% endfor %}
+            
+            
           </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
 
 <script>
-    const btn = document.getElementById('btn');
-    const me = document.getElementById("me")
-    if(btn.textContent === "Attend Event"){
-        document.getElementById("me").style.display="none"; 
+    let urls = {
+        home: '{% url "home" %}',
+        erEdit: '{% url "eventRegistrationEdit" %}'
+    };
+    function showNotAttending(btnID) {
+        var btnElement = document.getElementById(btnID);
+        btnElement.innerText = "No Longer Attending";
+        btnElement.classList.remove("btn-danger");
+        btnElement.classList.add("btn-secondary");
+        btnElement.disabled = true;
+    }
+    function removedRSVPCallback(data, status) {
+        if (status == 200) {
+            showNotAttending(data.request.btnID);
+        } else if (status == 500) {
+            setModal("An Error Occurred", "An error occurred on the server. Summary: "+data.error.message, "close");
+            showModal();
+        } else {
+            setModal("Login Timeout", "Unfortunately, your login has timed out. You will now be returned to the home page.", "close");
+            showModal(); 
+            window.location.replace(urls.home);
+        }
+    }
+    function cancelEvent(eventID){
+        setModal("Oops!", "Cancelling an event is not yet implemented. You can still edit the event to let others know what is going on. Good luck!", "close");
+        showModal();
+    }
+    function cancelRSVP(rsvpID, btnID){
+        let data = {
+            rsvpID: rsvpID,
+            operation: "DELETE",
+            btnID: btnID
+        }
+        sendAjax(data, urls.erEdit, removedRSVPCallback);
     }
 
-    //Change button text on click
-    btn.addEventListener('click', function handleClick() {
-    if(btn.textContent === "Attend Event"){
-        btn.textContent = "Attending " + "\u2713";
-        btn.style.backgroundColor = "Blue";
-        document.getElementById("me").style.display="block"; 
-    }
-    else{
-        btn.textContent = 'Attend Event';
-        btn.style.backgroundColor = "Green";
-        document.getElementById("me").style.display="none"; 
-    }});
-
-    function myFunction(id) { 
-	    document.getElementById(id).style.display="none";
-        if(id=== "me"){
-            btn.textContent = 'Attend Event'
-        } 
-  }
 </script>
+{%include 'ajaxRequest.html'%}
+{%include 'notificationModal.html'%}
