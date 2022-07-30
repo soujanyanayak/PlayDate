@@ -15,7 +15,9 @@
         <tr class="inner-box">
             <th scope="row">
                 <div class="event-date">
+                    {% if item.event.datetime != None %}
                     <p>{{item.event.datetime}}</p>
+                    {% endif %}
                 </div>
             </th>
             <td>
@@ -34,7 +36,9 @@
             <td>
                 <div class="event-wrap">
                     <span>
+                        {% if item.event.name != None%}
                         <a href="/events/{{item.event.event_id}}">{{item.event.name}}</a>
+                        {% endif %}
 
                     </span><br><br>
                     <div class="meta">
@@ -50,7 +54,7 @@
                             {% else %}
                             <span><b>Category:</b> Created by You</span><br><br>
                             <div>
-                                <a href="/events/edit/{{item.event.event_id}}/" class="btn btn-primary">Edit</a>
+                                <a href="/events/edit/{{item.event.event_id}}" class="btn btn-primary">Edit</a>
                                 <form method="POST" action="/events/delete/{{item.event.event_id}}/" class="col mx-4">
                                     {% csrf_token %}
                                     <button name="delete" class="btn btn-primary" type="submit">Delete</button>
@@ -65,7 +69,9 @@
             </td>
             <td>
                 <div class="location">
-                    {{item.event.address.street}} <br>{{item.event.address.city}}<br>
+                    {% if item.event.address.street != None%}
+                        {{item.event.address.street}}
+                    {% endif %} <br>{{item.event.address.city}}<br>
                     {{item.event.address.state}}<br> {{item.event.address.country}}-
                     {{item.event.address.zipcode}}
                 </div>
