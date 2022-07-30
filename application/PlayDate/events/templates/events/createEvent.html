@@ -10,18 +10,15 @@
         {% include "general_navbar.html" %}
         {% endif %}
 
+        <div class="wrapper">
+                <h4 class="logo navbar-brand text-center">
+                        <b>Post New Event:</b>
+                </h4>
 
-        <br />
-        <br />
-        <br />
-        <h4 class="logo navbar-brand text-center">
-                <b>Post New Event:</b>
-        </h4>
-
-        <div class="card mx-auto my-3" style="width: 30rem;">
-                <div class="card-body">
-                        <div class="register" style="width: 450px;">
-                                {% if regUser.is_verified %}
+                <div class="card mx-auto my-3" style="width: 30rem;">
+                        <div class="card-body">
+                                <div class="register" style="width: 450px;">
+                                        {% if regUser.is_verified %}
                                         <form method="POST" enctype="multipart/form-data">
                                                 {% csrf_token %}
                                                 <label for="eventname"><b>{{eventform.name.label}}</b><br>
@@ -71,34 +68,32 @@
 
 
                                         </form>
-                                {% elif not user.is_authenticated %}
+                                        {% elif not user.is_authenticated %}
                                         <div class="card-body">
-                                                <h1 style="text-align: center">You need to be logged in and verified to create a group!</h1>
-                                                <h4 style="text-align: center"><a href="/register/">🐱Register here!</a>•Already registered?•<a href="/login/">Login Here!🐱</a></h4>
+                                                <h1 style="text-align: center">You need to be logged in and verified to
+                                                        create a
+                                                        group!</h1>
+                                                <h4 style="text-align: center"><a href="/register/">🐱Register
+                                                                here!</a>•Already
+                                                        registered?•<a href="/login/">Login Here!🐱</a></h4>
                                         </div>
-                                {% elif user.is_authenticated and regUser.is_verified != True %}
+                                        {% elif user.is_authenticated and regUser.is_verified != True %}
                                         <div class="card-body">
-                                                <h1 style="text-align: center">You need to be verified to create a group!</h1>
-                                                <h4 style="text-align: center"><a href="/profile/">🐱Upload Verification Here!</a><br />•Already Uploaded?• Wait for an admin to verify your account!🐱</h4>
+                                                <h1 style="text-align: center">You need to be verified to create a
+                                                        group!</h1>
+                                                <h4 style="text-align: center"><a href="/profile/">🐱Upload Verification
+                                                                Here!</a><br />•Already Uploaded?• Wait for an admin to
+                                                        verify
+                                                        your account!🐱</h4>
                                         </div>
-                                {% endif %}
+                                        {% endif %}
 
 
+                                </div>
                         </div>
                 </div>
         </div>
-
-        <footer class="gsfooter mt-auto bg-light py-1 d-none d-md-flex sticky-bottom">
-                <div class="container-fluid text-center text-md-left">
-                        <span class="text-dark ">
-                                <a href="/termsofuse">Terms of Use | </a><a href="/privacy">Privacy Notice | </a><a
-                                        href="/helpPage">Contact
-                                        Us</a><br>
-                        </span>
-                        <span class="text-dark">Copyright © 2022 TheBabySitters. All rights reserved.</span>
-                </div>
-
-        </footer>
+        {% include "footer.html" %}
 </body>
 
 </html>
