@@ -12,7 +12,7 @@
     {% include "general_navbar.html" %}
     {% endif%}
     {% endblock %} <br><br><br>
-    <div class="container">
+    <div class="grid-container">
         <!-- <div class="section-title">
             <p>Fun activities  for you kids and pets.</p>
         </div>
@@ -31,67 +31,76 @@
         </div>
         <div class="row">
             {% for event in publicevents %}
-                <div class="col card mx-2 my-2" style="width: 18rem;">
-                    <img src={{event.banner.url}} width="300px" height="300px"
-                        class="card-img-top  mt-2" alt="...">
-                    <div class="card-body">
-                        <p class="card-text">
-                            <!-- <a href="/events/publicEvent1">{{event.name}}</a></p> -->
-                            <h5>{{event.name}}</h5>
-                        <!-- <a href="/events/publicEvent1" class="btn btn-primary">View details</a> -->
-                        <div>
-                            <p class="text-center px-5">{{event.desc}}</p>
-                        </div>
-                        <div>
-                            <p>Location:</p>
-                            <p>{{event.address.street}}<br> {{event.address.city}} <br>{{event.address.state}} - {{event.address.zipcode}}</p>
-                        </div>
-                        
-                        
+            <div class="col card mx-2 my-2" style="width: 18rem;">
+                <img src={{event.banner.url}} width="300px" height="300px" class="card-img-top  mt-2" alt="/media/publicevents_banner/default.jpeg">
+                <div class="card-body">
+                    <p class="card-text">
+                        <!-- <a href="/events/publicEvent1">{{event.name}}</a></p> -->
+                    <h5>{{event.name}}</h5>
+                    <!-- <a href="/events/publicEvent1" class="btn btn-primary">View details</a> -->
+                    <div>
+                        <p id="descText" class="text-center px-5">{{event.desc}}</p>
                     </div>
-                
+                    <div>
+                        <p>Location:</p>
+                        <p>{{event.address.street}}<br> {{event.address.city}} <br>{{event.address.state}} -
+                            {{event.address.zipcode}}</p>
+                    </div>
+
+                </div>
+                <div class="card-body">
+                    <a href="/events/publicEvent1" class="btn btn-primary">View details</a>
+                </div>
             </div>
             {% endfor %}
-    </div>
-    <footer class="text-center text-white bg-light sticky-bottom">
-        <!-- Grid container -->
-        <div class="container pt-3">
-            <!-- Section: Social media -->
-            <section>
-                <!-- Facebook -->
-                {% load static %}
-                <a href="#" class="mx-2"><img src="{% static 'media/facebook.png' %}"></a>
-
-                <!-- Instagram -->
-                <a href="#" class="mx-2"><img src="{% static 'media/instagram.png' %}"></a>
-
-                <!-- Twitter -->
-                <a href="#" class="mx-2"><img src="{% static 'media/twitter.png' %}"></a>
-
-                <!-- Tiktok -->
-                <a href="#" class="mx-2"><img src="{% static 'media/tiktok.png' %}"></a>
-
-                <!-- Reddit -->
-                <a href="#" class="mx-2"><img src="{% static 'media/reddit.png' %}"></a>
-
-                <!-- Github -->
-                <a href="#" class="mx-2"><img src="{% static 'media/github.png' %}"></a>
-            </section>
-            <!-- Section: Social media -->
         </div>
-        <!-- Grid container -->
+        <footer class="text-center text-white bg-light sticky-bottom">
+            <!-- Grid container -->
+            <div class="container pt-3">
+                <!-- Section: Social media -->
+                <section>
+                    <!-- Facebook -->
+                    {% load static %}
+                    <a href="#" class="mx-2"><img src="{% static 'media/facebook.png' %}"></a>
 
-        <!-- Copyright -->
-        <div class="text-center bg-light p-3">
-            <span class="text-dark ">
-                <a href="/termsofuse">Terms of Use | </a><a href="/privacy">Privacy Notice | </a><a
-                    href="/helpPage">Contact
-                    Us</a><br>
-            </span>
-            <span class="text-dark">Copyright © 2022 TheBabySitters. All rights reserved.</span>
-        </div>
-        <!-- Copyright -->
-    </footer>
+                    <!-- Instagram -->
+                    <a href="#" class="mx-2"><img src="{% static 'media/instagram.png' %}"></a>
+
+                    <!-- Twitter -->
+                    <a href="#" class="mx-2"><img src="{% static 'media/twitter.png' %}"></a>
+
+                    <!-- Tiktok -->
+                    <a href="#" class="mx-2"><img src="{% static 'media/tiktok.png' %}"></a>
+
+                    <!-- Reddit -->
+                    <a href="#" class="mx-2"><img src="{% static 'media/reddit.png' %}"></a>
+
+                    <!-- Github -->
+                    <a href="#" class="mx-2"><img src="{% static 'media/github.png' %}"></a>
+                </section>
+                <!-- Section: Social media -->
+            </div>
+            <!-- Grid container -->
+
+            <!-- Copyright -->
+            <div class="text-center bg-light p-3">
+                <span class="text-dark ">
+                    <a href="/termsofuse">Terms of Use | </a><a href="/privacy">Privacy Notice | </a><a
+                        href="/helpPage">Contact
+                        Us</a><br>
+                </span>
+                <span class="text-dark">Copyright © 2022 TheBabySitters. All rights reserved.</span>
+            </div>
+            <!-- Copyright -->
+        </footer>
 </body>
 
 </html>
+<style>
+    #descText {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+
+    }
+</style>
