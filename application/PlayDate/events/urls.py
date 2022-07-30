@@ -18,5 +18,7 @@ urlpatterns = [
     path('createPublicEvent/', views.createPublicEvent, name='createPublicEvent'),
     path('<int:event_id>/', views.viewEvent, name ='viewEvent'), #view event page
     path('register/<int:event_id>/', views.eventRegistration, name='eventRegistration'),
-    path('eventRegistrationEdit/', views.eventRegistrationEdit, name='eventRegistrationEdit')
+    path('eventRegistrationEdit/', views.eventRegistrationEdit, name='eventRegistrationEdit'),
+    path('delete/<int:event_id>/', views.deleteEvent, name='deleteEvent'),
+    path('edit/<int:event_id>/', views.editEvent, name='editEvent'),
 ]

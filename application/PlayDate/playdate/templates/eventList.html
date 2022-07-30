@@ -49,6 +49,14 @@
                             <span><b>Category:</b> RSVP'd Events</span><br><br>
                             {% else %}
                             <span><b>Category:</b> Created by You</span><br><br>
+                            <div>
+                                <a href="/events/edit/{{item.event.event_id}}/" class="btn btn-primary">Edit</a>
+                                <form method="POST" action="/events/delete/{{item.event.event_id}}/" class="col mx-4">
+                                    {% csrf_token %}
+                                    <button name="delete" class="btn btn-primary" type="submit">Delete</button>
+                                </form>
+                            
+                            </div>
                             {% endif %}
                         </div>
 

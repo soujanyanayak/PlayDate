@@ -22,11 +22,11 @@ from django.core.validators import FileExtensionValidator
 
 class Address(models.Model):
     address_id = models.AutoField(primary_key=True)
-    street = models.CharField(max_length=100, default='NA')
-    country = models.CharField(max_length=20, default='NA')
-    city = models.CharField(max_length=45, default='NA')
-    zipcode = models.IntegerField(default=00000)
-    state = models.CharField(max_length=45, default='NA')
+    street = models.CharField(max_length=100, default=None)
+    country = models.CharField(max_length=20, default=None)
+    city = models.CharField(max_length=45, default=None)
+    zipcode = models.IntegerField(default=None)
+    state = models.CharField(max_length=45, default=None)
 
     class Meta:
         db_table = 'Address'

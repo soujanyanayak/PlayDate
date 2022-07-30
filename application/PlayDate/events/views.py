@@ -2,8 +2,8 @@
 from multiprocessing import Event
 from unicodedata import category
 from unittest import result
-from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.shortcuts import redirect, render
+from django.http import HttpResponse, HttpResponseForbidden, HttpResponseRedirect, JsonResponse
 from django.db.models import Q
 from events.models import EventRegistration
 from home.forms import addressForm
@@ -41,8 +41,29 @@ def eventRegistration(request,event_id):
     if request.method == 'POST':
         event=Event.objects.get(event_id=event_id)
         event_registration=EventRegistration.objects.create(user=user,event=event)
-        return render(request,"memberEvent1.html",{'event':event,'registration':event_registration})
+        # return render(request,"memberEvent1.html",{'event':event,'registration':event_registration})
+        return  HttpResponseRedirect('/events/%s/'%event.event_id)
 
+def deleteEvent(request,event_id):
+    eventInstance=Event.objects.get(event_id=event_id)
+    events=EventRegistration.objects.filter(event=eventInstance).delete()
+    eventInstance.delete()
+    
+    return HttpResponseRedirect('/events/my-events/')
+
+def editEvent(request,event_id):  
+    user=request.user
+    eventInstance=Event.objects.get(event_id=event_id)
+    if eventInstance.user != user:
+        return HttpResponseForbidden()
+    form=eventForm(request.POST or None, instance=eventInstance)
+    addressInstance=Address.objects.get(event=eventInstance)
+    addrform=addressForm(request.POST or None, instance=addressInstance)
+    if request.POST and form.is_valid():
+        print("save")
+        form.save()
+        return HttpResponseRedirect('/events/my-events/')
+    return render(request,'editEvent.html',{'eventform':form,'addressform':addrform})
 
 def publicEvent1(request):
     return render(request, "publicEvent1.html")
