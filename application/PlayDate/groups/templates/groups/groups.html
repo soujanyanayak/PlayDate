@@ -25,13 +25,13 @@ The django data elements are stored in the context as well as in the session dat
         <div class="bannerContainer">
             {% if group.banner.url != None %}
             <div>
-                <img class="bannerimg" src="{{group.banner.url}}"  height="200px" width="200px" alt="" />
-                <h2 class="groupName" style="text-align: center; color: black;">{{group.group_name}}</h2>
+                <img class="bannerimg" src="{{group.banner.url}}" height="200px" width="200px" alt="" />
+                <h2 class="groupName" style="text-align: center; color: black">{{group.group_name}}</h2>
             </div>
             {% else %}
             <div>
                 <img class="bannerimg" src="/media/publicevents_banner/default.jpeg" height="200px" width="200px" alt="" />
-                <h2 class="groupName" style="text-align: center; color: black;">{{group.group_name}}</h2>
+                <h2 class="groupName" style="text-align: center; color: black">{{group.group_name}}</h2>
             </div>
             {% endif %}
         </div>
@@ -39,7 +39,7 @@ The django data elements are stored in the context as well as in the session dat
         <!--🐱Page Layout🐱-->
         <div class="row">
             <!--🐱Left Column🐱-->
-            <div class="column left card" style="background-color: white;box-shadow: 10%; ">
+            <div class="column left card" style="background-color: white; box-shadow: 10%">
                 {% if isMember == True %}
                 <form method="POST">
                     {% csrf_token %}
@@ -58,7 +58,7 @@ The django data elements are stored in the context as well as in the session dat
             </div>
 
             <!--🐱Middle Column🐱-->
-            <div class="column middle" style="background-color: skyblue; border: solid white; width: 70%; ">
+            <div class="column middle" style="background-color: skyblue; border: solid white; width: 70%">
                 <!--Add posts/events etc-->
                 <!--Group Information-->
                 <!--For Members-->
@@ -200,7 +200,7 @@ The django data elements are stored in the context as well as in the session dat
                         </form>
                         {% elif regUser != True%}
 
-                        <a name="joinGroup" href="/verificationError/" class="btn btn-primary me-1" style="width: 10rem; text-align: center" aria-current="true" type="submit"><i class="fas fa-lock fa-fw me-3"></i><span>Join Group</span></a>
+                        <a name="joinGroup" href="/groups/verificationError/" class="btn btn-primary me-1" style="width: 10rem; text-align: center" aria-current="true" type="submit"><i class="fas fa-lock fa-fw me-3"></i><span>Join Group</span></a>
                     </div>
                 </div>
                 {% endif %} {% else %}
@@ -214,44 +214,43 @@ The django data elements are stored in the context as well as in the session dat
 
             <!---Comment-->
             <!--🐱Right Column🐱-->
-            <div class="column right" style="background-color: rgb(241, 241, 241);box-shadow: 10%;">
+            <div class="column right" style="background-color: rgb(241, 241, 241); box-shadow: 10%">
                 {% if isMember == True %}
-                <div class = "card">
-                <!-- <p>••••••••••••••••••••••••••••••••••••</p>
+                <div class="card">
+                    <!-- <p>••••••••••••••••••••••••••••••••••••</p>
                 <h2 style="text-align: center">{{group.group_name}}</h2>
                 <p>••••••••••••••••••••••••••••••••••••</p> -->
-                <p style="text-align: center"><small>Created on:{{group.create_date}}</small></p>
-                <p style="text-align: center">Group Admin: <a href="{% url 'profileView' profile_id=group.group_admin.id %}">{{group.group_admin}}</a></p>
-                <p>Group size: {{member_list|length}} people</p>
-                <p><small>Keywords: {% if group.tags.all %} {% for tag in group.tags.all %} {{tag}}, {% endfor %}{% else %} No Keywords {%endif %}</small></p>
-               </div>
-                <div class = "card">
-                <p>{{group.group_desc}}</p>
-
+                    <p style="text-align: center"><small>Created on:{{group.create_date}}</small></p>
+                    <p style="text-align: center">Group Admin: <a href="{% url 'profileView' profile_id=group.group_admin.id %}">{{group.group_admin}}</a></p>
+                    <p>Group size: {{member_list|length}} people</p>
+                    <p><small>Keywords: {% if group.tags.all %} {% for tag in group.tags.all %} {{tag}}, {% endfor %}{% else %} No Keywords {%endif %}</small></p>
                 </div>
-                <div class = "card">
-                <h2 style="text-align: center">Members</h2>
-                <!--Member table-->
-                {% if member_list %}
-                <ul>
-                    <table style="text-align: center">
-                        <tr>
-                            <th>user ID</th>
-                            <th>username</th>
-                        </tr>
-                        {% for member in member_list %}
-                        <tr>
-                            <td>{{member.member_id.id}}</td>
-                            <td>
-                                <a href="{% url 'profileView' profile_id=member.member_id.id %}">{{member.member_id}}</a>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </table>
-                </ul>
-                
-                {% else %}
-                <p>No members error; there should at least be 0 member</p>
+                <div class="card">
+                    <p>{{group.group_desc}}</p>
+                </div>
+                <div class="card">
+                    <h2 style="text-align: center">Members</h2>
+                    <!--Member table-->
+                    {% if member_list %}
+                    <ul>
+                        <table style="text-align: center">
+                            <tr>
+                                <th>user ID</th>
+                                <th>username</th>
+                            </tr>
+                            {% for member in member_list %}
+                            <tr>
+                                <td>{{member.member_id.id}}</td>
+                                <td>
+                                    <a href="{% url 'profileView' profile_id=member.member_id.id %}">{{member.member_id}}</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </ul>
+
+                    {% else %}
+                    <p>No members error; there should at least be 0 member</p>
                 </div>
                 {% endif %} {% else %} {% endif %}
             </div>
@@ -277,9 +276,8 @@ The django data elements are stored in the context as well as in the session dat
         padding: 7% 0px 0px 0px;
     }
 
-    .bannerimg{
+    .bannerimg {
         border-radius: 50%;
-
     }
     .groupName {
         position: absolute;
@@ -315,7 +313,6 @@ The django data elements are stored in the context as well as in the session dat
         clear: both;
     }
 
-    
     /* Sidebar */
     .sidebar {
         position: fixed;
@@ -347,7 +344,6 @@ The django data elements are stored in the context as well as in the session dat
         overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
     }
 </style>
-
 
 <!--
 ░█▀█░█▀▄░█▀▀░█░█░▀█▀░█░█░█▀▀░█▀▄░░░█▀▀░█▀█░█▀▄░█▀▀

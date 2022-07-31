@@ -599,6 +599,10 @@ def createGroup(request):
     return render(request, 'groups/createGroup.html', {'createGroupForm': createGroupForm, 'memberListForm': memberListForm, 'regUser': regUser})
 
 
+def verifyYourself(request):
+    return render(request, "groups/verifyYourself.html")
+
+
 # ░█▀▄░█▀▀░█░█░░░░░█░█░█▀▀░█▀▀░░░█▀█░█▀█░█░░░█░█
 # ░█░█░█▀▀░▀▄▀░▄▄▄░█░█░▀▀█░█▀▀░░░█░█░█░█░█░░░░█░
 # ░▀▀░░▀▀▀░░▀░░░░░░▀▀▀░▀▀▀░▀▀▀░░░▀▀▀░▀░▀░▀▀▀░░▀░
