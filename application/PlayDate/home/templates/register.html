@@ -1,25 +1,7 @@
-{% load static %}
-{% include "header.html" %}
-
-<head>
-    <meta charset="UTF-8" />
-    <title>Register for PlayDate!</title>
-
-    <link rel="stylesheet" href="{% static 'css/register.css' %}">
-    </link>
-    <script src="{% static 'js/register.js' %}" defer="true"></script>
-</head>
-
-<body style="background-color: #9de2ff;">
-    <div>
-        <a href="/">
-            <h5 style="font-family: 'Gill Sans', sans-serif;color: #0d6efd; text-align: center; margin-top: 30px;">
-                <b>PlayDate</b>
-            </h5>
-        </a>
-    </div>
-    <div class="card mx-auto mt-2" style="width: 30rem;">
-        <div class="card-body">
+{% extends 'nonNavPage.html' %}
+{% with title="Register" style='static/css/register.css' script='static/js/register.js' %}
+{% block width %}30rem{% endblock %}
+{% block content %}
             <h6 class="card-subtitle mb-2 text-muted">Sign-Up:</h6>
             <form class="register" style="width: 450px;" method="POST" action="">
                 {% csrf_token %}
@@ -71,11 +53,4 @@
                     <p>Already a member? <a href="/login">Log In</a></p>
                 </div>
             </form>
-        </div>
-    </div>
-
-    {% include "footer.html" %}
-
-</body>
-
-</html>
+{% endblock %} {% endwith %}

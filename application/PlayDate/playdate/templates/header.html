@@ -3,7 +3,7 @@
 
 <head>
   <!-- Title: set by using "include 'header.html' with title='TITLE'" -->
-  <title>{{ title|default:"Play Date"}}</title>
+  <title>PlayDate{% if title %}:{{ title|default:""}}{% endif %}</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Bootstrap includes -->
@@ -35,6 +35,9 @@
       flex: 1;
     }
   </style>
+
+  {% if script %} <script src="{{script}}" defer="true"></script> {% endif %} 
+  {% if style %} <link rel="stylesheet" href="{{style}}"></link>{% endif %}
 
   <!-- Smartsupp Live Chat script -->
   <script type="text/javascript">
