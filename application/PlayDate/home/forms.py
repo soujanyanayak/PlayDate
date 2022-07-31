@@ -15,7 +15,63 @@ class profileForm(ModelForm):
             'profileDesc': ('Profile Description'), 'avatar': ('Avatar'),
         }
 
-class profileVerificationForm(ModelForm):
+class userRegistrationForm(UserCreationForm):
+    class Meta:
+        model = User
+        model.is_staff = False
+        fields = ['username', 'first_name', 'last_name',
+                  'email', 'password1', 'password2']
+
+# Profile Page Forms --------------------------------
+# Verifies user changes in Account Details card
+class profilePage_UserForm(ModelForm):
+    class Meta:
+        model = User
+        model.is_staff = False
+        fields = ['username', 'first_name', 'last_name',
+                  'email']
+# Verifies account changes in Account Details card
+class profilePage_AccountForm(ModelForm):
+    class Meta:
+        model = models.Account
+        fields = ['gender', 'dob']
+# Verifies profile changes in Account Details card
+class profilePage_ProfileForm(ModelForm):
+    class Meta:
+        model = models.Profile
+        fields = ['profileDesc']
+# Verifies address changes in Account Details card
+class profilePage_AddressForm(ModelForm):
+    class Meta:
+        model = models.Address
+        fields = ['street', 'city', 'state', 'country', 'zipcode']
+# Verifies dependent changes on profile page
+class profilePage_DependentForm(ModelForm):
+    class Meta:
+        model = models.Dependent
+        fields = ['profile', 'type', 'name', 'dob', 'interests']
+# Verify avatar image 
+class profilePage_AvatarForm(ModelForm):
+    # clean_image is a workaround to server-side
+    # validate the verification image.
+    def clean_image(self):
+        avatarImg = self.cleaned_data['avatar']
+        if avatarImg:
+            # size measured in bytes
+            if avatarImg.size > 6.5 * 1048578:
+                raise ValidationError("Avatar image must be under 6.5 MB")
+            avatarImgExt = avatarImg.name.split('.')[-1]
+            allowedTypes = "apng, avif, gif jpeg, jpg, png, webp"
+            if avatarImgExt in allowedTypes:
+                return avatarImg
+            raise ValidationError("Avatar image in the wrong format.")
+        raise ValidationError("No avatar image uploaded.")
+    class Meta:
+        model = models.Profile
+        fields = ['avatar']
+        labels = {'avatar': ('Avatar Image')}
+# Verify image in verification card
+class profilePage_VerificationForm(ModelForm):
     # clean_image is a workaround to server-side
     # validate the verification image.
     def clean_image(self):
@@ -30,18 +86,10 @@ class profileVerificationForm(ModelForm):
                 return verImg
             raise ValidationError("Verification image in the wrong format.")
         raise ValidationError("No verification image uploaded.")
-
     class Meta:
         model = models.Profile
         fields = ['verification']
         labels = {'verification': ('Verification Document')}
-
-class userRegistrationForm(UserCreationForm):
-    class Meta:
-        model = User
-        model.is_staff = False
-        fields = ['username', 'first_name', 'last_name',
-                  'email', 'password1', 'password2']
 
 
 class accountForm(ModelForm):

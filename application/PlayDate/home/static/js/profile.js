@@ -66,12 +66,14 @@ class DependentControl {
         this.data = {
             server: {
                 id: "-1",
+                type: "",
                 name: "",
                 dob: "",
                 interests: ""
             },
             client: {
                 id: "-1",
+                type: "",
                 name: "",
                 dob: "",
                 interests: ""
@@ -92,6 +94,7 @@ class DependentControl {
         if (loadVals.dependents.length > this.id) {
             this.data.client.id = this.data.server.id = loadVals.dependents[this.id].id;
             this.data.client.name = this.data.server.name = loadVals.dependents[this.id].name;
+            this.data.client.type = this.data.server.type = loadVals.dependents[this.id].type;
             this.data.client.interests = this.data.server.interests = loadVals.dependents[this.id].interests;
             this.data.client.dob = this.data.server.dob = new Date(loadVals.dependents[this.id].dob);
             this.state = STATE.CHANGED;
@@ -122,6 +125,13 @@ class DependentControl {
                      + "\t\t\t\t\t\t\t\t\tplaceholder='Enter your dependents name' value='"+this.data.client.name+"' oninput='setName("+this.id+")'>\n"
                      + "\t\t\t\t\t\t\t</div>\n"
                      + "\t\t\t\t\t\t\t<div class='col-md-10'>\n"
+                     + "\t\t\t\t\t\t\t\t<label class='small mb-1' for='dep"+this.id+"_type'>Type of Dependent</label>\n"
+                     + "\t\t\t\t\t\t\t\t<select class='form-select' id='dep"+this.id+"_type' name='dep_type' value='"+this.data.client.type+"' oninput='setType("+this.id+")'>\n"
+                     + "\t\t\t\t\t\t\t\t\t<option value='CHILD'>Child</option>\n"
+                     + "\t\t\t\t\t\t\t\t\t<option value='PET'>Pet</option>\n"
+                     + "\t\t\t\t\t\t\t\t</select>"
+                     + "\t\t\t\t\t\t\t</div>\n"
+                     + "\t\t\t\t\t\t\t<div class='col-md-10'>\n"
                      + "\t\t\t\t\t\t\t\t<label class='small mb-1' for='dep"+this.id+"_dob'>Date of Birth</label>\n"
                      + "\t\t\t\t\t\t\t\t<input class='form-control' id='dep"+this.id+"_dob' type='date' name='dep_dob'\n"
                      + "\t\t\t\t\t\t\t\t\tplaceholder='MM/DD/YYYY'  oninput='setDOB("+this.id+")'>\n"
@@ -145,6 +155,14 @@ class DependentControl {
     setName() { 
         this.data.client.name = document.getElementById(this.suffix+"_name").value; 
         this.setButton(this.data.client.name != this.data.server.name);
+    }
+
+    /* dpdtCtrl.setType() */
+    // Saves the type value from the DOM to the dpdtCtrl, then 
+    // affects dpdtCtrl.visible as needed through setButton()
+    setType() { 
+        this.data.client.type = document.getElementById(this.suffix+"_type").value; 
+        this.setButton(this.data.client.type != this.data.server.type);
     }
     
     /* dpdtCtrl.setDOB() */
@@ -190,6 +208,7 @@ class DependentControl {
             var element = document.getElementById(this.suffix+"_dob");
             element.valueAsDate = this.data.client.dob;
         }
+        document.getElementById(this.suffix+"_type").value = this.data.client.type;
     }
     
     /* dpdtCtrl.remove() */
@@ -223,6 +242,7 @@ class DependentControl {
             state: this.state,
             dependent: {
                 id: this.data.client.id,
+                type: this.data.client.type,
                 name: this.data.client.name,
                 dob: getUTC(this.data.client.dob),
                 interests: this.data.client.interests
@@ -261,6 +281,7 @@ class DependentControl {
             } else {
                 this.state = STATE.CHANGED;
                 this.data.server.name = this.data.client.name = data.name;
+                this.data.server.type = this.data.client.type = data.type;
                 this.data.server.dob = this.data.client.dob = new Date(data.dob);
                 this.data.server.interests = this.data.client.interests = data.interests;
                 this.data.server.id = this.data.client.id = data.id;
@@ -344,6 +365,14 @@ class DependentContainer {
     // by the change of the name input.
     setName(dpdtId) {
         this.dependents[dpdtId].setName();
+    }
+
+    /* dpdtCont.setType(dpdtId) */
+    // Passes priority to the correct dpdtCtrl.
+    // Called by the generic setType triggered
+    // by the change of the name input.
+    setType(dpdtId) {
+        this.dependents[dpdtId].setType();
     }
 
     /* dpdtCont.setDOB(dpdtId) */
@@ -459,6 +488,11 @@ function save(id) { dpdtController.save(id); }
 // The event handler for the input event of the
 // name input of the dependent form.
 function setName(id) { dpdtController.setName(id); }
+
+// setType(id)
+// The event handler for the input event of the
+// type input of the dependent form.
+function setType(id) { dpdtController.setType(id); }
 
 // setDOB(id)
 // The event handler for the input event of the

@@ -183,7 +183,7 @@ def profileEditPage(request):
 
 # /[serv]/profile
 def profilePage(request):
-    verForm = forms.profileVerificationForm()
+    verForm = forms.profilePage_VerificationForm()
     # If GET, send the user, profile, account and dependents
     if request.method == "GET":
         if not request.user.is_authenticated:
@@ -208,49 +208,149 @@ def profilePage(request):
     # everything to the client with a success message
     if request.method == "POST":
         print(request.POST)
+        if not request.user.is_authenticated:
+            return redirect("home")
+
+        # First grab info from the request for each form
+        account_data = {'gender': request.POST['inputGender'], 'dob':request.POST['inputDOB']}
+        user_data = {'username':request.POST['inputUserName'], 'first_name': request.POST['inputFirstName'], 'last_name': request.POST['inputLastName'], 'email': request.POST['inputEmail']}
+        profile_data = {'profileDesc': request.POST['inputDescription']}
+        address_data = {'street': request.POST['inputStreet'], 'city': request.POST['inputCity'], 'state': request.POST['inputState'], 'country': request.POST['inputCountry'], 'zipcode': request.POST['inputZipCode']}
+
+        # Prepare error message
+        errorMsg = {
+            'error': False,
+            'errors': None
+        }
+
+        # Deal with user form
         user = request.user
-        user.first_name = request.POST["inputFirstName"]
-        user.last_name = request.POST["inputLastName"]
-        user.email = request.POST["inputEmail"]
-        user.save()
-        profileObj = models.Profile.objects.get(profileID=request.user)
-        address = profileObj.address
+        user_form = forms.profilePage_UserForm(user_data, instance=user)
+        if not user_form.is_valid():
+            errorMsg = {
+                'error': True,
+                'errors': user_form.errors 
+            }
+        else:
+            user = user_form.save()
+        
+        # Deal with account form
+        account = models.Account.objects.get(accountID=user)
+        account_form = forms.profilePage_AccountForm(account_data, instance=account)
+        if not account_form.is_valid():
+            errorMsg = {
+                'error': True,
+                'errors': user.errors 
+            }
+        else:
+           account_form.save()
+        
+        # Deal with profile form
+        profile = models.Profile.objects.get(profileID=request.user)
+        profile_form = forms.profilePage_ProfileForm(profile_data, instance=profile)
+        if not profile_form.is_valid():
+            errorMsg = {
+                'error': True,
+                'errors': profile_form.errors 
+            }
+        else:
+            profile = profile_form.save()
+
+        # Deal with address form
+        address = profile.address
         if address is None:
             address = models.Address()
             address.save()
-            profileObj.address = address
-            profileObj.save()
-        address.country = request.POST["inputCountry"]
-        address.state = request.POST["inputState"]
-        address.zipcode = request.POST["inputZipCode"]
-        address.city = request.POST["inputCity"]
-        address.save()
-        account = models.Account.objects.get(accountID=request.user)
-        try:
-            dependents = models.Dependent.objects.filter(profile=profileObj)
-            print ("Dependents: ")
-            print (dependents)
-        except Exception as exc:
-            print (str(exc))
-            dependents = str(exc)
-        finally:
-            print ("Profile-----------------------------")
-            print (profileObj)
-            print ("Account-----------------------------")
-            print (account)
-            print ("Dependents--------------------------")
-            print (dependents)
+            profile.address = address
+            profile.save()
+        address_form = forms.profilePage_AddressForm(address_data, instance = address)
+        if not address_form.is_valid():
+            errorMsg = {
+                'error': True,
+                'errors': address_form.errors 
+            }
+        else:
+            address = address_form.save()
+        
+        # Get dependents
+        dependents = models.Dependent.objects.filter(profile=profile)
+
+        # Debug statements
+        print ("User--------------------------------")
+        print (user)
+        print ("Profile-----------------------------")
+        print (profile)
+        print ("Account-----------------------------")
+        print (account)
+        print ("Dependents--------------------------")
+        print (dependents)
+
+        # Compile data for render
+        if errorMsg['error']:
             retVals = {
-                'user': request.user, 
+            'user': user, 
+            'account': account,
+            'profile': profile, 
+            'dependents': dependents,
+            'verForm': verForm,
+            'modalTitle': "Error",
+            'modalText': str(errorMsg['errors']),
+            'modalBtnText': "Close",
+            'modalImmediate': True }
+        else:
+            retVals = {
+                'user': user, 
                 'account': account,
-                'profile': profileObj, 
+                'profile': profile, 
                 'dependents': dependents,
                 'verForm': verForm,
                 'modalTitle': "Success!",
                 'modalText': "Successfully saved your Account Details.",
                 'modalBtnText': "Close",
                 'modalImmediate': True }
+        return render(request, 'profilePage.html', retVals)
+
+def avatarUpload(request):
+    if request.user.is_authenticated:
+        print ("Hit avatarUpload")
+        user = request.user
+        profile = models.Profile.objects.get(profileID=request.user)
+        dependents = models.Dependent.objects.filter(profile=profile)
+        account = models.Account.objects.get(accountID=user)
+        if request.method == 'POST':
+            # Unload the image
+            avatarForm = forms.profilePage_AvatarForm(request.POST, request.FILES, instance=profile)
+            if avatarForm.is_valid():
+                avatarProfile = avatarForm.save(commit=False)
+                if len(request.FILES) == 0:
+                    avatarProfile.avatar = None
+                else:
+                    avatarProfile.avatar = request.FILES['avatar']
+                avatarProfile.save()
+                retVals = {
+                    'user': user, 
+                    'account': account,
+                    'profile': profile, 
+                    'dependents': dependents,
+                    'modalTitle': "Success!",
+                    'modalText': "Successfully updated your avatar.",
+                    'modalBtnText': "Close",
+                    'modalImmediate': True }
+                return render(request, 'profilePage.html', retVals)
+        else:
+            retVals = {
+                'user': user, 
+                'account': account,
+                'profile': profile, 
+                'dependents': dependents,
+                'modalTitle': "Error",
+                'modalText': "Please use a POST request",
+                'modalBtnText': "Close",
+                'modalImmediate': True }
             return render(request, 'profilePage.html', retVals)
+    else: 
+        return redirect('home')
+    
 
 # AJAX Endpoint
 def dependents(request):
@@ -267,10 +367,13 @@ def dependents(request):
             depID = data['dependent']['id']
             depData = {
                 'name': data['dependent']['name'],
+                'type': data['dependent']['type'],
                 'dob': data['dependent']['dob'],
                 'interests': data['dependent']['interests'],
-                'profile': profile.pk
+                'profile': profile
             }
+
+            # Dependent Action: DELETE -------------------------------------
             if data['state'] == "DELETE":
                 print ("Mode: DELETE")
                 try:
@@ -288,24 +391,32 @@ def dependents(request):
                     print ("Dependent deletion failed")
                     print (retVal['err'])
                     return JsonResponse(retVal, status=500)
+            
+            # Dependent Action: UPDATE -------------------------------------
             elif data['state'] == "UPDATE":
                 print ("Mode: UPDATE")
                 try:
-                    dependent = models.Dependent.objects.get(dependent_id=depID)
-                    dependent.name = depData['name']
-                    dependent.dob = depData['dob']
-                    dependent.interests = depData['interests']
-                    dependent.save()
-                    retVal = {
-                        'message': "Successfully updated dependent", 
-                        'id': dependent.dependent_id,
-                        'name': dependent.name,
-                        'dob': dependent.dob,
-                        'interests': dependent.interests,
-                        'profile': dependent.profile.pk
-                    }
-                    print ("Dependent update successful")
-                    return JsonResponse(retVal, status=200)
+                    depForm = forms.profilePage_DependentForm(depData, instance=profile)
+                    if depForm.is_valid():
+                        dependent = depForm.save()
+                        retVal = {
+                            'message': "Successfully updated dependent", 
+                            'id': dependent.dependent_id,
+                            'name': dependent.name,
+                            'dob': dependent.dob,
+                            'interests': dependent.interests,
+                            'profile': dependent.profile.pk
+                        }
+                        print ("Dependent update successful")
+                        return JsonResponse(retVal, status=200)
+                    else:
+                        retVal = {
+                            'message': "Invalid Input in dependent", 
+                            'err': str(depForm.errors)
+                        }
+                        print ("Dependent update failed")
+                        return JsonResponse(retVal, status=500)
+
                 except Exception as exc:
                     retVal = {
                         'message': 'An exception occurred during dependent update',
@@ -314,21 +425,31 @@ def dependents(request):
                     print ("Dependent update failed")
                     print (retVal['err'])
                     return JsonResponse(retVal, status=500)
+            
+            # Dependent Action: CREATE -------------------------------------
             else: 
                 print ("Mode: CREATE")
                 try:
-                    dependent = models.Dependent(name=depData['name'], dob=depData['dob'], interests=depData['interests'], profile=profile)
-                    dependent.save()
-                    retVal = {
-                        'message': "Successfully created dependent", 
-                        'id': dependent.dependent_id,
-                        'name': dependent.name,
-                        'dob': dependent.dob,
-                        'interests': dependent.interests,
-                        'profile': dependent.profile.pk
-                    }
-                    print ("Dependent creation successful @ id: " + str(dependent.dependent_id))
-                    return JsonResponse(retVal, status=200)
+                    depForm = forms.profilePage_DependentForm(depData)
+                    if depForm.is_valid():
+                        dependent = depForm.save()
+                        retVal = {
+                            'message': "Successfully created dependent", 
+                            'id': dependent.dependent_id,
+                            'name': dependent.name,
+                            'dob': dependent.dob,
+                            'interests': dependent.interests,
+                            'profile': dependent.profile.pk
+                        }
+                        print ("Dependent create successful")
+                        return JsonResponse(retVal, status=200)
+                    else:
+                        retVal = {
+                            'message': "Invalid Input in dependent", 
+                            'err': str(depForm.errors)
+                        }
+                        print ("Dependent creation failed")
+                        return JsonResponse(retVal, status=500)
                 except Exception as exc:
                     retVal = {
                         'message': 'An exception occurred during dependent creation',
@@ -345,9 +466,10 @@ def verificationUpload(request):
     if not request.user.is_authenticated:
         return redirect("home")
     if request.method == "POST":
-        verForm = forms.profileVerificationForm(request.POST, request.FILES)
+        profile = models.Profile.objects.get(profileID=request.user)
+        verForm = forms.profilePage_VerificationForm(request.POST, request.FILES, instance=profile)
         if verForm.is_valid():
-            verProfile = models.Profile.objects.get(profileID=request.user)
+            verProfile = verForm.save(commit=False)
             if len(request.FILES) == 0:
                 verProfile.verification = None
             else:
