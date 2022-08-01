@@ -17,7 +17,6 @@
         <div>
             <h5><b>Fun activities posted by our users:</b></h5>
         </div>
-
         {% if events %}
         {% for event in events %}
         {% with numerator=forloop.counter denominator=3 %}
@@ -56,10 +55,12 @@
         {% else %}
         <div> No events available currently</div>
         {% endif %}
+        {% endif %}
 
         <div>
             <h5><b>Public activities for everyone:</b></h5>
         </div>
+        
         {% if publicevents %}
 
         <div class="grid-container">

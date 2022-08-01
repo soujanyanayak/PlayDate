@@ -27,14 +27,17 @@ def publicevents(request):
 # Display all the events for user to register
 def membersevents(request):
     user=request.user
-    eventregistrations=EventRegistration.objects.filter(user=user).values_list('event')
-
-    print(eventregistrations)
-    events=Event.objects.all().exclude(event_id__in = eventregistrations)
-    print(events)
-    
     publicevents= Publicevent.objects.all()
-    return render(request, "membersevents.html",{'events':events,'publicevents':publicevents})
+    if user.is_authenticated:
+        eventregistrations=EventRegistration.objects.filter(user=user).values_list('event')
+
+        print(eventregistrations)
+        events=Event.objects.all().exclude(event_id__in = eventregistrations)
+        print(events)
+        return render(request, "membersevents.html",{'events':events,'publicevents':publicevents,'user':user})
+    
+    
+    return render(request, "membersevents.html",{'publicevents':publicevents,'user':user})
 
 def eventRegistration(request,event_id):
     user=request.user
