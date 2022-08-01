@@ -125,3 +125,10 @@ class addressForm(ModelForm):
             'zipcode':('Zipcode'),
             'city':('City')
         }
+        widgets = {
+            'street': forms.TextInput(attrs={'style': 'width: 25rem;', 'placeholder': "e.g. 123 Street"}),
+            'state': forms.TextInput(attrs={'style': 'width: 25rem;', 'placeholder': "e.g. CA"}),
+            'country': forms.TextInput(attrs={'style': 'width: 25rem;', 'placeholder': "e.g. USA"}),
+            'zipcode': forms.TextInput(attrs={'style': 'width: 25rem;', 'placeholder': "e.g. 12345"}),
+            'city': forms.TextInput(attrs={'style': 'width: 25rem;', 'placeholder': "e.g. San Francisco"}),
+        }
