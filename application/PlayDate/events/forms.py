@@ -31,7 +31,7 @@ class eventForm(ModelForm):
         fields=['name', 'banner', 'category', 'desc','datetime']
         labels={'name':('Event Name'),'banner':('Image'),'category':('category'),'desc':('Description'),'datetime':('datetime')}
         exclude = ()
-         widgets = {
+        widgets = {
             'name': forms.TextInput(attrs={'style': 'width: 25rem;', 'placeholder': "Kyle's 12th Birthday Party!"}),
             'category': forms.TextInput(attrs={'style': 'width: 25rem;', 'placeholder': "e.g. Birthday Party"}),
             'desc': forms.TextInput(attrs={'style': 'width: 25rem;' 'height:100px', 'placeholder': "add description..."}),
