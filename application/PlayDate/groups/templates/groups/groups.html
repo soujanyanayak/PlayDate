@@ -12,7 +12,7 @@ The django data elements are stored in the context as well as in the session dat
 
 {% load static %}{% include "header.html" %}
 <!DOCTYPE html>
-<html lang="en">CREATE DATABASE playdate;
+<html lang="en">
 
 <head>
     <meta charset="UTF-8" />
@@ -63,12 +63,12 @@ The django data elements are stored in the context as well as in the session dat
                                 {% csrf_token %} <button name="joinGroup" class="btn btn-primary me-1"
                                     style="width: 10rem; text-align: center" aria-current="true" type="submit"><i
                                         class="fas fa-lock fa-fw me-3"></i><span>Join Group</span></button>
-                            </form>
+                            </form><br>
                             {% else %}
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                 data-bs-target="#staticBackdrop">
                                 Join Group
-                            </button>
+                            </button><br>
 
                             <!-- Modal -->
                             <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
