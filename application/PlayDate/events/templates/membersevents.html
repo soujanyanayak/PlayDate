@@ -13,17 +13,16 @@
     {% endif %}
     {% endblock %}
     <br><br><br>
-    <div class="container">
+    <div class="">
         <div>
             <h5><b>Fun activities posted by our users:</b></h5>
         </div>
-
         {% if events %}
         {% for event in events %}
         {% with numerator=forloop.counter denominator=3 %}
         {% load mathfilters %}
         {% if numerator|mod:denominator == 1 %}
-        <div class="row">
+        <div class="grid-container">
             {% endif %}
             <div class="col-md-4 card mx-2 my-2" style="border-radius: 15px; width: 26rem;">
                 {% if event.banner.url != None %}
@@ -56,13 +55,15 @@
         {% else %}
         <div> No events available currently</div>
         {% endif %}
+        {% endif %}
 
         <div>
             <h5><b>Public activities for everyone:</b></h5>
         </div>
+        
         {% if publicevents %}
 
-        <div class="row">
+        <div class="grid-container">
             {% for publicevent in publicevents %}
 
             <div class="col card mx-2 my-2" style="width: 18rem;">
@@ -138,5 +139,43 @@
         <!-- Copyright -->
     </footer>
 </body>
+<style>
+    @media (min-width: 900px) {
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            align-items: center;
 
+            max-width: 1000px;
+            margin: auto;
+            display: grid;
+        }
+
+    }
+
+    @media (max-width: 900px) {
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+    }
+
+    @media only screen and (max-width: 600px) {
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+        }
+    }
+
+    .card-body {}
+
+    #descText {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+
+    }
+</style>
 </html>
