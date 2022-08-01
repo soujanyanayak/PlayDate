@@ -73,8 +73,14 @@ The django data elements are stored in the context as well as in the session dat
                                 <div class="d-flex justify-content-between p-2 px-3">
                                     <!--Top Segment: Profile Pic, Username, Date Created-->
                                     <div class="d-flex flex-row align-items-center">
+                                        {% if profile.avatar.url != None %}
                                         <img src="{{profile.avatar.url}}" width="50" class="rounded-circle" />
-                                        <div class="d-flex flex-column ml-2"><span class="font-weight-bold">{{event.user}}</span> <small class="text-primary">{{event.address}}</small></div>
+                                        {% else %}
+                                        <img src="/media/default_user.png" width="50" style="border: solid blue; margin-right: 10%" class="rounded-circle" />
+                                        {% endif %}
+                                        <div class="d-flex flex-column ml-2">
+                                            <span class="font-weight-bold"><a href="{% url 'profileView' profile_id=event.user.id %}">{{event.user}}</a></span> <small class="text-primary">{{event.address}}</small>
+                                        </div>
                                     </div>
                                     <div class="d-flex flex-row mt-1 ellipsis"><small class="mr-2">Created on: {{event.created_on}}</small> <i class="fa fa-ellipsis-h"></i></div>
 
@@ -133,8 +139,14 @@ The django data elements are stored in the context as well as in the session dat
                                 <div class="d-flex justify-content-between p-2 px-3">
                                     <!--Top Segment: Profile Pic, Username, Date Created-->
                                     <div class="d-flex flex-row align-items-center">
+                                        {% if profile.avatar.url != None %}
                                         <img src="{{profile.avatar.url}}" width="50" class="rounded-circle" />
-                                        <div class="d-flex flex-column ml-2"><span class="font-weight-bold">{{post.user}}</span></div>
+                                        {% else %}
+                                        <img src="/media/default_user.png" width="50" style="border: solid blue; margin-right: 10%; margin-top: 5%" class="rounded-circle" />
+                                        {% endif %}
+                                        <div class="d-flex flex-column ml-2">
+                                            <span class="font-weight-bold"> <a href="{% url 'profileView' profile_id=post.user.id %}">{{post.user}}</a></span>
+                                        </div>
                                     </div>
                                     <div class="d-flex flex-row mt-1 ellipsis"><small class="mr-2">Created on: {{post.created_on}}</small> <i class="fa fa-ellipsis-h"></i></div>
                                     <!-- Administrative Task Dropdown -->
