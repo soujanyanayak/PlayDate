@@ -50,15 +50,21 @@ In order to style form elements please refer to forms.py where attributes such a
                     <label for="group tags">Keywords:</label>
                     <p>
                         <small>• Enter some keywords to help users find your group.<br />• Keywords should be separated
-                            by a comma.</small>
+                            by pressing the spacebar.</small>
                     </p>
                     <p><small></small></p>
-                    {{createGroupForm.tags}}
+                    <!-- tags -->
+                    <label id="tag"> <b>Tags</b></label><br>
+                        <div style="width: 59rem" class="tag-container">
+                            <input placeholder="add tags..." class="input"/>
+                        </div>
+                    </label><br>
+                    <!-- {{createGroupForm.tags}} -->
 
                     <label for="banner">(optional) Upload a banner!</label>
                     <br />
                     {{createGroupForm.banner}}
-                    <button style="margin-left: 60%; margin-top: 1vh" class="btn btn-primary pt-2">Create Group</button>
+                    <button style="margin-left: 60%; margin-top: 1vh;"  class="btn btn-primary pt-2">Create Group</button>
                 </form>
             </div>
             {% elif not user.is_authenticated %}
@@ -81,7 +87,97 @@ In order to style form elements please refer to forms.py where attributes such a
 </body>
 
 </html>
+<style>
 
+    .tags{
+            width: 60%;
+            margin: 40px;
+    }
+    .tag-container{
+            border: 2px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            display: flex;
+            overflow: scroll;
+    }
+    .tag-container .tag{
+            padding: 5px;
+            border: 1px solid #ccc;
+            margin: 5px;
+            display: flex;
+            align-items: center;
+            border-radius: 3px;
+            background: #f2f2f2;
+    }
+    .close {
+            font-size: 16px;
+            margin-left: 5px;
+    }
+    .tag-container input{
+            flex: 1;
+            font-size: 16px;
+            padding: 5px;
+            outline: none;
+            border: 0;
+            padding-bottom: 20px;
+    }
+</style>
+<script>
+    //for tags input box
+    const tagContainer = document.querySelector(".tag-container");
+    const input = document.querySelector(".tag-container input");
+    var tags = [];
+
+    function createTag(label) {
+            const div = document.createElement("div");
+            div.setAttribute('class','tag');
+            const span = document.createElement('span');
+            span.innerHTML = label;
+            const closeBtn = document.createElement('button');
+            closeBtn.setAttribute('class', 'close');
+            closeBtn.setAttribute('data-item', label);
+            closeBtn.innerHTML = "x";
+
+            div.appendChild(span);
+            div.appendChild(closeBtn);
+
+            return div;
+    }
+    function reset(){
+
+    }
+    //reset so the input is not duplicated 
+    function reset(){
+            document.querySelectorAll(".tag").forEach(function(tag){
+                    tag.parentElement.removeChild(tag);
+            })
+    }
+    //add tags to array
+    function addTags(){
+            reset();
+            tags.slice().reverse().forEach(function(tag){
+                    const input = createTag(tag);
+                    tagContainer.prepend(input);
+            })
+    }
+    //tiggers add tag when spacebar is hit and resets input value
+    input.addEventListener('keyup', function(e){
+            if(e.key === " "){
+                    tags.push(input.value);
+                    addTags();
+                    input.value = " ";
+            }
+    })
+    //remove tags
+    document.addEventListener("click", function(e){
+            const value = e.target.getAttribute('data-item');
+            const index = tags.indexOf(value);
+            tags = [...tags.slice(0, index), ...tags.slice(index + 1)];                        
+            addTags();
+            
+    })
+   
+</script>
 <!--
 ▄▖▄▖▄▖▖▖▄▖▖▖▄▖▄   ▄▖▄▖▄ ▄▖
 ▌▌▙▘▌ ▙▌▐ ▌▌▙▖▌▌  ▌ ▌▌▌▌▙▖
