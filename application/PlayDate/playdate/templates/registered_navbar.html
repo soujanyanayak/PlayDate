@@ -29,10 +29,11 @@
                 <a class="nav-link {% if request.path == groups %} active {% endif %}" aria-current="page"
                     href="/groups">Groups</a>
             </ul>
-
             <!-- Search Field -->
             <form class="search-field  button mx-auto d-flex" role="search" action="{% url 'events' %}" method="GET"
                 value="{{request.GET.q}}">
+
+                {% if hide_search %}{% else %}
                 <div id="filter" class="dropdown">
                     <select id="filterText" class="btn btn-primary dropdown-toggle" type="button"
                         id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" name="category"
@@ -47,6 +48,7 @@
                     placeholder="City, State, Zipcode" aria-label="Search">
                 <button class="search-button-text btn btn-outline-success" name="submit" value="Search"
                     type="submit">&#128269;</button>
+                    {% endif %}
             </form>
 
             <script>
