@@ -304,8 +304,16 @@ def profilePage(request):
 
 
 def accountSettings(request, user_id):
+    if not request.user.is_authenticated:
+        return redirect('home')
     myProfile = models.Profile.objects.get(profileID=request.user)
     myAccount = models.Account.objects.get(accountID=request.user)
+    targetUser = User.objects.filter(id=user_id)
+    if len(targetUser) == 0:
+        targeetUser = None
+    else:
+        targetUser = targetUser[0]
+
     if request.user.id == user_id:
         if 'deleteAccount' in request.POST:
             print("DEV-CONSOLE: Deleting Account...")
@@ -315,7 +323,7 @@ def accountSettings(request, user_id):
             print("Successfully deleted:", u.username)
             return redirect('home')
         return render(request, "accountSettings.html", {'user_id': user_id, 'myProfile': myProfile, 'myAccount': myAccount})
-    return HttpResponse("account settings")
+    return render(request, "accountSettings.html", {'user': targetUser})
 
 
 def avatarUpload(request):

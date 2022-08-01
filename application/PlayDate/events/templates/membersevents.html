@@ -20,17 +20,18 @@
 
         {% if events %}
         {% for event in events %}
+        {% with numerator=forloop.counter denominator=3 %}
         {% load mathfilters %}
-        {% with numerator=event.event_id denominator=3 %}
         {% if numerator|mod:denominator == 1 %}
         <div class="row">
             {% endif %}
             <div class="col-md-4 card mx-2 my-2" style="border-radius: 15px; width: 26rem;">
-                 {% if event.banner.url != None %}
-                <img src={{event.banner.url}} width="300px" height="300px" class="card-img-top  mt-2" alt="...">
+                {% if event.banner.url != None %}
+                <img src={{event.banner.url}} style="width: 24vw; height: 30vh" class="card-img-top  mt-2" alt="...">
                 {% else %}
-                <img src="/media/publicevents_banner/default.jpeg" width="300px" height="300px" class="card-img-top  mt-2" alt="...">
-                {% endif %}                   
+                <img src="/media/publicevents_banner/default.jpeg" style="width: 24vw; height: 30vh"
+                    class="card-img-top  mt-2 mx-auto" alt="...">
+                {% endif %}
                 <div class="card-body">
                     <p class="card-text">{{event.name}}</p><br>
                     Posted BY: <a href="#">{{event.user.first_name}} {{event.user.last_name}}</a><br><br>
@@ -53,7 +54,7 @@
         {% endwith %}
         {% endfor %}
         {% else %}
-            <div> No events available currently</div>
+        <div> No events available currently</div>
         {% endif %}
 
         <div>
@@ -93,7 +94,7 @@
             </div> -->
         </div>
         {% else %}
-            <div>No public events currently</div>
+        <div>No public events currently</div>
         {% endif %}
     </div>
     </div>
