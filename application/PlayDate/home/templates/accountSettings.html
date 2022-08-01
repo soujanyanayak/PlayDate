@@ -1,0 +1,38 @@
+{% include "header.html" %} {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Account Settings</title>
+    </head>
+    <style>
+    </style>
+    <body style="background-color: skyblue">
+        {% block content %} {% if user.is_authenticated %} {% include "registered_navbar.html" %} {% else %} {% include "general_navbar.html" %} {% endif %} {% endblock %}
+        <div class="wrapper">
+            <div class="cardContainer d-flex flex-column align-items-center mx-auto my-3" style="height: 90vh;width:90%; max-width:500px;">
+                <h1 class="col-md-8" style="text-align: center">Account Settings</h1>
+                    {% if user_id == request.user.id %}
+                <div>
+                    <form method="POST" class="card mt-3">
+                        {% csrf_token %}
+                        <h4 class="card-header" style="text-align:center;">Delete your Account</h4>
+                        <div class="card-body d-flex flex-column align-items-center">
+                            <p class="card-body px-3" style="text-align:center;">Deleting your account is permanent and irreversible! All data in relation to your account will be deleted as a result!</p>
+                            <button name="deleteAccount" class="btn btn-primary pt-2" aria-current="true" type="submit">Delete Account</button>
+                        </div>
+                    </form>
+
+                    {% else %}
+                    <div class="card mb-3">
+                        <p class="card-body">The account you are trying to view does not belong to you!</p>
+                    </div>
+
+                    {% endif %}
+                    <button class="col-md-4 btn btn-secondary mx-1" onclick="window.location.href='../profile'">Back to Profile</button>
+                </div>
+            </div>
+        </div>
+        {% include "footer.html" %}
+    </body>
+</html>

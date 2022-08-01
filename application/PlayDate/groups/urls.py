@@ -17,6 +17,7 @@ urlpatterns = [
          views.viewGroupPost, name='viewGroupPost'),
     path('<int:group_id>/event/<int:event_id>/',
          views.viewGroupEvent, name='viewGroupEvent'),
+    path('verificationError/', views.verifyYourself, name='verifyYourself'),
 
 
     # DEV USE ONLY

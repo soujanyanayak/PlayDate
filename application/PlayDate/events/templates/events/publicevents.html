@@ -12,6 +12,9 @@
     {% include "general_navbar.html" %}
     {% endif%}
     {% endblock %} <br><br><br>
+    <div style=" padding: 10px 0px 0px 0px;">
+        <h5><b>Public activities for everyone:</b></h5>
+    </div>
     <div class="grid-container">
         <!-- <div class="section-title">
             <p>Fun activities  for you kids and pets.</p>
@@ -26,26 +29,24 @@
                 </ul>
             </div>
         </div> -->
-        <div>
-            <h5><b>Public activities for everyone:</b></h5>
-        </div>
-        <div class="row">
+
+        <div class="grid-container">
             {% for event in publicevents %}
             <div class="col card mx-2 my-2" style="width: 18rem;">
-                <img src={{event.banner.url}} width="300px" height="300px" class="card-img-top  mt-2" alt="/media/publicevents_banner/default.jpeg">
+                <img src={{event.banner.url}} width="300px" height="300px" class="card-img-top  mt-2" alt="...">
                 <div class="card-body">
                     <p class="card-text">
                         <!-- <a href="/events/publicEvent1">{{event.name}}</a></p> -->
-                    <h5>{{event.name}}</h5>
+                    <h5 id="descText">{{event.name}}</h5>
                     <!-- <a href="/events/publicEvent1" class="btn btn-primary">View details</a> -->
                     <div>
                         <p id="descText" class="text-center px-5">{{event.desc}}</p>
                     </div>
-                    <div>
+                    <!-- <div>
                         <p>Location:</p>
                         <p>{{event.address.street}}<br> {{event.address.city}} <br>{{event.address.state}} -
                             {{event.address.zipcode}}</p>
-                    </div>
+                    </div> -->
 
                 </div>
                 <div class="card-body">
@@ -54,6 +55,8 @@
             </div>
             {% endfor %}
         </div>
+    </div>
+    <div>
         <footer class="text-center text-white bg-light sticky-bottom">
             <!-- Grid container -->
             <div class="container pt-3">
@@ -93,10 +96,43 @@
             </div>
             <!-- Copyright -->
         </footer>
+
+    </div>
 </body>
 
 </html>
 <style>
+    @media (min-width: 900px) {
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            align-items: center;
+
+            max-width: 1000px;
+            margin: auto;
+            display: grid;
+        }
+
+    }
+
+    @media (max-width: 900px) {
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+    }
+
+    @media only screen and (max-width: 600px) {
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+        }
+    }
+
+    .card-body {}
+
     #descText {
         overflow: hidden;
         white-space: nowrap;

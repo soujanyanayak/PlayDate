@@ -3,7 +3,7 @@
 #   This file contains the url mapping for pages within the home application.
 #   Inside of urlpatterns, the first variable is the url - stick whatever is
 # written here onto 'http://[server_address]/home/[url_pattern]' and going to
-# that url will take you to the view defined be the second variable. 
+# that url will take you to the view defined be the second variable.
 # See home/views.py for more information on each of these pages.
 
 from django.urls import path
@@ -28,6 +28,10 @@ urlpatterns = [
     path('resetPassword/', views.resetPassword, name='resetPassword'),
     path('createdGroup/', views.createdGroup, name="createdGroup"),
     path('createdEvent/', views.createdEvent, name='createdEvent'),
+    path('accountSettings/<int:user_id>',
+         views.accountSettings, name='accountSettings'),
     path('dependents/', views.dependents, name='dependents'),
-    path('verificationUpload/', views.verificationUpload, name='verificationUpload')
+    path('verificationUpload/', views.verificationUpload,
+         name='verificationUpload'),
+    path('avatarUpload/', views.avatarUpload, name='avatarUpload')
 ]

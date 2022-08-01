@@ -27,3 +27,16 @@ LOAD DATA local INFILE '/home/andy/csc648-848-01-sw-engineering-summer-22-Team03
 🐱 Or you can login with local_infile on using:
 🐱 mysql --local-infile -u username -p
 🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱
+
+HTTPS
+curl -JLO "https://dl.filippo.io/mkcert/latest?for=linux/amd64"
+chmod +x mkcert-v*-linux-amd64
+sudo cp mkcert-v*-linux-amd64 /usr/local/bin/mkcert
+
+sudo mkcert -install
+
+sudo mkcert -cert-file cert.pem -key-file key.pem localhost 0.0.0.0 34.83.255.32
+
+sudo python manage.py runserver_plus --cert-file ./cert.pem --key-file ./key.pem
+
+nohup sudo python3 manage.py runserver_plus --cert-file ./cert.pem --key-file ./key.pem --keep-meta-shutdown 0.0.0.0:8000 &

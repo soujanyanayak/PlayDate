@@ -6,8 +6,8 @@
     body{margin-top:20px;
 background:#eee;
 padding-left: 20%;
-}
 
+}
 .profile-widget {
   position: relative;
 }
@@ -38,23 +38,23 @@ padding-left: 20%;
   color: black;
   padding-right: 10px;
 }
-
-
 img.profile-photo-lg{
   height: 80px;
   width: 80px;
   border-radius: 50%;
 }
-
 div.scroll {
-  margin:4px, 4px;
-  padding:4px;
-  width: 500px;
-  height: 110px;
-  overflow-x: hidden;
+  margin: 4px, 4px;
+  padding: 4px;
+  width: 35%;
+  height: 30rem;
+  overflow-x: auto;
   overflow-y: auto;
   text-align:justify;
   background-color: rgb(160, 215, 229);
+  margin-left: 12rem;
+  position: relative;
+  margin-bottom: 2%;
 }
 .name{
   position: relative;
@@ -63,14 +63,27 @@ div.scroll {
 }
 .members{
   padding-top: 10px;
-  padding-left: 10px;
+  padding-left: 5px;
 }
 .groupEvents{
   padding-left: 10px;
   padding-top: 5px;
 }
-
+.groupMembers{
+  
+  position: relative;
+  bottom: 6px;
+}
+.des{
+  overflow-x: auto;
+  overflow-y: auto;
+  width: 500px;
+  height: 100px;
+  word-wrap: break-word;
+  padding-left: 12rem;
+}
 </style>
+
 
 <div class="container">
   <div class="row">
@@ -79,11 +92,11 @@ div.scroll {
             <div class="row">
                 <div class="col-sm-12">
                     {% if event.banner.url != None %}
-                    <div class="image-container bg2" style="background:url(https://cdn.pixabay.com/photo/2020/03/25/20/20/alpine-4968554_960_720.jpg)">
+                    <div class="image-container bg2" style="background-color:green;">
                         <img src={{event.banner.url}} class="avatar" alt="avatar">
                     </div>
                     {% else %}
-                    <div class="image-container bg2" style="background:url(https://cdn.pixabay.com/photo/2020/03/25/20/20/alpine-4968554_960_720.jpg)">
+                    <div class="image-container bg2" style="background-color:green;">
                         <img src="/media/publicevents_banner/default.jpeg" class="avatar" alt="avatar">
                     </div>
                     {% endif %}
@@ -91,8 +104,10 @@ div.scroll {
                 <div class="col-sm-12">
                     <div class="details">
                         <h4>{{event.name}}<i class="fa fa-sheild"></i></h4>
-                        <div>Created by: {{event.user.first_name}} {{event.user.last_name}}</div>
-                        <div>Description: {{event.desc}}</div>
+                        <div style="padding-right: 35%; font-weight: bold;">Created by: </div>
+                        <div>{{event.user.first_name}} {{event.user.last_name}}</div>
+                        <div style="padding-right: 35%; font-weight: bold;">Description: </div>
+                        <div class="des">{{event.desc}}</div>
                         <h5>Event Date: {{event.datetime}}</h5>
                         <!-- <div class="tag">Tags: hiking  hikers</div> -->
                         <div class="mg-top-10">
@@ -113,7 +128,7 @@ div.scroll {
 
 <!-- to do: Seed event attendees from database -->
 <div class="container">
-  <h2 class="groupMembers">Event Attendees:</h2>
+  <h4 class="groupMembers">Event Attendees:</h4>
   <div class="scroll">
       <div class="attendeesContainer">
         <!-- <div id="me" class="member">

@@ -18,9 +18,10 @@ Description: Searching for groups. This page may be integrated into the search b
 
 <body style="background-color: #7ecae6;">
     <div class="wrapper">
-        {% if user.is_authenticated %} {% load static %} {% include "registered_navbar.html" %} {%else%} {%load static%}
-        {% include "general_navbar.html" %} {% endif %}
-        <div class="card" style="width: 50vw; padding: 1%; left: 25%; margin-top: 5%; text-align: center;">
+        {% if user.is_authenticated %} {% load static %} {% include "registered_navbar.html" with hide_search=1 %}
+        {%else%} {%load static%}
+        {% include "general_navbar.html" with hide_search=1 %} {% endif %}
+        <div class="card mx-auto" style="width: 60%; padding: 1%; text-align: center;">
             <form method="GET">
                 {% csrf_token %}
                 <input type="text" name="search" placeholder="Search Groups" />
@@ -28,17 +29,17 @@ Description: Searching for groups. This page may be integrated into the search b
                 <a href="/groups/createGroup" class="btn btn-primary me-1" style="width: 10rem">Create a Group!</a>
             </form>
         </div>
-        {% if user.is_authenticated %} {% if sampleGroups %}
+        {% if user.is_authenticated %}
 
+        {% if sampleGroups %}
         <div class="row mt-2 mx-5" style="margin-left: 5%; margin-right: 5%;">
             {% for sampleGroup in sampleGroups %}
             <div class="col card mx-2 my-2" style="border-radius: 15px; width: 25rem;">
                 {% if group.banner.url != None %}
-                <img src="{{group.banner.url}}" class="card-img-top mt-2" width="250px" height="250px" alt="" />
+                <img src="{{group.banner.url}}" class="card-img-top mt-2" style="width: 25vw; height: 30vh" alt="" />
                 {% else %}
-                <img src="/media/publicevents_banner/default.jpeg" class="card-img-top mt-2" width="250px"
-                    height="250px" alt="" />
-
+                <img src="/media/publicevents_banner/default.jpeg" class="card-img-top mt-2"
+                    style="width: 25vw; height: 30vh" alt="" />
                 {% endif %}
                 <div class="card-body">
                     <a href="{% url 'groupView' group_id=sampleGroup.group_id %}"
@@ -53,7 +54,7 @@ Description: Searching for groups. This page may be integrated into the search b
         {% endif %}
 
         {% if groups %}
-        <div class="card" style="border: solid blue 1px; width: 50vw; position: absolute; top: 75%; left: 25%">
+        <div class="card mx-auto mt-2" style="border: solid blue 1px; width:60%;">
             {% for group in groups %}
             <div class="card" style="border: solid blue 1px">
                 <table>
@@ -84,9 +85,8 @@ Description: Searching for groups. This page may be integrated into the search b
             </div>
             {% endfor %}
         </div>
-        <br />
-        <br />
         {% endif %}
+
         <!--
         <div class="results" style="position: absolute; top: 30%; left: 40%">
             {% for group in groups %}
@@ -108,6 +108,7 @@ Description: Searching for groups. This page may be integrated into the search b
         </div>
         {% endif %}
         <!--FIXTHIS: Footer is displayed on top of page, removed for now-->
+
     </div>
     {% include "footer.html" %}
 </body>

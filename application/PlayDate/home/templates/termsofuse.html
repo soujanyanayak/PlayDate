@@ -1,18 +1,5 @@
-<html>
-{% include "header.html" %}
-
-
-
-<body>
-    <div>
-        <a href="/">
-            <h5 style="text-align: center; margin-top: 50px; font-family: 'Gill Sans', sans-serif;color: #0d6efd;">
-                <b>PlayDate</b>
-            </h5>
-        </a>
-    </div>
-
-<div class="container marketing">
+{% extends 'nonNavPage.html' %}
+{% block content %}
     <h4 class="featurette-heading">Terms of Use</h4><br/><br/>
     <p>Please read these Terms of Use ("Terms", "Terms and Conditions") carefully before using PLAYDATE operated
         by “The Babysitters”.</p>
@@ -32,10 +19,4 @@
     </p>
 
     <p>If you have any questions about these Terms, please contact us.</p>
-
-</div>
-<br/><br/><br/>
-{% include "footer.html" %}
-</body>
-</hmtl>
-
+{% endblock %}

@@ -110,7 +110,10 @@
             {% for dependent in dependents %}
             <div class="dependent ms-3 my-2" style="width: 30%;">
                 <!-- <img src="{% static 'media/helen_p1.jpg' %}" width="80px" height="100px" class="card-img-top  mt-2" alt="..."> -->
-                <div class="card-header">{{dependent.name}}</div>
+                <div class="card-header d-flex flex-row justify-content-between">
+                    <div>{{dependent.name}}</div>
+                    <div>{{dependent.get_gender_display}}</div>
+                </div>
                 <div class="card-body">
                     <div>
                         <p class="small text-muted mb-1">Date of Birth</p>

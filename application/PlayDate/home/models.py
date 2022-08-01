@@ -88,10 +88,15 @@ class Backendadmin(models.Model):
         db_table = 'BackendAdmin'
         unique_together = (('backend_admin_id', 'user'),)
 
-
 class Dependent(models.Model):
+    type_choices = [
+        ('CHILD', 'Child'),
+        ('PET', 'Pet')
+    ]
     dependent_id = models.AutoField(primary_key=True)
     profile = models.ForeignKey('Profile', models.DO_NOTHING)
+    type = models.CharField(
+        max_length=10, choices=type_choices)
     name = models.CharField(max_length=45)
     dob = models.DateTimeField()
     interests = models.CharField(max_length=45)

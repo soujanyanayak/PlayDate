@@ -1,16 +1,5 @@
-<html>
-
-{% include "header.html" %}
-
-<body>
-    <div>
-        <a href="/">
-            <h5 style="text-align: center; margin-top: 50px; font-family: 'Gill Sans', sans-serif;color: #0d6efd;">
-                <b>PlayDate</b>
-            </h5>
-        </a>
-    </div>
-    <h5 style="font-family: 'Gill Sans', sans-serif;color: #0d6efd; text-align: left; margin-top: 30px;">
+{% extends 'nonNavPage.html' %} 
+{% block content %}
         <style>
             [data-custom-class='body'],
             [data-custom-class='body'] * {
@@ -6165,8 +6154,4 @@
                 </div>
             </div>
         </div> 
-    </div> 
-    {% include "footer.html" %}
-</body>
-
-</html>
+{% endblock %}

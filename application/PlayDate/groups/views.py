@@ -179,6 +179,11 @@ def groupView(request, group_id):
             # request.session['post_id'] = post.post_id
             return redirect('viewGroupEvent')
 
+        if 'leaveGroupAdmin' in request.POST:
+            models.Group.objects.get(group_id=group_id).delete()
+            print("deleting group...")
+            return redirect('/')
+
         if 'leaveGroup' in request.POST:
             models.Member.objects.filter(
                 group_id=group_id, member_id=request.user).delete()
@@ -247,6 +252,11 @@ def viewGroupPost(request, group_id, post_id):
         print("DEV-CONSOLE: New Group Event Button has been Clicked")
         request.session['group_id'] = group.group_id
         return redirect('createGroupEvent')
+
+    if 'leaveGroupAdmin' in request.POST:
+        models.Group.objects.get(group_id=group_id).delete()
+        print("deleting group...")
+        return redirect('/')
 #########################
     if 'editPost' in request.POST:
         print("DEV-CONSOLE: 'New Group Event' Button has been Clicked")
@@ -377,6 +387,11 @@ def viewGroupEvent(request, group_id, event_id):
         print("DEV-CONSOLE: New Group Event Button has been Clicked")
         request.session['group_id'] = group.group_id
         return redirect('createGroupEvent')
+
+    if 'leaveGroupAdmin' in request.POST:
+        models.Group.objects.get(group_id=group_id).delete()
+        print("deleting group...")
+        return redirect('/')
 
     if 'leaveGroup' in request.POST:
         models.Member.objects.filter(
@@ -597,6 +612,10 @@ def createGroup(request):
             # return render(request, 'groups/groups.html', {'group': group, 'member_list': member_list, 'isMember': isMember})
 
     return render(request, 'groups/createGroup.html', {'createGroupForm': createGroupForm, 'memberListForm': memberListForm, 'regUser': regUser})
+
+
+def verifyYourself(request):
+    return render(request, "groups/verifyYourself.html")
 
 
 # ░█▀▄░█▀▀░█░█░░░░░█░█░█▀▀░█▀▀░░░█▀█░█▀█░█░░░█░█

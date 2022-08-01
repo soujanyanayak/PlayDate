@@ -1,7 +1,7 @@
 {% load static %}
 {% include "header.html" %}
 
-<body>
+<body style="background-color: #9de2ff;">
     {% block content %}
     {% if user.is_authenticated %}
     {% load static %}
@@ -10,7 +10,7 @@
     {% load static %}
     {% include "general_navbar.html" %}
     {% endif %}
-    {% endblock %}<br><br><br>
+    {% endblock %}
 
     <script>
         categorySelection = "{{ category }}";
@@ -25,7 +25,7 @@
             <p>PlayDate was built by a team of students come from SFSU CSC684 class.<br>
                 We really hope you enjoyed our website and get useful infomation.<br>
                 Your feedback will be valuable to help us improve out website!
-            </p><br>
+            </p>
         </div>
 
         <div class="row mx-auto">
