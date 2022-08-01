@@ -48,8 +48,11 @@ The django data elements are stored in the context as well as in the session dat
                     <button name="allPosts" class="list-group-item list-group-item-action py-2 ripple" aria-current="true" type="submit"><i class="fas fa-lock fa-fw me-3"></i><span>Posts</span></button>
                     <button name="newPost" class="list-group-item list-group-item-action py-2 ripple" aria-current="true" type="submit"><i class="fas fa-lock fa-fw me-3"></i><span>New Post</span></button>
                     <button name="newGroupEvent" class="list-group-item list-group-item-action py-2 ripple" aria-current="true" type="submit"><i class="fas fa-lock fa-fw me-3"></i><span>New Event</span></button>
+                    {% if group.group_admin == request.user %} {% csrf_token %}
+                    <button name="leaveGroupAdmin" class="list-group-item list-group-item-action py-2 ripple" aria-current="true" type="submit"><i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Admin Leave Group</span></button>
+                    {% else %}
                     <button name="leaveGroup" class="list-group-item list-group-item-action py-2 ripple" aria-current="true" type="submit"><i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Leave Group</span></button>
-                    {% if group.group_admin == request.user%}
+                    {% endif %} {% if group.group_admin == request.user%}
                     <button name="adminDashboard" class="list-group-item list-group-item-action py-2 ripple" aria-current="true" type="submit"><i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Admin Dashboard</span></button>
                     {% endif %} {% elif isMember == False %}
                 </form>
