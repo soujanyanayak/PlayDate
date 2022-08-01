@@ -23,17 +23,17 @@
             <td>
                 {% if item.event.banner.url != None %}
                 <div class="event-img">
-                    <img src={{item.event.banner.url}} width="200px" height="200px"
-                        class="card-img-top  mt-2" alt="...">
+                    <img src={{item.event.banner.url}} style="width: 25vw; height: 30vh" class="card-img-top  mt-2"
+                        alt="...">
                 </div>
                 {% else %}
                 <div class="event-img">
-                    <img src="/media/publicevents_banner/default.jpeg" width="200px" height="200px"
+                    <img src="/media/publicevents_banner/default.jpeg" style="width: 25vw; height: 30vh"
                         class="card-img-top  mt-2" alt="...">
                 </div>
                 {% endif %}
             </td>
-            <td>
+            <td style="width: 25%;">
                 <div class="event-wrap">
                     <span>
                         {% if item.event.name != None%}
@@ -53,13 +53,14 @@
                             <span><b>Category:</b> RSVP'd Events</span><br><br>
                             {% else %}
                             <span><b>Category:</b> Created by You</span><br><br>
-                            <div>
-                                <a href="/events/edit/{{item.event.event_id}}" class="btn btn-primary">Edit</a>
-                                <form method="POST" action="/events/delete/{{item.event.event_id}}/" class="col mx-4">
+                            <div class="row">
+                                <a href="/events/edit/{{item.event.event_id}}"
+                                    class="col mx-auto btn btn-primary">Edit</a>
+                                <form method="POST" action="/events/delete/{{item.event.event_id}}/"
+                                    class="col mx-auto">
                                     {% csrf_token %}
                                     <button name="delete" class="btn btn-primary" type="submit">Delete</button>
                                 </form>
-                            
                             </div>
                             {% endif %}
                         </div>
@@ -70,7 +71,7 @@
             <td>
                 <div class="location">
                     {% if item.event.address.street != None%}
-                        {{item.event.address.street}}
+                    {{item.event.address.street}}
                     {% endif %} <br>{{item.event.address.city}}<br>
                     {{item.event.address.state}}<br> {{item.event.address.country}}-
                     {{item.event.address.zipcode}}
