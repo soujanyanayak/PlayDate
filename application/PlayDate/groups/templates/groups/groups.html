@@ -129,49 +129,27 @@ The django data elements are stored in the context as well as in the session dat
                             {% if groupEvents %}
                             {% for event in groupEvents %}
                             <div class="row d-flex align-items-center justify-content-center">
-                                <div class="col-md-6">
-                                    <div class="card" style="border: solid blue">
-                                        <div class="d-flex justify-content-between p-2 px-3">
-                                            <!--Top Segment: Profile Pic, Username, Date Created-->
-                                            <div class="d-flex flex-row align-items-center">
-                                                <img src="{{profile.avatar.url}}" width="50" class="rounded-circle" />
-                                                <div class="d-flex flex-column ml-2"><span
-                                                        class="font-weight-bold">{{event.user}}</span>
-                                                    <small class="text-primary">{{event.address}}</small>
-                                                </div>
-                                            </div>
-                                            <div class="d-flex flex-row mt-1 ellipsis"><small class="mr-2">Created on:
-                                                    {{event.created_on}}</small> <i class="fa fa-ellipsis-h"></i></div>
-                                        </div>
-                                        <!--Group Event Banner Image-->
-                                        {% if event.banner.url != None %}
-                                        <img src="{{event.banner.url}}" class="img-fluid" />
-                                        {% else %}
-                                        <img src="/media/publicevents_banner/default.jpeg" class="img-fluid" />
-                                        {% endif %}
+                                <div class="col card" style="width: 18rem;">
+                                    {% if event.banner.url != None %}
+                                    <img src="{{event.banner.url}}" class="card-img-top" />
+                                    {% else %}
+                                    <img src="/media/publicevents_banner/default.jpeg" class="card-img-top" />
+                                    {% endif %}
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{event.name}}</h5>
+                                        <p class="card-text">{{event.desc}}</p>
+                                        <strong>Created On: {{event.datetime}}</strong>
+                                        <div class="d-flex flex-row align-items-center">
+                                                {% include "groups/userlink_template.html" %}
 
-                                        <!-- Bottom Segment: #ofComments, Share, Post buttons, etc -->
-                                        <div class="p-2">
-                                            <!--Event Description-->
-                                            <p class="text-justify"><strong>On {{event.datetime}}</strong></p>
-                                            <hr />
-                                            <p class="text-justify">{{event.desc}}</p>
-                                            <!--Separator(hr)-->
-                                            <hr />
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <!--<div class="d-flex flex-row icons d-flex align-items-center"><i class="fa fa-heart"></i> <i class="fa fa-smile-o ml-2"></i></div> -->
-
-                                                <!--Stats buttons etc-->
-                                                <form method="POST" style="">
-                                                    {% csrf_token %}
-                                                    <a href="{% url 'viewGroupEvent' group_id=group.group_id event_id=event.event_id %}"
-                                                        name="eventDetails" value="{{event.event_id}}"
-                                                        class="btn btn-primary pt-2">Event
-                                                        Details</a>
-                                                </form>
-                                                <!--<div class="d-flex flex-row muted-color"><span>2 comments</span> <span class="ml-2">Share</span></div> -->
-                                            </div>
                                         </div>
+                                        <form method="POST">
+                                            {% csrf_token %}
+                                            <a href="{% url 'viewGroupEvent' group_id=group.group_id event_id=event.event_id %}"
+                                                name="eventDetails" value="{{event.event_id}}"
+                                                class="btn btn-primary pt-2">Event
+                                                Details</a>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -189,88 +167,73 @@ The django data elements are stored in the context as well as in the session dat
                             <img src="{% static 'media/enlarge.png' %}" width="25" height="25" alt="martin" />
                         </button>
                     </div>
+
+
                     <div class="collapse card-body" id="collapseGroupPost">
                         <div class="d-flex flex-column align-items-center text-center">
                             {% if groupPosts %} {% for post in groupPosts %}
                             <div class="row d-flex align-items-center justify-content-center">
-                                <div class="col-md-6">
-                                    <div class="card" style="border: solid blue">
-                                        <div class="d-flex justify-content-between p-2 px-3">
-                                            <!--Top Segment: Profile Pic, Username, Date Created-->
-                                            <div class="d-flex flex-row align-items-center">
-                                                <img src="{{profile.avatar.url}}" width="50" class="rounded-circle" />
-                                                <div class="d-flex flex-column ml-2"><span
-                                                        class="font-weight-bold">{{post.user}}</span>
-                                                </div>
-                                            </div>
-                                            <div class="d-flex flex-row mt-1 ellipsis"><small class="mr-2">Created on:
-                                                    {{post.created_on}}</small> <i class="fa fa-ellipsis-h"></i></div>
+                                <div class="col card" style="width: 18rem;">
+                                    {% if event.banner.url != None %}
+                                    <img src="{{event.banner.url}}" class="card-img-top" />
+                                    {% else %}
+                                    <img src="/media/publicevents_banner/default.jpeg" class="card-img-top" />
+                                    {% endif %}
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{post.post_title}}</h5>
+                                        <p class="card-text">{{post.desc}}</p>
+                                        <strong>Created On: {{post.created_on}}</strong>
+                                        <div class="d-flex flex-row align-items-center">
+                                                {% include "groups/userlink_template.html" %}
                                         </div>
-                                        <!--Post Banner Image-->
-                                        <!--<img src="https://i.imgur.com/xhzhaGA.jpg" class="img-fluid" />-->
-
-                                        <!-- Bottom Segment: #ofComments, Share, Post buttons, etc -->
-                                        <hr />
-                                        <div class="p-2">
-                                            <!--Event Description-->
-                                            <p class="p-2 text-justify">{{post.post_content}}</p>
-                                            <!--Separator(hr)-->
-                                            <hr />
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <!--<div class="d-flex flex-row icons d-flex align-items-center"><i class="fa fa-heart"></i> <i class="fa fa-smile-o ml-2"></i></div> -->
-
-                                                <!--Stats buttons etc-->
-                                                <form method="POST" style="">
-                                                    {% csrf_token %}
-                                                    <a href="{% url 'viewGroupPost' group_id=group.group_id post_id=post.post_id %}"
-                                                        name="postComment" style="" value="{{post.post_id}}"
-                                                        class="btn btn-primary pt-2">View
-                                                        Discussion</a>
-                                                </form>
-                                                <!--<div class="d-flex flex-row muted-color"><span>2 comments</span> <span class="ml-2">Share</span></div> -->
-                                            </div>
-                                        </div>
+                                        <form method="POST">
+                                            {% csrf_token %}
+                                            <a href="{% url 'viewGroupPost' group_id=group.group_id post_id=post.post_id %}"
+                                                name="postDetails" value="{{post.post_id}}"
+                                                class="btn btn-primary pt-2">View Discussion</a>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
-                            <br />
-                            {% endfor %} {% else %}
-                            <!--<p>No Posts</p>-->
+                            {% endfor %}
                             {% endif %}
-
                         </div>
                     </div>
-                </div>
-                <div class="card">
-                    <div style="display: flex; justify-content: space-between;" class="bg-light">
-                        <span class="mx-4">Group Members</span>
-                        <button style="text-align: right;" class="btn" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapseGroupMmebers" aria-expanded="false"
-                            aria-controls="collapseExample">
-                            {% load static %}
-                            <img src="{% static 'media/enlarge.png' %}" width="25" height="25" alt="martin" />
-                        </button>
-                    </div>
-                    <div class="collapse card-body" id="collapseGroupMmebers">
-                        <div class="d-flex flex-column align-items-center text-center">
+                    <div class="card">
+                        <div style="display: flex; justify-content: space-between;" class="bg-light">
+                            <span class="mx-4">Group Members</span>
+                            <button style="text-align: right;" class="btn" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseGroupMmebers" aria-expanded="false"
+                                aria-controls="collapseExample">
+                                {% load static %}
+                                <img src="{% static 'media/enlarge.png' %}" width="25" height="25" alt="martin" />
+                            </button>
+                        </div>
+                        <div class="collapse card-body" id="collapseGroupMmebers">
                             {% if member_list %}
-                            <ul>
-                                <table style="text-align: center">
+                            <table class="table text-center mx-auto" style="width: 70%;">
+                                <thead>
                                     <tr>
-                                        <th>user ID</th>
-                                        <th>username</th>
+                                        <th scope="col">User ID </th>
+                                        <th scope="col">Username</th>
                                     </tr>
+                                </thead>
+
+                                <tbody>
                                     {% for member in member_list %}
-                                    <tr>
-                                        <td>{{member.member_id.id}}</td>
+                                    <tr class="inner-box">
                                         <td>
-                                            <a
-                                                href="{% url 'profileView' profile_id=member.member_id.id %}">{{member.member_id}}</a>
+                                            <p>{{member.member_id.id}}</p>
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'profileView' profile_id=member.member_id.id %}">
+                                                {{member.member_id}}</a>
                                         </td>
                                     </tr>
                                     {% endfor %}
-                                </table>
-                            </ul>
+                                </tbody>
+                            </table>
+
                             {% else %}
                             <p>No members error; there should at least be 0 member</p>
                             {% endif %}
@@ -279,9 +242,8 @@ The django data elements are stored in the context as well as in the session dat
                 </div>
             </div>
         </div>
-    </div>
 
-    {% include "footer.html" %}
+        {% include "footer.html" %}
 </body>
 
 </html>

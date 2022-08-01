@@ -31,8 +31,8 @@ class createGroupForm(ModelForm):
             'group_name': ('Group Name'), 'group_desc': ('Group Description'), 'tags': ("Enter keywords separated by a space; These words will help users to find your group.")
         }
         widgets = {
-            'group_name': forms.TextInput(attrs={'style': 'width:65vw;', 'placeholder': "e.g. San Francisco Dog Group"}),
-            'group_desc': forms.Textarea(attrs={'style': 'width:65vw;', 'placeholder': "Enter a brief description on what your group is all about!"}),
+            'group_name': forms.TextInput(attrs={'style': 'width:100%;', 'placeholder': "e.g. San Francisco Dog Group"}),
+            'group_desc': forms.Textarea(attrs={'style': 'width:100%;', 'placeholder': "Enter a brief description on what your group is all about!"}),
             'tags': forms.TextInput(attrs={'style': 'width:65vw;', 'placeholder': "dogs, dog, canine, canines, shiba inu, shiba-inu, shiba inu"}),
             # 'banner': forms.ImageField(),
 
