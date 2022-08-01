@@ -12,8 +12,7 @@
     {% include "general_navbar.html" %}
     {% endif %}
     {% endblock %}
-    <br><br><br>
-    <div class="">
+    <div class="wrapper">
         <div>
             <h5><b>Fun activities posted by our users:</b></h5>
         </div>
@@ -22,7 +21,7 @@
         {% with numerator=forloop.counter denominator=3 %}
         {% load mathfilters %}
         {% if numerator|mod:denominator == 1 %}
-        <div class="grid-container">
+        <div class="row grid-container">
             {% endif %}
             <div class="col-md-4 card mx-2 my-2" style="border-radius: 15px; width: 26rem;">
                 {% if event.banner.url != None %}
@@ -55,12 +54,11 @@
         {% else %}
         <div> No events available currently</div>
         {% endif %}
-        {% endif %}
 
         <div>
             <h5><b>Public activities for everyone:</b></h5>
         </div>
-        
+
         {% if publicevents %}
 
         <div class="grid-container">
@@ -98,46 +96,7 @@
         <div>No public events currently</div>
         {% endif %}
     </div>
-    </div>
-    <footer class="text-center text-white bg-light sticky-bottom">
-        <!-- Grid container -->
-        <div class="container pt-3">
-            <!-- Section: Social media -->
-            <section>
-                <!-- Facebook -->
-                {% load static %}
-                <a href="#" class="mx-2"><img src="{% static 'media/facebook.png' %}"></a>
-
-                <!-- Instagram -->
-                <a href="#" class="mx-2"><img src="{% static 'media/instagram.png' %}"></a>
-
-                <!-- Twitter -->
-                <a href="#" class="mx-2"><img src="{% static 'media/twitter.png' %}"></a>
-
-                <!-- Tiktok -->
-                <a href="#" class="mx-2"><img src="{% static 'media/tiktok.png' %}"></a>
-
-                <!-- Reddit -->
-                <a href="#" class="mx-2"><img src="{% static 'media/reddit.png' %}"></a>
-
-                <!-- Github -->
-                <a href="#" class="mx-2"><img src="{% static 'media/github.png' %}"></a>
-            </section>
-            <!-- Section: Social media -->
-        </div>
-        <!-- Grid container -->
-
-        <!-- Copyright -->
-        <div class="text-center bg-light p-3">
-            <span class="text-dark ">
-                <a href="/termsofuse">Terms of Use | </a><a href="/privacy">Privacy Notice | </a><a
-                    href="/helpPage">Contact
-                    Us</a><br>
-            </span>
-            <span class="text-dark">Copyright © 2022 TheBabySitters. All rights reserved.</span>
-        </div>
-        <!-- Copyright -->
-    </footer>
+    {% include "footer.html"%}
 </body>
 <style>
     @media (min-width: 900px) {
@@ -178,4 +137,5 @@
 
     }
 </style>
+
 </html>
