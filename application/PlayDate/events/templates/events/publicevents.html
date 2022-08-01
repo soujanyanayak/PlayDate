@@ -30,9 +30,14 @@
             <h5><b>Public activities for everyone:</b></h5>
         </div>
         <div class="row">
+            {% if publicevents %}
+            <p>Test publicevents</p>
+            {% endif %}
+
             {% for event in publicevents %}
             <div class="col card mx-2 my-2" style="width: 18rem;">
-                <img src={{event.banner.url}} width="300px" height="300px" class="card-img-top  mt-2" alt="/media/publicevents_banner/default.jpeg">
+                <img src={{event.banner.url}} width="300px" height="300px" class="card-img-top  mt-2"
+                    alt="/media/publicevents_banner/default.jpeg">
                 <div class="card-body">
                     <p class="card-text">
                         <!-- <a href="/events/publicEvent1">{{event.name}}</a></p> -->
