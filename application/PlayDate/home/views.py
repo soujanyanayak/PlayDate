@@ -176,7 +176,6 @@ def profilePage(request):
         if not request.user.is_authenticated:
             return redirect("home")
         else:
-            request.session.set_expiry(600)
             profile = models.Profile.objects.get(profileID=request.user)
             account = models.Account.objects.get(accountID=request.user)
             try:
@@ -302,6 +301,21 @@ def profilePage(request):
                 'modalBtnText': "Close",
                 'modalImmediate': True}
         return render(request, 'profilePage.html', retVals)
+
+
+def accountSettings(request, user_id):
+    myProfile = models.Profile.objects.get(profileID=request.user)
+    myAccount = models.Account.objects.get(accountID=request.user)
+    if request.user.id == user_id:
+        if 'deleteAccount' in request.POST:
+            print("DEV-CONSOLE: Deleting Account...")
+            u = User.objects.get(id=user_id)
+            logout(request)
+            u.delete()
+            print("Successfully deleted:", u.username)
+            return redirect('home')
+        return render(request, "accountSettings.html", {'user_id': user_id, 'myProfile': myProfile, 'myAccount': myAccount})
+    return HttpResponse("account settings")
 
 
 def avatarUpload(request):
