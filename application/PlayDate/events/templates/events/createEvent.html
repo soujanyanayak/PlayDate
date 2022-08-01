@@ -24,31 +24,31 @@
                                 {% if regUser.is_verified %}
                                         <form method="POST" enctype="multipart/form-data">
                                                 {% csrf_token %}
-                                                <label for="eventname"><b>{{eventform.name.label}}</b><br>
+                                                <label style="padding-left: 1rem" for="eventname"><b>{{eventform.name.label}}</b><br>
                                                         {{eventform.name}}</label><br>
 
-                                                <label for="date"> <b>{{eventform.category.label}}</b> <br>
+                                                <label style="padding-left: 1rem" for="date"> <b>{{eventform.category.label}}</b> <br>
                                                         {{eventform.category}}</label><br>
 
                                                 <!-- <input type="text" name="eventname" id="eventname" autofocus /><br> -->
-                                                <label for="description"><b>{{eventform.desc.label}}</b><br>
+                                                <label style="padding-left: 1rem" for="description"><b>{{eventform.desc.label}}</b><br>
                                                         {{eventform.desc}}</label><br>
 
                                                 <!-- <textarea name="description" id="description" ></textarea><br> -->
-                                                <label for="date"> <b>{{eventform.datetime.label}} </b> <br>
+                                                <label style="padding-left: 1rem" for="date"> <b>{{eventform.datetime.label}} </b> <br>
                                                         {{eventform.datetime}}</label><br>
 
 
                                                 <label
-                                                        for="Address"><b>{{addressform.street.label}}</b><br>{{addressform.street}}</label><br>
+                                                        style="padding-left: 1rem" for="Address"><b>{{addressform.street.label}}</b><br>{{addressform.street}}</label><br>
                                                 <label
-                                                        for="Address"><b>{{addressform.city.label}}</b><br>{{addressform.city}}</label><br>
+                                                        style="padding-left: 1rem" for="Address"><b>{{addressform.city.label}}</b><br>{{addressform.city}}</label><br>
                                                 <label
-                                                        for="Address"><b>{{addressform.state.label}}</b><br>{{addressform.state}}</label><br>
+                                                        style="padding-left: 1rem" for="Address"><b>{{addressform.state.label}}</b><br>{{addressform.state}}</label><br>
                                                 <label
-                                                        for="Address"><b>{{addressform.country.label}}</b><br>{{addressform.country}}</label><br>
+                                                        style="padding-left: 1rem" for="Address"><b>{{addressform.country.label}}</b><br>{{addressform.country}}</label><br>
                                                 <label
-                                                        for="Address"><b>{{addressform.zipcode.label}}</b><br>{{addressform.zipcode}}</label><br>
+                                                        style="padding-left: 1rem" for="Address"><b>{{addressform.zipcode.label}}</b><br>{{addressform.zipcode}}</label><br>
 
 
                                                 <!-- <label id="tag"> <b>Tags</b></label><br>
@@ -65,7 +65,7 @@
                                                 <input type="text" name="State" id="State" /><br>
                                                 <label for="zipcode"> <b>Zipcode</b></label><br>
                                                 <input type="text" name="Zipcode" id="Zipcode" /><br><br> -->
-                                                <label for="name">
+                                                <label style="padding-left: 1rem" for="name">
                                                         <b>{{eventform.banner.label}}</b>
                                                         <br>{{eventform.banner}}
                                                         <!-- <input type="file" id="file-input" accept="image/*" /><br> -->
