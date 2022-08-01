@@ -10,7 +10,7 @@
     <script src="{% static 'js/profile.js' %}" defer="true"></script>
 </head>
 
-<body>
+<body style="background-color: #9de2ff;">
     {% block content %}
     {% if user.is_authenticated %}
     {% include "registered_navbar.html" %}
