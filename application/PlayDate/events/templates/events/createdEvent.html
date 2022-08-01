@@ -105,17 +105,23 @@ div.scroll {
                     <div class="details">
                         <h4>{{event.name}}<i class="fa fa-sheild"></i></h4>
                         <div style="padding-right: 35%; font-weight: bold;">Created by: </div>
-                        <div>{{event.user.first_name}} {{event.user.last_name}}</div>
+                        
+                        <div>
+                          
+                          {{event.user.first_name}} {{event.user.last_name}}</div>
                         <div style="padding-right: 35%; font-weight: bold;">Description: </div>
                         <div class="des">{{event.desc}}</div>
                         <h5>Event Date: {{event.datetime}}</h5>
                         <!-- <div class="tag">Tags: hiking  hikers</div> -->
                         <div class="mg-top-10">
-                          {% if creator == 0 %}
-                            <a href="#" class="btn btn-success" id="btn">Attend Event</a>
-                          {% else %}
-                            <p>Registered</p>
+                          {% if rsvp != 1 %}
+                            <form method="POST" action="/events/register/{{event.event_id}}/">
+                              {% csrf_token %}
+                              <button name="rsvp" class="btn btn-primary pt-2" type="submit">Register</button>
+                            </form>
                           {% endif %}
+                         
+
                         </div>
                     </div>
                 </div>
