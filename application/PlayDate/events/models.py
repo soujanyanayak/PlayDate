@@ -43,7 +43,7 @@ class Location(models.Model):
 class Event(models.Model):
     event_id = models.AutoField(primary_key=True)
     address = models.ForeignKey(Address, models.DO_NOTHING)
-    user = models.ForeignKey(User, models.DO_NOTHING)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     backend_admin = models.ForeignKey(
         Backendadmin, models.DO_NOTHING, blank=True, null=True)
     group = models.ForeignKey(Group, models.DO_NOTHING, blank=True, null=True)
@@ -63,7 +63,7 @@ class Event(models.Model):
 
 class EventRegistration(models.Model):
     registration_id = models.AutoField(primary_key=True)
-    user = models.ForeignKey(User, models.DO_NOTHING,
+    user = models.ForeignKey(User, on_delete=models.CASCADE,
                              default=None, blank=True, null=True)
     event = models.ForeignKey(Event, models.DO_NOTHING,
                               default=None, blank=True, null=True)
