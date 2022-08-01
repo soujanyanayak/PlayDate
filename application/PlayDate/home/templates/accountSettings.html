@@ -14,7 +14,11 @@
                     {% if user_id == request.user.id %}
                     <form method="POST">
                         {% csrf_token %}
-                        <button name="deleteAccount" class="btn btn-primary pt-2" aria-current="true" type="submit">Delete Account</button>
+                        <hr />
+                        <h4 style="text-align: center">Delete your Account</h4>
+                        <p style="text-align: center">Deleting your account is permanent and irreversible! All data in relation to your account will be deleted as a result!</p>
+                        <button name="deleteAccount" style="margin-left: 45%" class="btn btn-primary pt-2" aria-current="true" type="submit">Delete Account</button>
+                        <hr />
                     </form>
 
                     {% else %}
