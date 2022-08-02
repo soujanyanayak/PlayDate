@@ -67,6 +67,20 @@ class memberListForm(ModelForm):
 
 
 class createGroupEventForm(ModelForm):
+    # clean_image is a workaround to server-side
+    # validate the banner image.
+    def clean_image(self):
+        bannerImage = self.cleaned_data['banner']
+        if bannerImage:
+            # size measured in bytes
+            if bannerImage.size > 6.5 * 1048578:
+                raise ValidationError("Banner image must be under 6.5 MB")
+            bannerImageExt = bannerImage.name.split('.')[-1]
+            allowedTypes = "apng, avif, gif jpeg, jpg, png, webp"
+            if bannerImageExt in allowedTypes:
+                return bannerImage
+            raise ValidationError("Banner image in the wrong format.")
+        raise ValidationError("No banner image uploaded.")
     class Meta:
         model = models.GroupEvent
         fields = ['address', 'desc', 'name', 'banner', 'datetime']
