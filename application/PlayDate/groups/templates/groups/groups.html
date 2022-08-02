@@ -24,7 +24,7 @@ The django data elements are stored in the context as well as in the session dat
     {% block content %} {% if user.is_authenticated %} {% load static %} {% include "registered_navbar.html" %} {%else%}
     {% load static %} {% include "general_navbar.html" %} {% endif %} {% endblock %} <br>
 
-    <div class="wrapper mt-5">
+    <div class="wrapper mt-4">
         <div class="row">
             <div class="col-lg-4" style="margin-left:8vw">
                 <div class="card">
@@ -136,8 +136,8 @@ The django data elements are stored in the context as well as in the session dat
                         <div class="d-flex flex-column align-items-center text-center">
                             {% if groupEvents %}
                             {% for event in groupEvents %}
-                            <div class="row d-flex align-items-center justify-content-center">
-                                <div class="col card" style="width: 18rem;">
+                            <div class="row">
+                                <div class="col card" style="width: 50%;">
                                     {% if event.banner.url != None %}
                                     <img src="{{event.banner.url}}" class="card-img-top" />
                                     {% else %}
@@ -148,8 +148,7 @@ The django data elements are stored in the context as well as in the session dat
                                         <p class="card-text">{{event.desc}}</p>
                                         <strong>Created On: {{event.datetime}}</strong>
                                         <div class="d-flex flex-row align-items-center">
-                                                {% include "groups/userlink_template.html" %}
-
+                                            {% include "groups/userlink_template.html" %}
                                         </div>
                                         <form method="POST">
                                             {% csrf_token %}
@@ -160,7 +159,7 @@ The django data elements are stored in the context as well as in the session dat
                                         </form>
                                     </div>
                                 </div>
-                            </div>
+                            </div><br>
                             {% endfor %}
                             {% endif %}
                         </div>
@@ -180,8 +179,8 @@ The django data elements are stored in the context as well as in the session dat
                     <div class="collapse card-body" id="collapseGroupPost">
                         <div class="d-flex flex-column align-items-center text-center">
                             {% if groupPosts %} {% for post in groupPosts %}
-                            <div class="row d-flex align-items-center justify-content-center">
-                                <div class="col card" style="width: 18rem;">
+                            <div class="row">
+                                <div class="col card" style="width: 50%;">
                                     {% if event.banner.url != None %}
                                     <img src="{{event.banner.url}}" class="card-img-top" />
                                     {% else %}
@@ -192,7 +191,7 @@ The django data elements are stored in the context as well as in the session dat
                                         <p class="card-text">{{post.desc}}</p>
                                         <strong>Created On: {{post.created_on}}</strong>
                                         <div class="d-flex flex-row align-items-center">
-                                                {% include "groups/userlink_template.html" %}
+                                            {% include "groups/userlink_template.html" %}
                                         </div>
                                         <form method="POST">
                                             {% csrf_token %}
@@ -202,7 +201,7 @@ The django data elements are stored in the context as well as in the session dat
                                         </form>
                                     </div>
                                 </div>
-                            </div>
+                            </div><br>
                             {% endfor %}
                             {% endif %}
                         </div>
