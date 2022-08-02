@@ -200,10 +200,10 @@ def viewEvent(request, event_id):
         # print(registration)
     if registration is not None:
         print("$$$$$")
-        isRsvp=1
+        isRsvp=registration.first()
     attendees=EventRegistration.objects.filter(event=event_id)
     # print (registrations)
-    return render(request, 'events/createdEvent.html', {'event' : event, 'attendees': attendees,'isRsvp':registration, 'user': user, 'isEventAdmin': isEventAdmin})
+    return render(request, 'events/createdEvent.html', {'event' : event, 'attendees': attendees,'isRsvp':isRsvp, 'user': user, 'isEventAdmin': isEventAdmin})
 
 def eventRegistrationEdit(request):
     print( "Received Event Registration")

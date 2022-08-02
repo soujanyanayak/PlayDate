@@ -122,10 +122,10 @@ div.scroll {
                         <h5 style="padding-right: 11rem;">Location:</h5>
                         <h5 style="padding-right: 6.5rem;">Event Date: {{event.datetime}}</h5>
                         <!-- <div class="tag">Tags: hiking  hikers</div> -->
-                        <div class="mg-top-10">
+                        <div class="mg-top-10" id="myAttendance">
                           {% if isRsvp %}
-                          <a id="btnAttendee_{{attendee.user.pk}}" class="btn btn-danger"  
-                          onclick="cancelRSVP({{user.pk}}, 'btnAttendee_{{attendee.user.pk}}')">Cancel RSVP</a>
+                          <a id="btnAttendee" class="btn btn-danger"  
+                          onclick="cancelMyRSVP()">Cancel RSVP</a>
                             
                           {% else %}
                           <form method="POST" action="/events/register/{{event.event_id}}/">
@@ -225,6 +225,8 @@ div.scroll {
         home: '{% url "home" %}',
         erEdit: '{% url "eventRegistrationEdit" %}'
     };
+    let myRes = "{{isRsvp.pk}}";
+    let rsvp = "{{isRsvp}}";
     function showNotAttending(btnID) {
         var btnElement = document.getElementById(btnID);
         btnElement.innerText = "No Longer Attending";
@@ -247,6 +249,25 @@ div.scroll {
     function cancelEvent(eventID){
         setModal("Oops!", "Cancelling an event is not yet implemented. You can still edit the event to let others know what is going on. Good luck!", "close");
         showModal();
+    }
+    function cancelMyRSVP() {
+        let data = {
+            rsvpID: myRes,
+            operation: "DELETE"
+        }
+        sendAjax(data, urls.erEdit, (data, status)=> {
+            if (status != 200) {
+                setModal("Error", "There was an error when trying to cancel your event RSVP", "Close");
+                showModal();
+            }
+            let btnElemnt = document.getElementById('myAttendance');
+            let btnHtml = '<form method="POST" action="/events/register/{{event.event_id}}/">{% csrf_token %}<button name="rsvp" class="btn btn-primary pt-2" type="submit">RSVP</button></form>';
+            btnElemnt.innerHTML = btnHtml;
+            setModal("Success", "You have successfully canceled your RSVP for {{event.name}}", "Close");
+            showModal();
+
+        });
+
     }
     function cancelRSVP(rsvpID, btnID){
         let data = {
