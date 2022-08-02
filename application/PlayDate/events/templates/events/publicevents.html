@@ -11,11 +11,10 @@
     {% load static %}
     {% include "general_navbar.html" %}
     {% endif%}
-    {% endblock %} <br><br><br>
-    <div style=" padding: 10px 0px 0px 0px;">
-        <h5><b>Public activities for everyone:</b></h5>
-    </div>
-    <div class="grid-container">
+    {% endblock %}
+    <div class="wrapper">
+        <h5 style="margin-left: 10%;"><b>Public activities for everyone:</b></h5>
+
         <!-- <div class="section-title">
             <p>Fun activities  for you kids and pets.</p>
         </div>
@@ -32,8 +31,8 @@
 
         <div class="grid-container">
             {% for event in publicevents %}
-            <div class="col card mx-2 my-2" style="width: 18rem;">
-                <img src={{event.banner.url}} style="width: 24vw; height: 30vh" class="card-img-top  mt-2" alt="...">
+            <div class="col card mx-2 my-2" style="border-radius: 15px; width: 24rem;">
+                <img src={{event.banner.url}} style="width: 22rem; height: 30vh" class="card-img-top  mt-2" alt="...">
                 <div class="card-body">
                     <p class="card-text">
                         <!-- <a href="/events/publicEvent1">{{event.name}}</a></p> -->

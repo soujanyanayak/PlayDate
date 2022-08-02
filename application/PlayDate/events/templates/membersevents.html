@@ -22,11 +22,11 @@
         {% if numerator|mod:denominator == 1 %}
         <div class="row" style="margin-left: 10%;">
             {% endif %}
-            <div class="col-md-4 card mx-2 my-2" style="border-radius: 15px; width: 26rem;">
+            <div class="col-md-4 card mx-2 my-2" style="border-radius: 15px; width: 24rem;">
                 {% if event.banner.url != None %}
-                <img src={{event.banner.url}} style="width: 24vw; height: 30vh" class="card-img-top  mt-2" alt="...">
+                <img src={{event.banner.url}} style="width: 22rem; height: 30vh" class="card-img-top  mt-2" alt="...">
                 {% else %}
-                <img src="/media/publicevents_banner/default.jpeg" style="width: 24vw; height: 30vh"
+                <img src="/media/publicevents_banner/default.jpeg" style="width: 22rem; height: 30vh"
                     class="card-img-top  mt-2 mx-auto" alt="...">
                 {% endif %}
                 <div class="card-body">
