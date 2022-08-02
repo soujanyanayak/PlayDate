@@ -105,10 +105,11 @@ div.scroll {
                     <div class="details">
                         <h4>{{event.name}}<i class="fa fa-sheild"></i></h4>
                         <div style="padding-right: 35%; font-weight: bold;">Created by: </div>
-                        
-                        <div>
+                        <a href="{% url 'profileView' profile_id=user.id %}">
                           
-                          {{event.user.first_name}} {{event.user.last_name}}</div>
+                          {{event.user.first_name}} {{event.user.last_name}}
+                        </a>
+                        
                         <div style="padding-right: 35%; font-weight: bold;">Description: </div>
                         <div class="des">{{event.desc}}</div>
                         <h5>Event Date: {{event.datetime}}</h5>
@@ -153,7 +154,9 @@ div.scroll {
             <div id="attendee_{{attendee.user.pk}}" class="member">
               <div class="row">
                 <div class="pic">
-                  <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="user" class="profile-photo-lg">
+                  <img src="{% if profile.avatar %}{{profile.avatar.url}}{%else%}{% static 'media/system_avatar.jpeg'%}{%endif%}"
+                        alt="User avatar" class="profile-photo-lg">
+                  <!-- <img src={{attendee.user}} alt="user" class="profile-photo-lg"> -->
                 </div>
                 <div class="name">
                   <h5>{{attendee.user.first_name}}</h5>

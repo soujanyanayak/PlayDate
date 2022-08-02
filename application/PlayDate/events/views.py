@@ -30,11 +30,11 @@ def membersevents(request):
     publicevents= Publicevent.objects.all()
     if user.is_authenticated:
         eventregistrations=EventRegistration.objects.filter(user=user).values_list('event')
-
+        profile = Profile.objects.get(profileID=user)
         print(eventregistrations)
         events=Event.objects.all().exclude(event_id__in = eventregistrations)
         print(events)
-        return render(request, "membersevents.html",{'events':events,'publicevents':publicevents,'user':user})
+        return render(request, "membersevents.html",{'events':events,'publicevents':publicevents,'user':user,'profile':profile})
     
     
     return render(request, "membersevents.html",{'publicevents':publicevents,'user':user})
