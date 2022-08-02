@@ -53,6 +53,11 @@ class createGroupForm(ModelForm):
 
         }
 
+class createFirstMemberForm(ModelForm):
+    class Meta:
+        model = models.Member
+        fields = ['member_id', 'group_id']
+
 
 class memberListForm(ModelForm):
     # This is an empty form because users cannot edit the Member table
