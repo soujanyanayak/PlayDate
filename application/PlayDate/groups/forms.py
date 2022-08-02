@@ -25,19 +25,19 @@ class joinGroupForm(ModelForm):
 
 class createGroupForm(ModelForm):
     # clean_image is a workaround to server-side
-    # validate the verification image.
+    # validate the banner image.
     def clean_image(self):
-        bannerImage = self.cleaned_data['avatar']
+        bannerImage = self.cleaned_data['banner']
         if bannerImage:
             # size measured in bytes
             if bannerImage.size > 6.5 * 1048578:
-                raise ValidationError("Avatar image must be under 6.5 MB")
+                raise ValidationError("Banner image must be under 6.5 MB")
             bannerImageExt = bannerImage.name.split('.')[-1]
             allowedTypes = "apng, avif, gif jpeg, jpg, png, webp"
             if bannerImageExt in allowedTypes:
                 return bannerImage
-            raise ValidationError("Avatar image in the wrong format.")
-        raise ValidationError("No avatar image uploaded.")
+            raise ValidationError("Banner image in the wrong format.")
+        raise ValidationError("No banner image uploaded.")
 
     class Meta:
         model = models.Group
