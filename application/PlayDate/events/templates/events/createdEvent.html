@@ -120,6 +120,29 @@ div.scroll {
                         <div style="margin-right: 20%; font-weight: bold;">Description: </div>
                         <div class="des">{{event.desc}}</div>
                         <h5 style="padding-right: 11rem;">Location:</h5>
+                        <div class="des">
+                        {% if event.address.street %}
+                        {{event.address.street}}
+                        {%endif%}
+                        {% if event.address.city %}
+                        {{event.address.city}}
+                        {%endif%}
+                        {% if event.address.state %}
+                        {{event.address.state}}
+                        {%endif%}
+                        {% if event.address.country %}
+                        {{event.address.country}}
+                        {%endif%}
+                        {% if event.address.zipcode %}
+                        {{event.address.zipcode}}
+                        {%endif%}
+                      </div>
+                        
+                        
+                        
+                        
+                        
+
                         <h5 style="padding-right: 6.5rem;">Event Date: {{event.datetime}}</h5>
                         <!-- <div class="tag">Tags: hiking  hikers</div> -->
                         <div class="mg-top-10">
