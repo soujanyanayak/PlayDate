@@ -111,13 +111,19 @@ Description: This is the view group event detail page. Ideally it would fused wi
                                     <div class="comments" style="width: 100%">
                                         {% if groupEventComments %} {% for comment in groupEventComments %}
                                         <div class="d-flex flex-row mb-2">
-                                            <img src="https://i.imgur.com/9AZ2QX1.jpg" style="width: 3rem; height: 3rem; border: 1px solid blue" class="rounded-circle" />
+                                            {% for profile in profiles %} {% if profile.profileID == comment.user %} {% if profile.avatar.url != None %}
+                                            <img src="{{profile.avatar.url}}" style="width: 3rem; height: 3rem; border: 1px solid blue" class="rounded-circle" />
+                                            {% else %}
+                                            <img src="/media/default_user.png" width="50" style="border: solid blue; margin-right: 10%" class="rounded-circle" />
+                                            {% endif %}
+
                                             <div class="d-flex flex-column ml-2" style="display: inline-block; overflow: hidden">
-                                                <span class="username"> <strong>{{comment.user}}</strong></span>
+                                                <a href="{% url 'profileView' profile_id=comment.user.id %}"> {% if profile.is_verified == True %} ✅ {% else %} ✘ {% endif %} {{comment.user}} </a>
                                                 <small style="line-height: 80%">•{{comment.created_on}}•</small>
                                                 <hr />
                                                 <small class="comment-text" style="">{{comment.content}}</small>
                                             </div>
+                                            {% endif %} {% endfor %}
                                         </div>
 
                                         <hr />
