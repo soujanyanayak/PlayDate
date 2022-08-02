@@ -148,17 +148,8 @@ The django data elements are stored in the context as well as in the session dat
                                         <p class="card-text">{{event.desc}}</p>
                                         <strong>Created On: {{event.datetime}}</strong>
                                         <div class="d-flex flex-row align-items-center">
-                                            {% if profile.avatar.url != None %}
-                                            <img src="{{profile.avatar.url}}" width="50" class="rounded-circle" />
-                                            {% else %}
-                                            <img src="/media/default_user.png" width="50"
-                                                style="border: solid blue; margin-right: 10%" class="rounded-circle" />
-                                            {% endif %}
-                                            <div class="d-flex flex-column ml-2">
-                                                <span class="font-weight-bold"><a
-                                                        href="{% url 'profileView' profile_id=event.user.id %}">{{event.user}}</a></span>
-                                                <small class="text-primary">{{event.address}}</small>
-                                            </div>
+                                                {% include "groups/userlink_template.html" %}
+
                                         </div>
                                         <form method="POST">
                                             {% csrf_token %}
@@ -201,21 +192,12 @@ The django data elements are stored in the context as well as in the session dat
                                         <p class="card-text">{{post.desc}}</p>
                                         <strong>Created On: {{post.created_on}}</strong>
                                         <div class="d-flex flex-row align-items-center">
-                                            {% if profile.avatar.url != None %}
-                                            <img src="{{profile.avatar.url}}" width="50" class="rounded-circle" />
-                                            {% else %}
-                                            <img src="/media/default_user.png" width="50"
-                                                style="border: solid blue; margin-right: 10%" class="rounded-circle" />
-                                            {% endif %}
-                                            <div class="d-flex flex-column ml-2">
-                                                <span class="font-weight-bold"> <a
-                                                        href="{% url 'profileView' profile_id=post.user.id %}">{{post.user}}</a></span>
-                                            </div>
+                                                {% include "groups/userlink_template.html" %}
                                         </div>
                                         <form method="POST">
                                             {% csrf_token %}
-                                            <a href="{% url 'viewGroupEvent' group_id=group.group_id event_id=event.event_id %}"
-                                                name="eventDetails" value="{{event.event_id}}"
+                                            <a href="{% url 'viewGroupPost' group_id=group.group_id post_id=post.post_id %}"
+                                                name="postDetails" value="{{post.post_id}}"
                                                 class="btn btn-primary pt-2">View Discussion</a>
                                         </form>
                                     </div>

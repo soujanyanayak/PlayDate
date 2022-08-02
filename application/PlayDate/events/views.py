@@ -68,8 +68,9 @@ def editEvent(request,event_id):
         return HttpResponseRedirect('/events/my-events/')
     return render(request,'editEvent.html',{'eventform':form,'addressform':addrform})
 
-def publicEvent1(request):
-    return render(request, "publicEvent1.html")
+def publicEvent1(request, event_id):
+    event=Publicevent.objects.get(public_event_id=event_id)
+    return render(request, "publicevent.html",{'event':event})
 
 
 def memberEvent1(request):
@@ -183,16 +184,18 @@ def viewEvent(request, event_id):
     user=request.user
     isEventAdmin = (event.user == user) or (event.group_admin == user) 
     registration=EventRegistration()
-    creator=0
+    isRsvp=0
     try:
         registration=EventRegistration.objects.filter(user__exact=user.user_id).filter(event__exact=event_id)
     except:
+        
         print(registration)
     if registration is not None:
-        creator=1
+        print("$$$$$")
+        isRsvp=1
     attendees=EventRegistration.objects.filter(event=event_id)
     # print (registrations)
-    return render(request, 'events/createdEvent.html', {'event' : event, 'attendees': attendees,'creator':creator, 'user': user, 'isEventAdmin': isEventAdmin})
+    return render(request, 'events/createdEvent.html', {'event' : event, 'attendees': attendees,'rsvp':isRsvp, 'user': user, 'isEventAdmin': isEventAdmin})
 
 def eventRegistrationEdit(request):
     print( "Received Event Registration")

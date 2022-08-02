@@ -92,6 +92,16 @@ def groupView(request, group_id):
     member_list = models.Member.objects.filter(group_id=group_id)
     groupEvents = models.GroupEvent.objects.filter(group=group)
     groupPosts = models.Post.objects.filter(group=group)
+    print(groupEvents, "\n\n")
+    profiles = []
+
+    for x in member_list:
+        profiles.append(Profile.objects.get(profileID=x.member_id))
+
+    profiles = set(profiles)
+    profiles = list(profiles)
+
+    print("profiles:", profiles)
 
     # Check if the user is verified
     regUser = False
@@ -192,7 +202,7 @@ def groupView(request, group_id):
             return render(request, "groups/groups.html", {'group': group, 'member_list': member_list, 'isMember': isMember, 'groupEvents': groupEvents, 'groupPosts': groupPosts, 'regUser': regUser})
             # return redirect('joinSuccess') //This does not work but should be reimplemented because its better practice
 
-    return render(request, "groups/groups.html", {'group': group, 'member_list': member_list, 'isMember': isMember, 'groupEvents': groupEvents, 'groupPosts': groupPosts, 'regUser': regUser})
+    return render(request, "groups/groups.html", {'group': group, 'member_list': member_list, 'isMember': isMember, 'groupEvents': groupEvents, 'groupPosts': groupPosts, 'regUser': regUser, 'profiles': profiles})
 
 
 # Viewing a particular post so the user can comment and start a discussion.
