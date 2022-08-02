@@ -27,6 +27,8 @@
                     <label for="group desc">Content:</label>
                     {{createGroupPostForm.post_content}}
                     <br />
+                    <label for="post img">Post Image:</label>
+                    {{createGroupPostForm.banner}}
                     <button style="margin-left: 60%; margin-top: 1vh" class="btn btn-primary pt-2">Create Post for {{request.session.group_name}}</button>
                 </form>
             </div>

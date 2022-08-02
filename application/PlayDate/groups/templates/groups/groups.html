@@ -192,8 +192,8 @@ The django data elements are stored in the context as well as in the session dat
                             {% if groupPosts %} {% for post in groupPosts %}
                             <div class="row">
                                 <div class="col card" style="width: 50%;">
-                                    {% if event.banner.url != None %}
-                                    <img src="{{event.banner.url}}" class="card-img-top" />
+                                    {% if post.banner.url != None %}
+                                    <img src="{{post.banner.url}}" class="card-img-top" />
                                     {% else %}
                                     <img src="/media/publicevents_banner/default.jpeg" class="card-img-top" />
                                     {% endif %}

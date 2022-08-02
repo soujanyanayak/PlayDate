@@ -95,7 +95,7 @@ class createGroupEventCommentForm(ModelForm):
 class createGroupPostForm(ModelForm):
     class Meta:
         model = models.Post
-        fields = ['post_title', 'post_content', ]
+        fields = ['post_title', 'post_content', 'banner']
         widgets = {
             'post_title': forms.TextInput(attrs={'style': 'width:65vw;', 'placeholder': "What is your post about?"}),
             'post_content': forms.Textarea(attrs={'style': 'width:65vw;', 'placeholder': "Write your post so other members can see!"}),

@@ -110,6 +110,9 @@ class Post(models.Model):
     post_title = models.CharField(max_length=128)
     post_content = models.TextField(max_length=256, blank=True, null=True)
 
+    banner = models.ImageField(
+        upload_to="publicevents_banner", default=None, blank=True)
+
     class Meta:
         # managed = False
         db_table = 'GroupPost'
