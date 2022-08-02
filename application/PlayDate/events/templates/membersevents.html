@@ -14,6 +14,7 @@
     {% endblock %}
     <div class="wrapper">
         {% if user.is_authenticated %}
+        <br><br>
         <h5 style="margin-left: 10%;"><b>Fun activities posted by our users:</b></h5>
         {% if events %}
         {% for event in events %}
@@ -86,12 +87,17 @@
         <h5 style="margin-left: 10%;"> <b>No events available currently</b></h5>
         {% endif %}
         {% endif %}
+    </div>
+    <br><br>
+    <div class="wrapper">
+
+        <h5 style="margin-left: 10%;"><b>Public activities for everyone:</b></h5>
 
         {% if publicevents %}
-        <div class="row grid-container">
+        <!-- <div class="row grid-container">
             <h5 style="margin-left: 10%;"><b>Public activities for everyone:</b></h5>
-        </div>
-        <div class="grid-container">
+        </div> -->
+        <div class="row" style="margin-left: 10%;">
 
             {% for publicevent in publicevents %}
 
