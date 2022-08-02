@@ -78,8 +78,41 @@ Description: Searching for groups. This page may be integrated into the search b
                                 style="text-align: left"><strong>{{group.group_name}}</strong></a>
                             <p>{{group.group_desc}}</p>
                         </div>
+
+                        {% if user.is_authenticated and regUser %}
                         <a href="{% url 'groupView' group_id=group.group_id %}"
                             style="margin-left: 60%; margin-bottom: 5%" class="btn btn-primary ms-7">Group Page</a>
+
+                        {% elif user.is_authenticated and not regUser %}
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#staticBackdrop">
+                            Group Page
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="staticBackdropLabel">You're not Verified!</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Sorry, it seems you're not verified yet!<br>
+                                        Please go to your <a href="/profile">Profile</a> to upload your identification
+                                        photo for
+                                        verification!
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
                     </td>
                 </table>
             </div>
