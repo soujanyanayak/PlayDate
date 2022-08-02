@@ -3,8 +3,13 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <title>Create a Post for {{request.session.group_name}}</title>
+        <title>Create a Post for {{group.group_name}}</title>
     </head>
+    <style>
+        .uplButton{
+            margin: 5px;
+        }
+    </style>
     <body style="background-color: #9de2ff">
         {% if user.is_authenticated %} {% load static %} {% include "registered_navbar.html" %} {% else %} {% load static %} {% include "general_navbar.html" %} {% endif %}
         <br />
@@ -19,7 +24,7 @@
         <!--FIX-THIS: The top border is cut-off by the navbar-->
         <div class="card mx-auto my-3" style="padding-top: 5vh; border: solid blue; height: 90vh; width: 70vw">
             <div class="card-body">
-                <h1 style="text-align: center"><strong>New {{request.session.group_name}} Post!</strong></h1>
+                <h1 style="text-align: center"><strong>New {{group.group_name}} Post!</strong></h1>
                 <form enctype="multipart/form-data" style="align-items: center; width: 50vw" method="POST">
                     {% csrf_token %}
                     <label for="post title">Post Subject:</label>
@@ -28,8 +33,8 @@
                     {{createGroupPostForm.post_content}}
                     <br />
                     <label for="post img">Post Image:</label>
-                    {{createGroupPostForm.banner}}
-                    <button style="margin-left: 60%; margin-top: 1vh" class="btn btn-primary pt-2">Create Post for {{request.session.group_name}}</button>
+                    {% include 'imageUpload.html' with iuID="banner" iuAttribute="banner" iuDisplayType="plain" iuButtonText="Select Post Image" iuContainerClass="d-flex flex-row-reverse align-items-center justify-content-end" %}
+                    <button style="margin-left: 60%; margin-top: 1vh" class="btn btn-primary pt-2">Create Post for {{group.group_name}}</button>
                 </form>
             </div>
         </div>

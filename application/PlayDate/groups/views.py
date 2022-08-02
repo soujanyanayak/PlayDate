@@ -581,7 +581,7 @@ def createGroupPost(request):
             print("FORM NOT VALID:", createGroupPostForm.errors,
                   "non-field errors:", createGroupPostForm.non_field_errors)
 
-    return render(request, "groups/createGroupPost.html", {"createGroupPostForm": createGroupPostForm})
+    return render(request, "groups/createGroupPost.html", {"createGroupPostForm": createGroupPostForm, 'group': group})
 
 # For creating a group event
 
