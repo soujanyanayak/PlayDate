@@ -581,7 +581,7 @@ def createGroupPost(request):
             print("FORM NOT VALID:", createGroupPostForm.errors,
                   "non-field errors:", createGroupPostForm.non_field_errors)
 
-    return render(request, "groups/createGroupPost.html", {"createGroupPostForm": createGroupPostForm})
+    return render(request, "groups/createGroupPost.html", {"createGroupPostForm": createGroupPostForm, 'group': group})
 
 # For creating a group event
 
@@ -630,18 +630,14 @@ def createGroupEvent(request):
 
 def createGroup(request):
     createGroupForm = forms.createGroupForm()
-    memberListForm = forms.memberListForm()
     regUser = None
     if request.user.is_authenticated:
         regUser = Profile.objects.get(profileID=request.user)
-    else:
-        regUser = None
-    print("createGroup")
+    print("\ncreateGroup")
     if request.method == 'POST':
         createGroupForm = forms.createGroupForm(request.POST, request.FILES)
         print("FILES", request.FILES)
-        memberListForm = forms.memberListForm(request.POST)
-        if createGroupForm.is_valid() and memberListForm.is_valid():
+        if createGroupForm.is_valid():
             instanceGroup = createGroupForm.save(commit=False)
             instanceGroup.group_admin = request.user
             instanceGroup.banner = None
@@ -651,17 +647,14 @@ def createGroup(request):
             # otherwise they did upload a banner
             else:
                 instanceGroup.banner = request.FILES['banner']
+            # put the title in the tags and save Taggit
             instanceGroup.save()
-            # put the title in the tags
-
-            groupName = str(instanceGroup.group_name).split()
-            print(groupName)
-
+            instanceGroup.getTagsFromContent()
             createGroupForm.save_m2m()
 
-            instanceMember = memberListForm.save(commit=False)
-            instanceMember.group_id = instanceGroup
-            instanceMember.member_id = request.user
+            # Create first member
+            memberData = {'group_id': instanceGroup, 'member_id': request.user}
+            instanceMember = forms.createFirstMemberForm(memberData)
             instanceMember.save()
 
             group = models.Group.objects.get(
@@ -670,17 +663,27 @@ def createGroup(request):
                 group_id=instanceGroup.group_id)
             # print(member_list.member_id)
             isMember = True
-            for titleWord in groupName:
-                group.tags.add(titleWord)
 
             return redirect('groupView', group_id=instanceGroup.group_id)
             # return render(request, 'groups/groups.html', {'group': group, 'member_list': member_list, 'isMember': isMember})
+        retVals = {
+            'createGroupForm': createGroupForm, 
+            'regUser': regUser,
+            'modalTitle': "Error",
+            'modalText': createGroupForm.errors.as_text,
+            'modalBtnText': "Close",
+            'modalImmediate': True
+        }
+        return render(request, 'groups/createGroup.html', retVals)
 
-    return render(request, 'groups/createGroup.html', {'createGroupForm': createGroupForm, 'memberListForm': memberListForm, 'regUser': regUser})
+    return render(request, 'groups/createGroup.html', {'createGroupForm': createGroupForm, 'regUser': regUser})
 
 
 def verifyYourself(request):
     return render(request, "groups/verifyYourself.html")
+
+def createGroupTermsandConditions(request):
+    return render(request, 'createGroupTermsandConditions.html')
 
 
 # ░█▀▄░█▀▀░█░█░░░░░█░█░█▀▀░█▀▀░░░█▀█░█▀█░█░░░█░█

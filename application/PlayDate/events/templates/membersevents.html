@@ -14,15 +14,13 @@
     {% endblock %}
     <div class="wrapper">
         {% if user.is_authenticated %}
-        <div class="row grid-container">
-            <h5><b>Fun activities posted by our users:</b></h5>
-        </div>
+        <h5 style="margin-left: 10%;"><b>Fun activities posted by our users:</b></h5>
         {% if events %}
         {% for event in events %}
         {% with numerator=forloop.counter denominator=3 %}
         {% load mathfilters %}
         {% if numerator|mod:denominator == 1 %}
-        <div class="row grid-container">
+        <div class="row" style="margin-left: 10%;">
             {% endif %}
             <div class="col-md-4 card mx-2 my-2" style="border-radius: 15px; width: 26rem;">
                 {% if event.banner.url != None %}
@@ -45,10 +43,11 @@
                     </div>
                     {% elif user.is_authenticated and not regUser %}
 
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#staticBackdrop">
                         View Details
                     </button>
-    
+
                     <!-- Modal -->
                     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
                         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -61,11 +60,13 @@
                                 </div>
                                 <div class="modal-body">
                                     Sorry, it seems you're not verified yet!<br>
-                                    Please go to your <a href="/profile">Profile</a> to upload your identification photo for
+                                    Please go to your <a href="/profile">Profile</a> to upload your identification photo
+                                    for
                                     verification!
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
                                 </div>
                             </div>
                         </div>
@@ -76,30 +77,30 @@
                         Up</a> -->
                 </div>
             </div>
-        </div>
             {% if numerator|mod:denominator == 0 %}
-        
+        </div>
         {% endif %}
         {% endwith %}
         {% endfor %}
         {% else %}
-        <div> No events available currently</div>
+        <h5 style="margin-left: 10%;"> <b>No events available currently</b></h5>
         {% endif %}
         {% endif %}
 
         {% if publicevents %}
         <div class="row grid-container">
-            <h5><b>Public activities for everyone:</b></h5>
+            <h5 style="margin-left: 10%;"><b>Public activities for everyone:</b></h5>
         </div>
         <div class="grid-container">
-            
+
             {% for publicevent in publicevents %}
 
             <div class="col card mx-2 my-2" style="width: 18rem;">
                 <img src={{publicevent.banner.url}} width="300px" height="300px" class="card-img-top  mt-2" alt="...">
                 <div class="card-body">
                     <p class="card-text">{{publicevent.name}}</p>
-                    <a href="/events/public-event/{{publicevent.public_event_id}}" class="btn btn-primary">View details</a>
+                    <a href="/events/public-event/{{publicevent.public_event_id}}" class="btn btn-primary">View
+                        details</a>
                 </div>
             </div>
 
@@ -124,9 +125,9 @@
             </div> -->
         </div>
         {% else %}
-        <div>No public events currently</div>
+        <h5 style="margin-left: 10%;"><b>No public events currently</b></h5>
         {% endif %}
-        
+
     </div>
     {% include "footer.html"%}
 </body>

@@ -53,6 +53,11 @@ class createGroupForm(ModelForm):
 
         }
 
+class createFirstMemberForm(ModelForm):
+    class Meta:
+        model = models.Member
+        fields = ['member_id', 'group_id']
+
 
 class memberListForm(ModelForm):
     # This is an empty form because users cannot edit the Member table
@@ -62,6 +67,20 @@ class memberListForm(ModelForm):
 
 
 class createGroupEventForm(ModelForm):
+    # clean_image is a workaround to server-side
+    # validate the banner image.
+    def clean_image(self):
+        bannerImage = self.cleaned_data['banner']
+        if bannerImage:
+            # size measured in bytes
+            if bannerImage.size > 6.5 * 1048578:
+                raise ValidationError("Banner image must be under 6.5 MB")
+            bannerImageExt = bannerImage.name.split('.')[-1]
+            allowedTypes = "apng, avif, gif jpeg, jpg, png, webp"
+            if bannerImageExt in allowedTypes:
+                return bannerImage
+            raise ValidationError("Banner image in the wrong format.")
+        raise ValidationError("No banner image uploaded.")
     class Meta:
         model = models.GroupEvent
         fields = ['address', 'desc', 'name', 'banner', 'datetime']
@@ -88,14 +107,28 @@ class createGroupEventCommentForm(ModelForm):
         model = models.groupEventComment
         fields = ['content', ]
         widgets = {
-            'content': forms.Textarea(attrs={'style': 'width: 100%; height:8vh', 'placeholder': "Your comment here."})
+            'content': forms.Textarea(attrs={'style': 'width: 150%; height:8vh', 'placeholder': "Your comment here."})
         }
 
 
 class createGroupPostForm(ModelForm):
+    # clean_image is a workaround to server-side
+    # validate the banner image.
+    def clean_image(self):
+        bannerImage = self.cleaned_data['banner']
+        if bannerImage:
+            # size measured in bytes
+            if bannerImage.size > 6.5 * 1048578:
+                raise ValidationError("Banner image must be under 6.5 MB")
+            bannerImageExt = bannerImage.name.split('.')[-1]
+            allowedTypes = "apng, avif, gif jpeg, jpg, png, webp"
+            if bannerImageExt in allowedTypes:
+                return bannerImage
+            raise ValidationError("Banner image in the wrong format.")
+        raise ValidationError("No banner image uploaded.")
     class Meta:
         model = models.Post
-        fields = ['post_title', 'post_content', ]
+        fields = ['post_title', 'post_content', 'banner']
         widgets = {
             'post_title': forms.TextInput(attrs={'style': 'width:65vw;', 'placeholder': "What is your post about?"}),
             'post_content': forms.Textarea(attrs={'style': 'width:65vw;', 'placeholder': "Write your post so other members can see!"}),
@@ -108,5 +141,5 @@ class createGroupCommentForm(ModelForm):
         model = models.groupPostComment
         fields = ['content', ]
         widgets = {
-            'content': forms.Textarea(attrs={'style': 'width: 100%; height:8vh', 'placeholder': "Your comment here."})
+            'content': forms.Textarea(attrs={'style': 'width: 150%; height:8vh', 'placeholder': "Your comment here."})
         }
