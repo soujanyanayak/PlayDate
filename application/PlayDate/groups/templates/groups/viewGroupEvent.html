@@ -39,23 +39,7 @@ Description: This is the view group event detail page. Ideally it would fused wi
         <!--🐱Page Layout🐱-->
         <div class="row">
             <!--🐱Left Column🐱-->
-            <div class="column left" style="background-color: white; border: dotted cyan">
-                {% if isMember == True %}
-                <form method="POST">
-                    {% csrf_token %}
-                    <button name="mainPage" class="list-group-item list-group-item-action py-2 ripple" aria-current="true" type="submit"><i class="fas fa-lock fa-fw me-3"></i><span>All Activities</span></button>
-                    <button name="allEvents" class="list-group-item list-group-item-action py-2 ripple" aria-current="true" type="submit"><i class="fas fa-lock fa-fw me-3"></i><span>Events</span></button>
-                    <button name="allPosts" class="list-group-item list-group-item-action py-2 ripple" aria-current="true" type="submit"><i class="fas fa-lock fa-fw me-3"></i><span>Posts</span></button>
-                    <button name="newPost" class="list-group-item list-group-item-action py-2 ripple" aria-current="true" type="submit"><i class="fas fa-lock fa-fw me-3"></i><span>New Post</span></button>
-                    <button name="newGroupEvent" class="list-group-item list-group-item-action py-2 ripple" aria-current="true" type="submit"><i class="fas fa-lock fa-fw me-3"></i><span>New Event</span></button>
-                    <button name="leaveGroup" class="list-group-item list-group-item-action py-2 ripple" aria-current="true" type="submit"><i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Leave Group</span></button>
-                    {% if group.group_admin == request.user%}
-                    <button name="adminDashboard" class="list-group-item list-group-item-action py-2 ripple" aria-current="true" type="submit"><i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Admin Dashboard</span></button>
-                    {% endif %} {% elif isMember == False %}
-                </form>
-
-                {% endif %}
-            </div>
+            <div class="column left" style="background-color: white; border: dotted cyan">{% include "groups/groupmenu_template.html" %}</div>
 
             <!--🐱Middle Column🐱-->
             <div class="column middle" style="background-color: skyblue; border: solid white">

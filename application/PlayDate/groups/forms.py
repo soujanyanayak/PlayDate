@@ -38,6 +38,7 @@ class createGroupForm(ModelForm):
                 return bannerImage
             raise ValidationError("Avatar image in the wrong format.")
         raise ValidationError("No avatar image uploaded.")
+
     class Meta:
         model = models.Group
         fields = ['group_name', 'group_desc', 'tags', 'banner']
@@ -47,7 +48,7 @@ class createGroupForm(ModelForm):
         widgets = {
             'group_name': forms.TextInput(attrs={'style': 'width:100%;', 'placeholder': "e.g. San Francisco Dog Group"}),
             'group_desc': forms.Textarea(attrs={'style': 'width:100%;', 'placeholder': "Enter a brief description on what your group is all about!"}),
-            'tags': forms.TextInput(attrs={'style': 'width:65vw;', 'placeholder': "dogs, dog, canine, canines, shiba inu, shiba-inu, shiba inu"}),
+            'tags': forms.TextInput(attrs={'style': 'width:100%;', 'placeholder': "dogs, dog, canine, canines, shiba inu, shiba-inu, shiba inu"}),
             # 'banner': forms.ImageField(),
 
         }

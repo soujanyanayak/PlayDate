@@ -38,7 +38,7 @@ def Search(request):
         sampleGroups.append(
             models.Group.objects.get(group_id=i.group_id_id))
 
-    #print("sample:", sampleGroups)
+    # print("sample:", sampleGroups)
 
     # print(sampleGroups)
 
@@ -92,6 +92,7 @@ def groupView(request, group_id):
     member_list = models.Member.objects.filter(group_id=group_id)
     groupEvents = models.GroupEvent.objects.filter(group=group)
     groupPosts = models.Post.objects.filter(group=group)
+    allGroupPosts = models.Post.objects.filter(group=group)
     print(groupEvents, "\n\n")
     profiles = []
 
@@ -121,6 +122,18 @@ def groupView(request, group_id):
     if not request.user.is_authenticated:
         print("user is not authenticated")
 
+    context = {
+        'group': group,
+        'member_list': member_list,
+        'regUser': regUser,
+        'isMember': isMember,
+        'groupEvents': groupEvents,
+        'allGroupPosts': allGroupPosts,
+        'groupPosts': groupPosts,
+        'joinGroupForm': joinGroupForm,
+        'profiles': profiles,
+    }
+
     # This represents the part of the page for a member of the group.
     # Contains functionality for view/crud posts
     # if isMember == True:
@@ -143,7 +156,7 @@ def groupView(request, group_id):
             instanceMember.save()
             isMember = True
             print(request.user, 'has joined group:', group.group_name)
-            return render(request, "groups/groups.html", {'group': group, 'member_list': member_list, 'isMember': isMember, 'groupEvents': groupEvents, 'groupPosts': groupPosts, 'regUser': regUser})
+            return render(request, "groups/groups.html", context)
 
     # _  _ __     __  __ __  __
     # |\/||_ |\/||__)|_ |__)(_
@@ -152,18 +165,7 @@ def groupView(request, group_id):
         if 'mainPage' in request.POST:
             print("DEV-CONSOLE: All Activities Button has been Clicked")
             request.session['group_id'] = group.group_id
-            return render(request, "groups/groups.html", {'group': group, 'member_list': member_list, 'isMember': isMember, 'groupEvents': groupEvents, 'groupPosts': groupPosts})
-
-        if 'allEvents' in request.POST:
-            print("DEV-CONSOLE: All Events Button has been Clicked")
-            request.session['group_id'] = group.group_id
-            return render(request, "groups/groups.html", {'group': group, 'member_list': member_list, 'isMember': isMember, 'groupEvents': groupEvents, })
-            # return render(request, "groups/groups.html", {'group': group, 'member_list': member_list, 'isMember': isMember, 'groupEvents': groupEvents})
-
-        if 'allPosts' in request.POST:
-            print("DEV-CONSOLE: All Posts Button has been Clicked")
-            request.session['group_id'] = group.group_id
-            return render(request, "groups/groups.html", {'group': group, 'member_list': member_list, 'isMember': isMember, 'groupPosts': groupPosts})
+            return render(request, "groups/groups.html", context)
 
         if 'newPost' in request.POST:
             print("DEV-CONSOLE: New Post Button has been Clicked")
@@ -199,10 +201,10 @@ def groupView(request, group_id):
                 group_id=group_id, member_id=request.user).delete()
             isMember = False
             print(request.user, 'has left group:', group.group_name)
-            return render(request, "groups/groups.html", {'group': group, 'member_list': member_list, 'isMember': isMember, 'groupEvents': groupEvents, 'groupPosts': groupPosts, 'regUser': regUser})
+            return render(request, "groups/groups.html", context)
             # return redirect('joinSuccess') //This does not work but should be reimplemented because its better practice
 
-    return render(request, "groups/groups.html", {'group': group, 'member_list': member_list, 'isMember': isMember, 'groupEvents': groupEvents, 'groupPosts': groupPosts, 'regUser': regUser, 'profiles': profiles})
+    return render(request, "groups/groups.html", context)
 
 
 # Viewing a particular post so the user can comment and start a discussion.
@@ -215,6 +217,13 @@ def viewGroupPost(request, group_id, post_id):
     # print(postObject)
     # print(postObject[0])
     # print(postObject[0].post_id)
+    profiles = []
+
+    for x in member_list:
+        profiles.append(Profile.objects.get(profileID=x.member_id))
+
+    profiles = set(profiles)
+    profiles = list(profiles)
 
     # it's implied that isMember would already be true, so we can just write isMember=True
     isMember = False
@@ -225,6 +234,20 @@ def viewGroupPost(request, group_id, post_id):
     allGroupPosts = models.Post.objects.filter(group_id=group_id)
     groupPosts = models.Post.objects.filter(post_id=post_id)
     groupPostComments = models.groupPostComment.objects.filter(post_id=post_id)
+
+    context = {
+        'group': group,
+        'member_list': member_list,
+        'isMember': isMember,
+        'groupEvents': groupEvents,
+        'allGroupPosts': allGroupPosts,
+        'groupPosts': groupPosts,
+        'groupPostComments': groupPostComments,
+        'createGroupCommentForm': createGroupCommentForm,
+        'profiles': profiles,
+        'postObject': postObject,
+    }
+
     if isMember == False:
         if 'joinGroup' in request.POST:
             print(request.method)
@@ -236,22 +259,22 @@ def viewGroupPost(request, group_id, post_id):
             instanceMember.save()
             isMember = True
             print(request.user, 'has joined group:', group.group_name)
-            return render(request, "groups/groups.html", {'group': group, 'member_list': member_list, 'isMember': isMember, 'groupEvents': groupEvents, 'groupPosts': groupPosts})
+            return render(request, "groups/groups.html", context)
 
     if 'mainPage' in request.POST:
         print("DEV-CONSOLE: All Activities Button has been Clicked")
         request.session['group_id'] = group.group_id
-        return render(request, "groups/groups.html", {'group': group, 'member_list': member_list, 'isMember': isMember, 'groupEvents': groupEvents, 'groupPosts': allGroupPosts})
+        return render(request, "groups/groups.html", context)
 
     if 'allEvents' in request.POST:
         print("DEV-CONSOLE: All Events Button has been Clicked")
         request.session['group_id'] = group.group_id
-        return render(request, "groups/groups.html", {'group': group, 'member_list': member_list, 'isMember': isMember, 'groupEvents': groupEvents})
+        return render(request, "groups/groups.html", context)
 
     if 'allPosts' in request.POST:
         print("DEV-CONSOLE: All Posts Button has been Clicked")
         request.session['group_id'] = group.group_id
-        return render(request, "groups/groups.html", {'group': group, 'member_list': member_list, 'isMember': isMember, 'groupPosts': allGroupPosts})
+        return render(request, "groups/groups.html", context)
 
     if 'newPost' in request.POST:
         print("DEV-CONSOLE: New Post Button has been Clicked")
@@ -271,7 +294,8 @@ def viewGroupPost(request, group_id, post_id):
     if 'editPost' in request.POST:
         print("DEV-CONSOLE: 'New Group Event' Button has been Clicked")
         request.session['group_id'] = group.group_id
-        return redirect('createGroupEvent')
+        return redirect('groupView', group.group_id)
+        # return redirect('createGroupEvent')
 
     # done
     if 'deletePost' in request.POST:
@@ -280,7 +304,8 @@ def viewGroupPost(request, group_id, post_id):
         print("post deleted")
         request.session['group_id'] = group.group_id
         allGroupPosts = models.Post.objects.filter(group_id=group_id)
-        return render(request, "groups/groups.html", {'group': group, 'member_list': member_list, 'isMember': isMember, 'groupEvents': groupEvents, 'groupPosts': allGroupPosts})
+        return redirect('groupView', group.group_id)
+        # return render(request, "groups/groups.html", context)
 
     if 'reportPost' in request.POST:
         request.session['group_id'] = group.group_id
@@ -296,7 +321,7 @@ def viewGroupPost(request, group_id, post_id):
         print(request.user, 'has left group:', group.group_name)
         request.session['group_id'] = group.group_id
 
-        return render(request, "groups/groups.html", {'group': group, 'member_list': member_list, 'isMember': isMember, 'groupEvents': groupEvents, 'groupPosts': groupPosts})
+        return render(request, "groups/viewThread.html", context)
         # return redirect('joinSuccess') //This does not work but should be reimplemented because its better practice
 
     if 'postComment' in request.POST:
@@ -315,13 +340,12 @@ def viewGroupPost(request, group_id, post_id):
                 post_id=postObject[0].post_id)
             print(groupPostComments)
 
-            return render(request, "groups/viewThread.html", {'group': group, 'member_list': member_list, 'isMember': isMember, 'groupEvents': groupEvents, 'groupPosts': groupPosts, 'groupPostComments': groupPostComments, 'createGroupCommentForm': forms.createGroupCommentForm})
+            return render(request, "groups/groups.html", context)
         elif not forms.createGroupCommentForm.is_valid():
             print("FORM NOT VALID:", forms.createGroupCommentForm.errors,
                   "non-field errors:", forms.createGroupCommentForm.non_field_errors)
 
-    return render(request, "groups/viewThread.html", {'group': group, 'member_list': member_list, 'isMember': isMember, 'groupEvents': groupEvents, 'groupPosts': groupPosts, 'groupPostComments': groupPostComments, 'createGroupCommentForm': forms.createGroupCommentForm})
-
+    return render(request, "groups/viewThread.html", context)
 # Viewing a particular event where the user can RSVP or comment
 
 
@@ -336,6 +360,15 @@ def viewGroupEvent(request, group_id, event_id):
     RSVP_list = models.RSVP.objects.filter(
         group_id=group_id, event_id=event_id)
     eventObject = models.GroupEvent.objects.filter(event_id=event_id)
+
+    profiles = []
+
+    for x in member_list:
+        profiles.append(Profile.objects.get(profileID=x.member_id))
+
+    profiles = set(profiles)
+    profiles = list(profiles)
+
     isRSVP = None
     # print(postObject)
     # print(postObject[0])
@@ -359,6 +392,20 @@ def viewGroupEvent(request, group_id, event_id):
 
     groupPosts = models.Post.objects.filter(group=group)
 
+    context = {
+        'group': group,
+        'member_list': member_list,
+        'isMember': isMember,
+        'groupEvents': groupEvents,
+        'groupEventComments': groupEventComments,
+        'allGroupEvents': allGroupEvents,
+        'RSVP_list': RSVP_list,
+        'createGroupEventCommentForm': createGroupEventCommentForm,
+        'isRSVP': isRSVP,
+        'profiles': profiles,
+        'eventObject': eventObject,
+    }
+
     # Page Functions
     if isMember == False:
         if 'joinGroup' in request.POST:
@@ -371,22 +418,12 @@ def viewGroupEvent(request, group_id, event_id):
             instanceMember.save()
             isMember = True
             print(request.user, 'has joined group:', group.group_name)
-            return render(request, "groups/groups.html", {'group': group, 'member_list': member_list, 'isMember': isMember, 'groupEvents': groupEvents, 'groupPosts': groupPosts})
+            return render(request, "groups/groups.html", context)
 
     if 'mainPage' in request.POST:
         print("DEV-CONSOLE: All Activities Button has been Clicked")
         request.session['group_id'] = group.group_id
-        return render(request, "groups/groups.html", {'group': group, 'member_list': member_list, 'isMember': isMember, 'groupEvents': groupEvents, 'groupPosts': groupPosts})
-
-    if 'allEvents' in request.POST:
-        print("DEV-CONSOLE: All Events Button has been Clicked")
-        request.session['group_id'] = group.group_id
-        return render(request, "groups/groups.html", {'group': group, 'member_list': member_list, 'isMember': isMember, 'groupEvents': allGroupEvents})
-
-    if 'allPosts' in request.POST:
-        print("DEV-CONSOLE: All Posts Button has been Clicked")
-        request.session['group_id'] = group.group_id
-        return render(request, "groups/groups.html", {'group': group, 'member_list': member_list, 'isMember': isMember, 'groupPosts': groupPosts})
+        return redirect('createGroupPost')
 
     if 'newPost' in request.POST:
         print("DEV-CONSOLE: New Post Button has been Clicked")
@@ -410,7 +447,7 @@ def viewGroupEvent(request, group_id, event_id):
         print(request.user, 'has left group:', group.group_name)
         request.session['group_id'] = group.group_id
 
-        return render(request, "groups/groups.html", {'group': group, 'member_list': member_list, 'isMember': isMember, 'groupEvents': groupEvents, 'groupPosts': groupPosts})
+        return render(request, "groups/groups.html", context)
         # return redirect('joinSuccess') //This does not work but should be reimplemented because its better practice
     # RSVP Button
 
@@ -426,7 +463,8 @@ def viewGroupEvent(request, group_id, event_id):
         request.session['group_id'] = group.group_id
         allGroupEvents = models.GroupEvent.objects.filter(
             group_id=group.group_id)
-        return render(request, "groups/groups.html", {'group': group, 'member_list': member_list, 'isMember': isMember, 'groupEvents': allGroupEvents, 'groupPosts': groupPosts})
+        return redirect('groupView', group.group_id)
+        # return render(request, "groups/groups.html", context)
 
     if 'reportEvent' in request.POST:
         request.session['group_id'] = group.group_id
@@ -460,6 +498,7 @@ def viewGroupEvent(request, group_id, event_id):
             group_id=group_id, event_id=event_id)
 
         print(request.user, 'has unRSVPd:', eventObject)
+
         return render(request, "groups/viewGroupEvent.html", {'group': group, 'member_list': member_list, 'isMember': isMember, 'groupEvents': groupEvents, 'groupPosts': groupPosts, 'groupEventComments': groupEventComments, 'RSVP_list': RSVP_list, 'createGroupEventCommentForm': createGroupEventCommentForm, 'isRSVP': isRSVP})
 
     # Event Comments
@@ -484,13 +523,13 @@ def viewGroupEvent(request, group_id, event_id):
             RSVP_list = models.RSVP.objects.filter(
                 group_id=group_id, event_id=event_id)
 
-            return render(request, "groups/viewGroupEvent.html", {'group': group, 'member_list': member_list, 'isMember': isMember, 'groupEvents': groupEvents, 'groupEventComments': groupEventComments, 'RSVP_list': RSVP_list, 'createGroupEventCommentForm': createGroupEventCommentForm, 'isRSVP': isRSVP})
+            return render(request, "groups/viewGroupEvent.html", context)
 
         elif not createGroupEventCommentForm.is_valid():
             print("FORM NOT VALID:", forms.createGroupEventCommentForm.errors,
                   "non-field errors:", forms.createGroupEventCommentForm.non_field_errors)
 
-    return render(request, "groups/viewGroupEvent.html", {'group': group, 'member_list': member_list, 'isMember': isMember, 'groupEvents': groupEvents, 'groupEventComments': groupEventComments, 'RSVP_list': RSVP_list, 'createGroupEventCommentForm': createGroupEventCommentForm, 'isRSVP': isRSVP})
+    return render(request, "groups/viewGroupEvent.html", context)
 
 
 def createGroupPost(request):
@@ -520,9 +559,9 @@ def createGroupPost(request):
 
             # Group/member/isMember is stored inside the session, the following clears the session incase
             # the user wants to create a post/event for a different group.
-            del request.session['group_id']
-
-            return render(request, "groups/groups.html", {'group': group, 'member_list': member_list, 'isMember': isMember, 'groupEvents': groupEvents, 'groupPosts': groupPosts})
+            #del request.session['group_id']
+            return redirect('groupView', group.group_id)
+            # return render(request, "groups/groups.html", {'group': group, 'member_list': member_list, 'isMember': isMember, 'groupEvents': groupEvents, 'groupPosts': groupPosts})
         elif not createGroupPostForm.is_valid():
             print("FORM NOT VALID:", createGroupPostForm.errors,
                   "non-field errors:", createGroupPostForm.non_field_errors)
@@ -559,11 +598,12 @@ def createGroupEvent(request):
                 instanceGroupEvent.banner = request.FILES['banner']
 
             instanceGroupEvent.save()
+            return redirect('groupView', group.group_id)
 
             # Group/member/isMember is stored inside the session, the following clears the session incase
             # the user wants to create a post/event for a different group.
 
-            return render(request, "groups/groups.html", {'group': group, 'member_list': member_list, 'isMember': isMember, 'groupEvents': groupEvents, 'groupPosts': groupPosts})
+            # return render(request, "groups/groups.html", {'group': group, 'member_list': member_list, 'isMember': isMember, 'groupEvents': groupEvents, 'groupPosts': groupPosts})
         elif not createGroupEventForm.is_valid():
             print("FORM NOT VALID:", createGroupEventForm.errors,
                   "non-field errors:", createGroupEventForm.non_field_errors)

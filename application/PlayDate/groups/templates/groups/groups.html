@@ -106,9 +106,16 @@ The django data elements are stored in the context as well as in the session dat
                                     <button name="newPost"
                                         class="list-group-item list-group-item-action py-2 ripple bg-light"
                                         aria-current="true" type="submit">New Post</button>
+                                    {% if isMember == True and request.user == group.group_admin%}
+                                    <button name="leaveGroupAdmin"
+                                        class="list-group-item list-group-item-action py-2 ripple bg-light"
+                                        aria-current="true" type="submit">Disband Group</button>
+                                    {% elif isMember == True and request.user != group.group_admin %}
                                     <button name="leaveGroup"
                                         class="list-group-item list-group-item-action py-2 ripple bg-light"
                                         aria-current="true" type="submit">Leave Group</button>
+                                    {% endif %}
+
                                 </span>
                             </form>
                         </div>
