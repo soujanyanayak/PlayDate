@@ -15,75 +15,83 @@ In order to style form elements please refer to forms.py where attributes such a
 {% load static %}{% include "header.html" %}
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Create Group</title>
+    </head>
 
-<head>
-    <meta charset="UTF-8" />
-    <title>Create Group</title>
-</head>
+    <style>
+        .uplContainer {
+            justify-content: center;
+        }
+        .uplInput {
+            position: fixed;
+            top: -1000px;
+        }
+        .uplButton {
+            margin-right: 5px;
+            margin-top: 5px;
+        }
+    </style>
 
-<body style="background-color: #9de2ff">
-    {% if user.is_authenticated %} {% load static %} {% include "registered_navbar.html" %} {% else %} {% load static %}
-    {% include "general_navbar.html" %} {% endif %}
+    <body style="background-color: #9de2ff">
+        {% if user.is_authenticated %} {% load static %} {% include "registered_navbar.html" %} {% else %} {% load static %} {% include "general_navbar.html" %} {% endif %}
 
-    <!--This h4 tag becomes covered by the navbar and does not show.
+        <!--This h4 tag becomes covered by the navbar and does not show.
         <h4 class="logo navbar-brand text-center">
             <b>Create Your Group:</b>
         </h4>
         -->
-    <div class="wrapper">
-        <!--FIX-THIS: The top border is cut-off by the navbar-->
-        <div class="card mx-auto my-2" style="padding-top: 5vh; border: solid blue; width: 40%">
-            {% if regUser.is_verified %}
-            <div class="card-body">
-                <h1 style="text-align: center"><strong>Create a Group!</strong></h1>
-                <form class="register" enctype="multipart/form-data" style="align-items: center;" method="POST">
-                    {% csrf_token %}
-                    <label for="group name">Group Name:</label>
-                    {{createGroupForm.group_name}}
-                    <label for="group desc">Group Description:</label>
-                    {{createGroupForm.group_desc}}
-                    <br />
-                    <br />
-                    <label for="group tags">Keywords:</label>
-                    <p>
-                        <small>• Enter some keywords to help users find your group.<br />• Keywords should be separated
-                            by pressing the spacebar.</small>
-                    </p>
-                    <p><small></small></p>
-                    <!-- tags -->
-                    <label id="tag"> <b>Tags</b></label><br>
-                    <div class="tag-container">
-                        <input placeholder="add tags..." class="input" />
-                    </div>
-                    </label><br>
-                    <!-- {{createGroupForm.tags}} -->
+        <div class="wrapper">
+            <!--FIX-THIS: The top border is cut-off by the navbar-->
+            <div class="card mx-auto my-2" style="padding-top: 5vh; border: solid blue; width: 40%">
+                {% if regUser.is_verified %}
+                <div class="card-body">
+                    <h1 style="text-align: center"><strong>Create a Group!</strong></h1>
+                    <form class="register" enctype="multipart/form-data" style="align-items: center" method="POST">
+                        {% csrf_token %}
+                        <label for="group name"><b>Group Name</b></label>
+                        {{createGroupForm.group_name}}
+                        <label for="group desc"><b>Group Description</b></label>
+                        {{createGroupForm.group_desc}}
+                        <br />
+                        <br />
+                        <label for="group tags"><b>Tags</b></label>
+                        <p class="m-1">
+                            <small>• Enter some keywords to help users find your group.<br />• Keywords should be separated by pressing the spacebar.</small>
+                        </p>
+                        {{createGroupForm.tags}}
+                        <!--<div class="tag-container"></div>-->
+                        <br />
+                        <!-- {{createGroupForm.tags}} -->
 
+                        <!--
                     <label for="banner">(optional) Upload a banner!</label>
-                    <br />
                     {{createGroupForm.banner}}
-                    <button style="margin-left: 60%; margin-top: 1vh;" class="btn btn-primary pt-2">Create
-                        Group</button>
-                </form>
+                    -->
+
+                        <label id="id_bannerLabel"> <b>Banner: (Optional)</b></label
+                        ><br />
+                        {% include 'imageUpload.html' with iuID="banner" iuAttribute="banner" iuDisplayType="plain" iuButtonText="Select Group Banner" iuContainerClass="d-flex flex-row-reverse align-items-center justify-content-end" %}
+
+                        <button style="margin-left: 60%; margin-top: 1vh" class="btn btn-primary pt-2">Create Group</button>
+                    </form>
+                </div>
+                {% elif not user.is_authenticated %}
+                <div class="card-body">
+                    <h1 style="text-align: center">You need to be logged in and verified to create a group!</h1>
+                    <h4 style="text-align: center"><a href="/register/">🐱Register here!</a>•Already registered?•<a href="/login/">Login Here!🐱</a></h4>
+                </div>
+                {% elif user.is_authenticated and regUser.is_verified != True %}
+                <div class="card-body">
+                    <h1 style="text-align: center">You need to be verified to create a group!</h1>
+                    <h4 style="text-align: center"><a href="/profile/">🐱Upload Verification Here!</a><br />•Already Uploaded?• Wait for an admin to verify your account!🐱</h4>
+                </div>
+                {% endif %}
             </div>
-            {% elif not user.is_authenticated %}
-            <div class="card-body">
-                <h1 style="text-align: center">You need to be logged in and verified to create a group!</h1>
-                <h4 style="text-align: center"><a href="/register/">🐱Register here!</a>•Already registered?•<a
-                        href="/login/">Login Here!🐱</a></h4>
-            </div>
-            {% elif user.is_authenticated and regUser.is_verified != True %}
-            <div class="card-body">
-                <h1 style="text-align: center">You need to be verified to create a group!</h1>
-                <h4 style="text-align: center"><a href="/profile/">🐱Upload Verification Here!</a><br />•Already
-                    Uploaded?• Wait for an admin to verify your account!🐱</h4>
-            </div>
-            {% endif %}
         </div>
-
-    </div>
-    {% include "footer.html" %}
-</body>
-
+        {% include "footer.html" %}
+    </body>
 </html>
 <style>
     .tags {
@@ -131,12 +139,12 @@ In order to style form elements please refer to forms.py where attributes such a
 
     function createTag(label) {
         const div = document.createElement("div");
-        div.setAttribute('class', 'tag');
-        const span = document.createElement('span');
+        div.setAttribute("class", "tag");
+        const span = document.createElement("span");
         span.innerHTML = label;
-        const closeBtn = document.createElement('button');
-        closeBtn.setAttribute('class', 'close');
-        closeBtn.setAttribute('data-item', label);
+        const closeBtn = document.createElement("button");
+        closeBtn.setAttribute("class", "close");
+        closeBtn.setAttribute("data-item", label);
         closeBtn.innerHTML = "x";
 
         div.appendChild(span);
@@ -144,40 +152,38 @@ In order to style form elements please refer to forms.py where attributes such a
 
         return div;
     }
-    function reset() {
-
-    }
-    //reset so the input is not duplicated 
+    function reset() {}
+    //reset so the input is not duplicated
     function reset() {
         document.querySelectorAll(".tag").forEach(function (tag) {
             tag.parentElement.removeChild(tag);
-        })
+        });
     }
     //add tags to array
     function addTags() {
         reset();
-        tags.slice().reverse().forEach(function (tag) {
-            const input = createTag(tag);
-            tagContainer.prepend(input);
-        })
+        tags.slice()
+            .reverse()
+            .forEach(function (tag) {
+                const input = createTag(tag);
+                tagContainer.prepend(input);
+            });
     }
     //tiggers add tag when spacebar is hit and resets input value
-    input.addEventListener('keyup', function (e) {
+    input.addEventListener("keyup", function (e) {
         if (e.key === " ") {
             tags.push(input.value);
             addTags();
             input.value = " ";
         }
-    })
+    });
     //remove tags
     document.addEventListener("click", function (e) {
-        const value = e.target.getAttribute('data-item');
+        const value = e.target.getAttribute("data-item");
         const index = tags.indexOf(value);
         tags = [...tags.slice(0, index), ...tags.slice(index + 1)];
         addTags();
-
-    })
-
+    });
 </script>
 <!--
 ▄▖▄▖▄▖▖▖▄▖▖▖▄▖▄   ▄▖▄▖▄ ▄▖

@@ -24,7 +24,7 @@ The django data elements are stored in the context as well as in the session dat
     {% block content %} {% if user.is_authenticated %} {% load static %} {% include "registered_navbar.html" %} {%else%}
     {% load static %} {% include "general_navbar.html" %} {% endif %} {% endblock %} <br>
 
-    <div class="wrapper mt-5">
+    <div class="wrapper mt-4">
         <div class="row">
             <div class="col-lg-4" style="margin-left:8vw">
                 <div class="card">
@@ -34,7 +34,7 @@ The django data elements are stored in the context as well as in the session dat
                             {% if group.banner.url != None %}
                             <img src="{{group.banner.url}}" style="width: 20vw; height: 20vh" alt="" />
                             {% else %}
-                            <img src="/media/publicevents_banner/default.jpeg" style="width: 100vw; height: 20vh"
+                            <img src="/media/publicevents_banner/default.jpeg" style="width: 20vw; height: 20vh"
                                 alt="" />
                             {% endif %}
 
@@ -59,11 +59,7 @@ The django data elements are stored in the context as well as in the session dat
                                     {%endif %}</i></p>
                             {% if user.is_authenticated and isMember == False %}
                             {% if regUser %}
-                            <form method="POST">
-                                {% csrf_token %} <button name="joinGroup" class="btn btn-primary me-1"
-                                    style="width: 10rem; text-align: center" aria-current="true" type="submit"><i
-                                        class="fas fa-lock fa-fw me-3"></i><span>Join Group</span></button>
-                            </form><br>
+
                             {% else %}
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                 data-bs-target="#staticBackdrop">
@@ -100,15 +96,28 @@ The django data elements are stored in the context as well as in the session dat
                             <form method="POST">
                                 {% csrf_token %}
                                 <span style="display: flex; justify-content: space-between;">
+                                    {% if isMember == True %}
                                     <button name="newGroupEvent"
                                         class="list-group-item list-group-item-action py-2 ripple bg-light"
                                         aria-current="true" type="submit">New Event</button>
                                     <button name="newPost"
                                         class="list-group-item list-group-item-action py-2 ripple bg-light"
                                         aria-current="true" type="submit">New Post</button>
+                                    {% if request.user == group.group_admin%}
+                                    <button name="leaveGroupAdmin"
+                                        class="list-group-item list-group-item-action py-2 ripple bg-light"
+                                        aria-current="true" type="submit">Disband Group</button>
+                                    {% elif isMember == True and request.user != group.group_admin %}
                                     <button name="leaveGroup"
                                         class="list-group-item list-group-item-action py-2 ripple bg-light"
                                         aria-current="true" type="submit">Leave Group</button>
+                                    {% endif %}
+                                    {% elif isMember == False %}
+                                    <button name="joinGroup"
+                                        class="list-group-item list-group-item-action py-2 ripple bg-light"
+                                        aria-current="true" type="submit">Join Group</button>
+                                    {% endif %}
+
                                 </span>
                             </form>
                         </div>
@@ -123,13 +132,21 @@ The django data elements are stored in the context as well as in the session dat
             </div>
             <div class="col-lg-6">
                 <div class="card">
-                    <div class="card-header">Group Events</div>
-                    <div class="card-body">
+                    <div style="display: flex; justify-content: space-between;" class="bg-light">
+                        <span class="mx-4">Group Events</span>
+                        <button style="text-align: right;" class="btn" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseGroupEvent" aria-expanded="false" aria-controls="collapseExample">
+                            {% load static %}
+                            <img src="{% static 'media/enlarge.png' %}" width="25" height="25" alt="martin" />
+                        </button>
+                    </div>
+
+                    <div class="collapse show card-body" id="collapseGroupEvent">
                         <div class="d-flex flex-column align-items-center text-center">
                             {% if groupEvents %}
                             {% for event in groupEvents %}
-                            <div class="row d-flex align-items-center justify-content-center">
-                                <div class="col card" style="width: 18rem;">
+                            <div class="row">
+                                <div class="col card" style="width: 50%;">
                                     {% if event.banner.url != None %}
                                     <img src="{{event.banner.url}}" class="card-img-top" />
                                     {% else %}
@@ -140,8 +157,7 @@ The django data elements are stored in the context as well as in the session dat
                                         <p class="card-text">{{event.desc}}</p>
                                         <strong>Created On: {{event.datetime}}</strong>
                                         <div class="d-flex flex-row align-items-center">
-                                                {% include "groups/userlink_template.html" %}
-
+                                            {% include "groups/userlink_template.html" %}
                                         </div>
                                         <form method="POST">
                                             {% csrf_token %}
@@ -152,7 +168,7 @@ The django data elements are stored in the context as well as in the session dat
                                         </form>
                                     </div>
                                 </div>
-                            </div>
+                            </div><br>
                             {% endfor %}
                             {% endif %}
                         </div>
@@ -172,8 +188,8 @@ The django data elements are stored in the context as well as in the session dat
                     <div class="collapse card-body" id="collapseGroupPost">
                         <div class="d-flex flex-column align-items-center text-center">
                             {% if groupPosts %} {% for post in groupPosts %}
-                            <div class="row d-flex align-items-center justify-content-center">
-                                <div class="col card" style="width: 18rem;">
+                            <div class="row">
+                                <div class="col card" style="width: 50%;">
                                     {% if event.banner.url != None %}
                                     <img src="{{event.banner.url}}" class="card-img-top" />
                                     {% else %}
@@ -184,7 +200,7 @@ The django data elements are stored in the context as well as in the session dat
                                         <p class="card-text">{{post.desc}}</p>
                                         <strong>Created On: {{post.created_on}}</strong>
                                         <div class="d-flex flex-row align-items-center">
-                                                {% include "groups/userlink_template.html" %}
+                                            {% include "groups/userlink_template.html" %}
                                         </div>
                                         <form method="POST">
                                             {% csrf_token %}
@@ -194,7 +210,7 @@ The django data elements are stored in the context as well as in the session dat
                                         </form>
                                     </div>
                                 </div>
-                            </div>
+                            </div><br>
                             {% endfor %}
                             {% endif %}
                         </div>
