@@ -2,10 +2,10 @@
 {% include "header.html" %}
 
 <style>
-    .uplInput{
-        position: fixed;
-        top: -1000px;
-    }
+        .uplInput {
+                position: fixed;
+                top: -1000px;
+        }
 </style>
 
 <body style="background-color: #9de2ff;">
@@ -17,8 +17,6 @@
         {% include "general_navbar.html" %}
         {% endif %}
         <div class="wrapper">
-
-
                 <h4 class="logo navbar-brand text-center">
                         <b>Post New Event:</b>
                 </h4>
@@ -81,7 +79,7 @@
                                                         <br>{{eventform.banner}}
                                                 </label><br> 
                                                 -->
-                                                
+
                                                 <label style="padding-left: 1rem"
                                                         for="Address"><b>{{eventform.banner.label}}</b></label><br>
                                                 {% include 'imageUpload.html' with iuID="banner" iuAttribute="banner" iuDisplayType="plain" iuButtonText="Select Event Banner" iuContainerClass="d-flex flex-row-reverse align-items-center justify-content-around mt-1" %}
@@ -119,17 +117,7 @@
                         </div>
                 </div>
         </div>
-        <footer class="gsfooter mt-auto bg-light py-1 d-none d-md-flex sticky-bottom">
-                <div class="container-fluid text-center text-md-left">
-                        <span class="text-dark ">
-                                <a href="/termsofuse">Terms of Use | </a><a href="/privacy">Privacy Notice | </a><a
-                                        href="/helpPage">Contact
-                                        Us</a><br>
-                        </span>
-                        <span class="text-dark">Copyright © 2022 TheBabySitters. All rights reserved.</span>
-                </div>
-
-        </footer>
+        {% include "footer.html"%}
 </body>
 
 </html>
