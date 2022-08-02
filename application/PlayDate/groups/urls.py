@@ -18,6 +18,7 @@ urlpatterns = [
     path('<int:group_id>/event/<int:event_id>/',
          views.viewGroupEvent, name='viewGroupEvent'),
     path('verificationError/', views.verifyYourself, name='verifyYourself'),
+    path('createGroupTermsandCondition/', views.createGroupTermsandCondition, name='createGroupTermsandCondition'),
 
 
     # DEV USE ONLY

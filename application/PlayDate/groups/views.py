@@ -682,6 +682,9 @@ def createGroup(request):
 def verifyYourself(request):
     return render(request, "groups/verifyYourself.html")
 
+def createGroupTermsandConditions(request):
+    return render(request, 'createGroupTermsandConditions.html')
+
 
 # ░█▀▄░█▀▀░█░█░░░░░█░█░█▀▀░█▀▀░░░█▀█░█▀█░█░░░█░█
 # ░█░█░█▀▀░▀▄▀░▄▄▄░█░█░▀▀█░█▀▀░░░█░█░█░█░█░░░░█░
