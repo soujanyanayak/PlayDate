@@ -13,7 +13,8 @@
     {% endif %}
     {% endblock %}
     <div class="wrapper">
-        <div>
+        {% if user.is_authenticated %}
+        <div class="row grid-container">
             <h5><b>Fun activities posted by our users:</b></h5>
         </div>
         {% if events %}
@@ -34,6 +35,7 @@
                     <p class="card-text">{{event.name}}</p><br>
                     Posted BY: <a href="#">{{event.user.first_name}} {{event.user.last_name}}</a><br><br>
                     <br><br>
+                    {% if user.is_authenticated and regUser %}
                     <div class="row">
                         <a href="/events/{{event.event_id}}" class="col-4 btn btn-primary mx-4">View details</a>
                         <form method="POST" action="/events/register/{{event.event_id}}/" class="col mx-4">
@@ -41,27 +43,56 @@
                             <button name="rsvp" class="btn btn-primary pt-2" type="submit">Register</button>
                         </form>
                     </div>
+                    {% elif user.is_authenticated and not regUser %}
+
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        View Details
+                    </button>
+    
+                    <!-- Modal -->
+                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="staticBackdropLabel">You're not Verified!</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Sorry, it seems you're not verified yet!<br>
+                                    Please go to your <a href="/profile">Profile</a> to upload your identification photo for
+                                    verification!
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
 
                     <!-- <a href="/events/signUpSucceed" class="btn btn-primary mx-4">Sign
                         Up</a> -->
                 </div>
             </div>
-            {% if numerator|mod:denominator == 0 %}
         </div>
+            {% if numerator|mod:denominator == 0 %}
+        
         {% endif %}
         {% endwith %}
         {% endfor %}
         {% else %}
         <div> No events available currently</div>
         {% endif %}
-
-        <div>
-            <h5><b>Public activities for everyone:</b></h5>
-        </div>
+        {% endif %}
 
         {% if publicevents %}
-
+        <div class="row grid-container">
+            <h5><b>Public activities for everyone:</b></h5>
+        </div>
         <div class="grid-container">
+            
             {% for publicevent in publicevents %}
 
             <div class="col card mx-2 my-2" style="width: 18rem;">
@@ -95,6 +126,7 @@
         {% else %}
         <div>No public events currently</div>
         {% endif %}
+        
     </div>
     {% include "footer.html"%}
 </body>

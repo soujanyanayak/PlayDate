@@ -34,7 +34,15 @@ def membersevents(request):
         print(eventregistrations)
         events=Event.objects.all().exclude(event_id__in = eventregistrations)
         print(events)
-        return render(request, "membersevents.html",{'events':events,'publicevents':publicevents,'user':user,'profile':profile})
+        # Check if the user is verified
+        regUser = False
+        if user.is_authenticated:
+            isVerified = Profile.objects.get(profileID=request.user)
+            if isVerified.is_verified == True:
+                regUser = True
+        else:
+            regUser = False
+        return render(request, "membersevents.html",{'events':events,'publicevents':publicevents,'user':user,'profile':profile,'regUser':regUser})
     
     
     return render(request, "membersevents.html",{'publicevents':publicevents,'user':user})
@@ -185,17 +193,17 @@ def viewEvent(request, event_id):
     isEventAdmin = (event.user == user) or (event.group_admin == user) 
     registration=EventRegistration()
     isRsvp=0
-    try:
-        registration=EventRegistration.objects.filter(user__exact=user.user_id).filter(event__exact=event_id)
-    except:
+    # try:
+    registration=EventRegistration.objects.filter(user__exact=user).filter(event__exact=event_id)
+    # except:
         
-        print(registration)
+        # print(registration)
     if registration is not None:
         print("$$$$$")
         isRsvp=1
     attendees=EventRegistration.objects.filter(event=event_id)
     # print (registrations)
-    return render(request, 'events/createdEvent.html', {'event' : event, 'attendees': attendees,'rsvp':isRsvp, 'user': user, 'isEventAdmin': isEventAdmin})
+    return render(request, 'events/createdEvent.html', {'event' : event, 'attendees': attendees,'isRsvp':registration, 'user': user, 'isEventAdmin': isEventAdmin})
 
 def eventRegistrationEdit(request):
     print( "Received Event Registration")

@@ -48,7 +48,7 @@ class eventForm(ModelForm):
         exclude = ()
         widgets = {
             'name': forms.TextInput(attrs={'style': 'width: 25rem;', 'placeholder': "Kyle's 12th Birthday Party!"}),
-            'category': forms.TextInput(attrs={'style': 'width: 25rem;', 'placeholder': "e.g. Birthday Party"}),
-            'desc': forms.TextInput(attrs={'style': 'width: 25rem;' 'height:100px', 'placeholder': "add description..."}),
+            'category': forms.TextInput(attrs={'style': 'width: 25rem;', 'placeholder': "e.g. pets or kids"}),
+            'desc': forms.TextInput(attrs={'style': 'width: 25rem;' 'height:100px', 'placeholder': "add event description..."}),
             'datetime': forms.DateInput(attrs={'style': 'width: 25rem;','type': 'date'}),
         }
