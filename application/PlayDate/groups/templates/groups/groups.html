@@ -34,7 +34,7 @@ The django data elements are stored in the context as well as in the session dat
                             {% if group.banner.url != None %}
                             <img src="{{group.banner.url}}" style="width: 20vw; height: 20vh" alt="" />
                             {% else %}
-                            <img src="/media/publicevents_banner/default.jpeg" style="width: 100vw; height: 20vh"
+                            <img src="/media/publicevents_banner/default.jpeg" style="width: 20vw; height: 20vh"
                                 alt="" />
                             {% endif %}
 
@@ -123,8 +123,16 @@ The django data elements are stored in the context as well as in the session dat
             </div>
             <div class="col-lg-6">
                 <div class="card">
-                    <div class="card-header">Group Events</div>
-                    <div class="card-body">
+                    <div style="display: flex; justify-content: space-between;" class="bg-light">
+                        <span class="mx-4">Group Events</span>
+                        <button style="text-align: right;" class="btn" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseGroupEvent" aria-expanded="false" aria-controls="collapseExample">
+                            {% load static %}
+                            <img src="{% static 'media/enlarge.png' %}" width="25" height="25" alt="martin" />
+                        </button>
+                    </div>
+
+                    <div class="collapse show card-body" id="collapseGroupEvent">
                         <div class="d-flex flex-column align-items-center text-center">
                             {% if groupEvents %}
                             {% for event in groupEvents %}
