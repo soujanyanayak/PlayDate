@@ -156,7 +156,8 @@ def groupView(request, group_id):
             instanceMember.save()
             isMember = True
             print(request.user, 'has joined group:', group.group_name)
-            return render(request, "groups/groups.html", context)
+            # return render(request, "groups/groups.html", context)
+            return redirect('groupView', group.group_id)
 
     # _  _ __     __  __ __  __
     # |\/||_ |\/||__)|_ |__)(_
@@ -201,7 +202,8 @@ def groupView(request, group_id):
                 group_id=group_id, member_id=request.user).delete()
             isMember = False
             print(request.user, 'has left group:', group.group_name)
-            return render(request, "groups/groups.html", context)
+            # return render(request, "groups/groups.html", context)
+            return redirect('groupView', group.group_id)
             # return redirect('joinSuccess') //This does not work but should be reimplemented because its better practice
 
     return render(request, "groups/groups.html", context)

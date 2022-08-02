@@ -59,11 +59,7 @@ The django data elements are stored in the context as well as in the session dat
                                     {%endif %}</i></p>
                             {% if user.is_authenticated and isMember == False %}
                             {% if regUser %}
-                            <form method="POST">
-                                {% csrf_token %} <button name="joinGroup" class="btn btn-primary me-1"
-                                    style="width: 10rem; text-align: center" aria-current="true" type="submit"><i
-                                        class="fas fa-lock fa-fw me-3"></i><span>Join Group</span></button>
-                            </form><br>
+
                             {% else %}
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                 data-bs-target="#staticBackdrop">
@@ -100,13 +96,14 @@ The django data elements are stored in the context as well as in the session dat
                             <form method="POST">
                                 {% csrf_token %}
                                 <span style="display: flex; justify-content: space-between;">
+                                    {% if isMember == True %}
                                     <button name="newGroupEvent"
                                         class="list-group-item list-group-item-action py-2 ripple bg-light"
                                         aria-current="true" type="submit">New Event</button>
                                     <button name="newPost"
                                         class="list-group-item list-group-item-action py-2 ripple bg-light"
                                         aria-current="true" type="submit">New Post</button>
-                                    {% if isMember == True and request.user == group.group_admin%}
+                                    {% if request.user == group.group_admin%}
                                     <button name="leaveGroupAdmin"
                                         class="list-group-item list-group-item-action py-2 ripple bg-light"
                                         aria-current="true" type="submit">Disband Group</button>
@@ -114,6 +111,11 @@ The django data elements are stored in the context as well as in the session dat
                                     <button name="leaveGroup"
                                         class="list-group-item list-group-item-action py-2 ripple bg-light"
                                         aria-current="true" type="submit">Leave Group</button>
+                                    {% endif %}
+                                    {% elif isMember == False %}
+                                    <button name="joinGroup"
+                                        class="list-group-item list-group-item-action py-2 ripple bg-light"
+                                        aria-current="true" type="submit">Join Group</button>
                                     {% endif %}
 
                                 </span>
