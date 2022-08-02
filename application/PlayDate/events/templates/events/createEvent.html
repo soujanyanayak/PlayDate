@@ -1,6 +1,13 @@
 {% load static %}
 {% include "header.html" %}
 
+<style>
+    .uplInput{
+        position: fixed;
+        top: -1000px;
+    }
+</style>
+
 <body style="background-color: #9de2ff;">
         {% if user.is_authenticated %}
         {% load static %}
@@ -68,11 +75,16 @@
                                                 <input type="text" name="State" id="State" /><br>
                                                 <label for="zipcode"> <b>Zipcode</b></label><br>
                                                 <input type="text" name="Zipcode" id="Zipcode" /><br><br> -->
+                                                <!--
                                                 <label style="padding-left: 1rem" for="name">
                                                         <b>{{eventform.banner.label}}</b>
                                                         <br>{{eventform.banner}}
-                                                        <!-- <input type="file" id="file-input" accept="image/*" /><br> -->
-                                                </label><br>
+                                                </label><br> 
+                                                -->
+                                                
+                                                <label style="padding-left: 1rem"
+                                                        for="Address"><b>{{eventform.banner.label}}</b></label><br>
+                                                {% include 'imageUpload.html' with iuID="banner" iuAttribute="banner" iuDisplayType="plain" iuButtonText="Select Group Banner" iuContainerClass="d-flex flex-row-reverse align-items-center justify-content-around mt-1" %}
                                                 <br>
                                                 <!-- <a class="col" href="/createdEvent"> -->
                                                 <button class="btn btn-primary pt-2" type="submit">
