@@ -85,9 +85,9 @@ class createGroupEventForm(ModelForm):
         model = models.GroupEvent
         fields = ['address', 'desc', 'name', 'banner', 'datetime']
         widgets = {
-            'address': forms.TextInput(attrs={'style': 'width:65vw;', 'placeholder': "e.g. 12201 Holloway Ave, San Francisco, CA, 94132"}),
-            'desc': forms.Textarea(attrs={'style': 'width:65vw;', 'placeholder': "Enter a brief description on what this event is all about."}),
-            'name': forms.TextInput(attrs={'style': 'width:65vw;', 'placeholder': "e.g. Kyle's 12th Birthday Party!"}),
+            'address': forms.TextInput(attrs={'style': 'width:100%;', 'placeholder': "e.g. 12201 Holloway Ave, San Francisco, CA, 94132"}),
+            'desc': forms.Textarea(attrs={'style': 'width:100%;', 'placeholder': "Enter a brief description on what this event is all about."}),
+            'name': forms.TextInput(attrs={'style': 'width:100%;', 'placeholder': "e.g. Kyle's 12th Birthday Party!"}),
             'datetime': forms.DateInput(attrs={'type': 'date'}),
 
             # 'banner': forms.ImageField(),
@@ -107,7 +107,7 @@ class createGroupEventCommentForm(ModelForm):
         model = models.groupEventComment
         fields = ['content', ]
         widgets = {
-            'content': forms.Textarea(attrs={'style': 'width: 150%; height:8vh', 'placeholder': "Your comment here."})
+            'content': forms.Textarea(attrs={'style': 'width: 100%; height:8vh', 'placeholder': "Your comment here."})
         }
 
 
@@ -130,8 +130,8 @@ class createGroupPostForm(ModelForm):
         model = models.Post
         fields = ['post_title', 'post_content', 'banner']
         widgets = {
-            'post_title': forms.TextInput(attrs={'style': 'width:65vw;', 'placeholder': "What is your post about?"}),
-            'post_content': forms.Textarea(attrs={'style': 'width:65vw;', 'placeholder': "Write your post so other members can see!"}),
+            'post_title': forms.TextInput(attrs={'style': 'width:100%;', 'placeholder': "What is your post about?"}),
+            'post_content': forms.Textarea(attrs={'style': 'width:100%;', 'placeholder': "Write your post so other members can see!"}),
 
         }
 
