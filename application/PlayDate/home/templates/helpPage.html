@@ -13,11 +13,32 @@
     {% endblock %}
 
     <script>
+        var catElement;
         categorySelection = "{{ category }}";
         function setCategory() {
-            document.getElementById("category").value = categorySelection;
+            catElement = document.getElementById('category');
+            catElement.value = categorySelection;
+            catElement.addEventListener("input", (event) => {
+                catElement.setCustomValidity("");
+                if (catElement.value == '') {
+                    catElement.setCustomValidity("Please select a Category");
+                    catElement.reportValidity();
+                }
+            });
         }
-        window.addEventListener("DOMContentLoaded", setCategory);
+        window.addEventListener("DOMContentLoaded", () => {
+            setCategory();
+        });
+
+        function validate(event) {
+            if (catElement.value == '') {
+                catElement.setCustomValidity("Please select a Category");
+                catElement.reportValidity();
+                event.preventDefault();
+                return false;
+            }
+            return true;
+        }
     </script>
 
     <div class="container mx-auto mb-4">
@@ -57,7 +78,7 @@
 
             <div class="col-lg-7 mt-3 mt-lg-0 d-flex align-items-stretch">
                 <div class="card" style="width: 50rem;">
-                    <form action="" method="post" role="form" class="mx-3 my-3">
+                    <form action="" method="post" role="form" class="mx-3 my-3" onsubmit="validate(event)">
                         {% csrf_token %}
                         <div class="row">
                             <div class="form-group col-md-6">
