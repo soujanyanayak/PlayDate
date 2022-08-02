@@ -81,7 +81,7 @@ div.scroll {
   width: 500px;
   height: 100px;
   word-wrap: break-word;
-  padding-left: 20rem;
+  padding-left: 34%;
 }
 .image-container{
   width: 150%;
@@ -104,34 +104,30 @@ div.scroll {
                     </div>
                     {% else %}
                     <div class="image-container bg2" style="background-color:green;">
-                        <img src="/media/publicevents_banner/default.jpeg" class="avatar" alt="avatar">
+                        <img style= "width: 14rem; height: 14rem;" src="/media/publicevents_banner/default.jpeg" class="avatar" alt="avatar">
                     </div>
                     {% endif %}
                 </div>
                 <div style="margin-left: 24%; margin-top: 2%;" class="col-sm-12">
                     <div class="details">
                         <h4>{{event.name}}<i class="fa fa-sheild"></i></h4>
-                        <div style="padding-right: 35%; font-weight: bold;">Created by: </div>
-                        <a href="{% url 'profileView' profile_id=user.id %}">
-                  
-                          {{event.user.first_name}} {{event.user.last_name}}
-                        </a>
+                        <div style="font-weight: bold;">Created by:  
+                          <a href="{% url 'profileView' profile_id=user.id %}">
+                            {{event.user.first_name}} {{event.user.last_name}}
+                          </a>
+                        </div>
                         
-                        <div style="padding-right: 35%; font-weight: bold;">Description: </div>
-                        <div class="des">sdgkjsdgjkhsdkg jdhskjghskjd{{event.desc}}</div>
-                        <h5>Event Date: {{event.datetime}}</h5>
+                        <div style="margin-right: 20%; font-weight: bold;">Description: </div>
+                        <div class="des">{{event.desc}}</div>
+                        <h5 style="padding-right: 11rem;">Location:</h5>
+                        <h5 style="padding-right: 6.5rem;">Event Date: {{event.datetime}}</h5>
                         <!-- <div class="tag">Tags: hiking  hikers</div> -->
                         <div class="mg-top-10">
-                          {% if isRsvp %}
-                          <a id="btnAttendee_{{attendee.user.pk}}" class="btn btn-danger"  
-                          onclick="cancelRSVP({{user.pk}}, 'btnAttendee_{{user.pk}}')">Cancel RSVP</a>
-                            
-                          {% else %}
-                          <form method="POST" action="/events/register/{{event.event_id}}/">
-                            {% csrf_token %}
-                            <button name="rsvp" class="btn btn-primary pt-2" type="submit">RSVP</button>
-                          </form>
-                          
+                          {% if rsvp != 1 %}
+                            <form method="POST" action="/events/register/{{event.event_id}}/">
+                              {% csrf_token %}
+                              <button name="rsvp" class="btn btn-primary pt-2" type="submit">Register</button>
+                            </form>
                           {% endif %}
                          
 
