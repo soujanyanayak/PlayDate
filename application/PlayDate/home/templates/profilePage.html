@@ -73,20 +73,35 @@ let avatarBtn;
 // Also, set the submit button usability to match validity.
 function avatarCtrl(fileStatus) {
     if (!fileStatus.valid) {
-        avatarBtn.classList.remove(classPrimary);
-        avatarBtn.classList.add(classSecondary);
-        avatarBtn.disabled = true;
+        setAvatarUpload(false);
         setModal(fileStatus.error.summary, fileStatus.error.text, "OK");
         showModal();
         return false;
     }
-    avatarBtn.classList.remove(classSecondary);
-    avatarBtn.classList.add(classPrimary);
-    avatarBtn.disabled = false;
-    document.getElementById('uploadGuide').innerText = "Press this button to save your new avatar";
+    setAvatarUpload(true);
     return true;
 }
 
+function uploadClick(event){
+    if (document.getElementById('id_avatar').files.length == 0){
+        event.preventDefault();
+        document.getElementById('id_avatar').click();
+        return false;
+    }
+    return true;
+}
+
+function setAvatarUpload(isValid) {
+    if (isValid) {
+        avatarBtn.classList.remove(classSecondary);
+        avatarBtn.classList.add(classPrimary);
+        avatarBtn.innerText = "Upload Avatar";
+    } else {
+        avatarBtn.classList.remove(classPrimary);
+        avatarBtn.classList.add(classSecondary);
+        avatarBtn.innerText = "Select Avatar";
+    }
+}
 /* Verification control --------------------------------------- */
 // ID of the verification button
 let verBtnId = "verificationButton";
@@ -130,12 +145,11 @@ function btnCtrl(fileStatus) {
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex flex-column align-items-center text-center">
-                                <form class="avatar" name="avatar" enctype="multipart/form-data" method="POST" action="{% url 'avatarUpload'%}">
+                                <form class="avatar" name="avatar" enctype="multipart/form-data" method="POST" onsubmit="return uploadClick(event)" action="{% url 'avatarUpload'%}">
                                     {% csrf_token %}
                                     {% include 'imageUpload.html' with iuID="0" iuAttribute="avatar" iuValEvent="avatarCtrl" iuDisplayType='image' iuDefaultImage=defImg iuSetImage=profile.avatar iuImageClass="rounded-circle iuImage" %}
                                     <div class="uploadFooter">
-                                        <span class="uploadGuide" id="uploadGuide">Click the image above to select a new avatar image</span>
-                                        <button class="btn btn-secondary mt-3" type="Submit" id="avatarButton" disabled>Upload Avatar</button>
+                                        <button class="btn btn-secondary mt-3" type="Submit" id="avatarButton" >Select Avatar</button>
                                     </div>
                                 </form>
                                 <div class="mt-3">

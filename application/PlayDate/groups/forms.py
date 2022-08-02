@@ -8,7 +8,7 @@
 # Description:Each model that is editable by users needs to have a form that points to that particular model.
 #•••••••••••••••••••••••••••••••••#
 from django import forms
-from django.forms import ModelForm, Textarea
+from django.forms import ModelForm, Textarea, ValidationError
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.forms.widgets import DateInput
@@ -24,6 +24,20 @@ class joinGroupForm(ModelForm):
 
 
 class createGroupForm(ModelForm):
+    # clean_image is a workaround to server-side
+    # validate the verification image.
+    def clean_image(self):
+        bannerImage = self.cleaned_data['avatar']
+        if bannerImage:
+            # size measured in bytes
+            if bannerImage.size > 6.5 * 1048578:
+                raise ValidationError("Avatar image must be under 6.5 MB")
+            bannerImageExt = bannerImage.name.split('.')[-1]
+            allowedTypes = "apng, avif, gif jpeg, jpg, png, webp"
+            if bannerImageExt in allowedTypes:
+                return bannerImage
+            raise ValidationError("Avatar image in the wrong format.")
+        raise ValidationError("No avatar image uploaded.")
     class Meta:
         model = models.Group
         fields = ['group_name', 'group_desc', 'tags', 'banner']

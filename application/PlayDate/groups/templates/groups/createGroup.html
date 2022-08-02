@@ -21,6 +21,20 @@ In order to style form elements please refer to forms.py where attributes such a
     <title>Create Group</title>
 </head>
 
+<style>
+    .uplContainer {
+        justify-content: center;
+    }
+    .uplInput {
+        position: fixed;
+        top:-1000px;
+    }
+    .uplButton {
+        margin-right: 5px;
+        margin-top: 5px;
+    }
+</style>
+
 <body style="background-color: #9de2ff">
     {% if user.is_authenticated %} {% load static %} {% include "registered_navbar.html" %} {% else %} {% load static %}
     {% include "general_navbar.html" %} {% endif %}
@@ -38,29 +52,31 @@ In order to style form elements please refer to forms.py where attributes such a
                 <h1 style="text-align: center"><strong>Create a Group!</strong></h1>
                 <form class="register" enctype="multipart/form-data" style="align-items: center;" method="POST">
                     {% csrf_token %}
-                    <label for="group name">Group Name:</label>
+                    <label for="group name"><b>Group Name</b></label>
                     {{createGroupForm.group_name}}
-                    <label for="group desc">Group Description:</label>
+                    <label for="group desc"><b>Group Description</b></label>
                     {{createGroupForm.group_desc}}
                     <br />
                     <br />
-                    <label for="group tags">Keywords:</label>
-                    <p>
+                    <label for="group tags"><b>Tags</b></label>
+                    <p class="m-1">
                         <small>• Enter some keywords to help users find your group.<br />• Keywords should be separated
                             by pressing the spacebar.</small>
                     </p>
-                    <p><small></small></p>
-                    <!-- tags -->
-                    <label id="tag"> <b>Tags</b></label><br>
                     <div class="tag-container">
                         <input placeholder="add tags..." class="input" />
                     </div>
                     </label><br>
                     <!-- {{createGroupForm.tags}} -->
 
+                    <!--
                     <label for="banner">(optional) Upload a banner!</label>
-                    <br />
                     {{createGroupForm.banner}}
+                    -->
+
+                    <label id="id_bannerLabel"> <b>Banner: (Optional)</b></label><br>
+                    {% include 'imageUpload.html' with iuID="banner" iuAttribute="banner" iuDisplayType="plain" iuButtonText="Select Group Banner" iuContainerClass="d-flex flex-row-reverse align-items-center justify-content-end" %}
+
                     <button style="margin-left: 60%; margin-top: 1vh;" class="btn btn-primary pt-2">Create
                         Group</button>
                 </form>

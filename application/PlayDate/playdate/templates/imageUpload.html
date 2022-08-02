@@ -88,7 +88,9 @@
 {% if iuDisplayType %} {% if iuDisplayType == "image" %} 
 <!-- Image Upload: Image -->
 <style>
-    .iuAnchor {
+    .uplInput {
+        position: fixed;
+        top:-1000;
     }
 
     /* Tiny  devices  */
@@ -185,6 +187,7 @@
             alert(fileStatus.error.text);
             return false;
         }
+        return true;
     }
 
     // verify:
@@ -246,7 +249,7 @@
 
         // Call the event handler, then edit our control as needed
         {% if iuValEvent %} let keepFile = {{ iuValEvent }}(fileStatus); 
-        {% else %} let keepfile = genericValEvent_{{iuID}}(fileStatus); {% endif %}
+        {% else %} let keepFile = genericValEvent_{{iuID}}(fileStatus); {% endif %}
         if (!keepFile) {
             // Clear the file selection
             uplInput.value = "";
@@ -267,7 +270,7 @@
         document.getElementById(uplAnchorId_{{iuID}}).addEventListener("click", triggerSelect_{{iuID}});
     });
 </script>
-<div class="uplContainer d-flex flex-column-reverse" id="uplContainer_{{iuID}}"> 
+<div class="uplContainer {% if iuContainerClass %}{{iuContainerClass}}{%else%} d-flex flex-column-reverse {% endif %}" id="uplContainer_{{iuID}}"> 
     <a onclick="triggerSelect_{{iuID}}" class="iuAnchor" id="uplAnchor_{{iuID}}">
         <img src="{% if iuSetImage %}{{iuSetImage.url}}{% else %}{{iuDefaultImage}}{% endif %}" alt="Admin"
             class="{{ iuImageClass|default:'rounded-circle iuImage'}}" id="uplImage_{{iuID}}">
@@ -297,6 +300,7 @@
             alert(fileStatus.error.text);
             return false;
         }
+        return true;
     }
 
     // verify:
@@ -361,7 +365,7 @@
 
         // Call the event handler, then edit our control as needed
         {% if iuValEvent %} let keepFile = {{ iuValEvent }}(fileStatus); 
-        {% else %} let keepfile = genericValEvent_{{iuID}}(fileStatus); {% endif %}
+        {% else %} let keepFile = genericValEvent_{{iuID}}(fileStatus); {% endif %}
         if (!keepFile) {
             // Clear the file selection
             uplInput.value = "";
@@ -381,9 +385,9 @@
         document.getElementById(uplButtonId_{{iuID}}).addEventListener("click", triggerSelect_{{iuID}});
     });
 </script>
-<div class="uplContainer d-flex flex-column-reverse" id="uplContainer_{{iuID}}"> 
+<div class="uplContainer {% if iuContainerClass %}{{iuContainerClass}}{%else%} d-flex flex-column-reverse {% endif %}" id="uplContainer_{{iuID}}"> 
     <label class="uplLabel" id="uplLabel_{{iuID}}">{{iuNoFileText|default:"No Image Selected"}}</label>
     <button class="uplButton btn btn-secondary" id="uplButton_{{iuID}}" type="button" onclick="triggerSelect_{{iuID}}">{{iuButtonText|default:"Upload Image"}}</button>
-    <input class="invisible w-25" type="file" name="{{iuAttribute}}" accept="image/*" id="id_{{iuAttribute}}">
+    <input class="uplInput invisible w-25" type="file" name="{{iuAttribute}}" accept="image/*" id="id_{{iuAttribute}}">
 </div>
 {% endif %} {% else %}<div>Error: iuDisplayType not chosen</div>{% endif %}
