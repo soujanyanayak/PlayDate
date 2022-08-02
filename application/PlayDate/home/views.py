@@ -251,6 +251,11 @@ def profilePage(request):
         address = profile.address
         if address is None:
             address = models.Address()
+            address.street = ""
+            address.city = ""
+            address.state = ""
+            address.zipcode = 0
+            address.country = ""
             address.save()
             profile.address = address
             profile.save()
@@ -347,7 +352,7 @@ def avatarUpload(request):
                 retVals = {
                     'user': user,
                     'account': account,
-                    'profile': profile,
+                    'profile': avatarProfile,
                     'dependents': dependents,
                     'modalTitle': "Success!",
                     'modalText': "Successfully updated your avatar.",
@@ -414,13 +419,15 @@ def dependents(request):
             elif data['state'] == "UPDATE":
                 print("Mode: UPDATE")
                 try:
+                    dependent = models.Dependent.objects.get(dependent_id=depID)
                     depForm = forms.profilePage_DependentForm(
-                        depData, instance=profile)
+                        depData, instance=dependent)
                     if depForm.is_valid():
                         dependent = depForm.save()
                         retVal = {
                             'message': "Successfully updated dependent",
                             'id': dependent.dependent_id,
+                            'type': dependent.type,
                             'name': dependent.name,
                             'dob': dependent.dob,
                             'interests': dependent.interests,
@@ -455,6 +462,7 @@ def dependents(request):
                         retVal = {
                             'message': "Successfully created dependent",
                             'id': dependent.dependent_id,
+                            'type': dependent.type,
                             'name': dependent.name,
                             'dob': dependent.dob,
                             'interests': dependent.interests,
