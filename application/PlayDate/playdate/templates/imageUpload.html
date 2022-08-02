@@ -88,10 +88,6 @@
 {% if iuDisplayType %} {% if iuDisplayType == "image" %} 
 <!-- Image Upload: Image -->
 <style>
-    .uplInput {
-        position: fixed;
-        top:-1000;
-    }
 
     /* Tiny  devices  */
     @media (min-width: 0px) {  
@@ -278,6 +274,13 @@
     <input class="invisible w-25" type="file" name="{{iuAttribute}}" accept="image/*" id="id_{{iuAttribute}}">
 </div>
 {% else %}
+<style>
+    
+    .uplInput {
+        position: fixed;
+        top:-1000px;
+    }
+</style>
 
 <!-- Image Upload: Plain -->
 <script>

@@ -79,6 +79,7 @@ function avatarCtrl(fileStatus) {
         return false;
     }
     setAvatarUpload(true);
+    avatarBtn.click();
     return true;
 }
 
@@ -216,7 +217,7 @@ function btnCtrl(fileStatus) {
                                     <div class="card mb-4">
                                         <div class="card-header">Account Details</div>
                                         <div class="card-body">
-                                            <form class="accountDetails" name="accountDetails" method="POST" action="">
+                                            <form class="accountDetails" name="accountDetails" method="POST" action="/profile/">
                                                 {% csrf_token %}
 
                                                 <!-- AD: Username -->
@@ -258,7 +259,7 @@ function btnCtrl(fileStatus) {
                                                             name="inputGender" value="{{account.gender}}">
                                                             <option value="MALE">Male</option>
                                                             <option value="FEMALE">Female</option>
-                                                            <option velue="NON_BINARY">Non-Binary</option>
+                                                            <option value="NON_BINARY">Non-Binary</option>
                                                         </select>
                                                     </div>
                                                     <!-- Account: date of birth -->
@@ -284,21 +285,21 @@ function btnCtrl(fileStatus) {
                                                     <div class="col-md-10">
                                                         <label class="small mb-1" for="inputStreet">Street</label>
                                                         <input class="form-control" id="inputStreet" type="text"
-                                                            name="inputStreet" placeholder="e.g. 1600 Calloway Ave"
-                                                            value="{{profile.address.street}}">
+                                                            name="inputStreet" placeholder="e.g. '1600 Calloway Ave' or 'N/A' "
+                                                            value="{{profile.address.street}}" required>
                                                     </div>
                                                     <!-- Address: City -->
                                                     <div class="col-md-10">
                                                         <label class="small mb-1" for="inputCity">City</label>
                                                         <input class="form-control w-50" id="inputCity" type="text"
                                                             name="inputCity" placeholder="e.g. 'San Francisco'"
-                                                            value="{{profile.address.city}}">
+                                                            value="{{profile.address.city}}" required>
                                                     </div>
                                                     <!-- Address: State -->
                                                     <div class="col-md-5 mb-1">
                                                         <label class="small mb-1 w-50" for="inputState">State</label>
                                                         <select id="inputState" name="inputState"
-                                                            value="{{profile.address.state}}">
+                                                            value="{{profile.address.state}}" required>
                                                             <option value="AL">Alabama</option> <option value="AK">Alaska</option> <option value="AS">American Samoa</option>
                                                             <option value="AZ">Arizona</option> <option value="AR">Arkansas</option> <option value="UM-81">Baker Island</option>
                                                             <option value="CA">California</option> <option value="CO">Colorado</option> <option value="CT">Connecticut</option>
@@ -328,14 +329,14 @@ function btnCtrl(fileStatus) {
                                                         <label class="small mb-1" for="inputZipCode">Zip Code</label>
                                                         <input class="form-control w-25" id="inputZipCode" type="text"
                                                             name="inputZipCode" placeholder="e.g. '95001'"
-                                                            value="{{profile.address.zipcode}}">
+                                                            value="{{profile.address.zipcode}}" required>
                                                     </div>
                                                     <!-- Address: Country-->
                                                     <div class="col-md-6">
                                                         <label class="small mb-1" for="inputCountry">Country</label>
                                                         <input class="form-control" id="inputCountry" type="text"
                                                             name="inputCountry" placeholder="e.g. 'United States'"
-                                                            value="{{profile.address.country|default:'United States'}}">
+                                                            value="{{profile.address.country|default:'United States'}}" required>
                                                     </div>
                                                 </div>
 

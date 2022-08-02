@@ -30,6 +30,17 @@ class Group(models.Model):
     # tags are delimited by commas
     tags = TaggableManager()
 
+    def getTagsFromContent(self):
+        blinds = ["a","am", "an", "and", "as", "are", "all", "by", "be", "been", "behind", "back", "because", "but", "can", "can't", "cannot", "do", "don't", "down", "even", "eventually", "ever", "et", "for", "from", "fine", "far", "fore", "gotten", "got", "her", "his", "him", "her", "himself", "herself", "hence", "henceforth", "hello", "how", "has", "hasn't", "I", "is", "in", "inside", "into", "if", "isn't", "know", "let", "might", "must", "mustn't", "not", "on", "of", "or", "ought", "please", "some", "somebody", "sought", "that", "them", "then", "there", "to", "the", "us", "used", "when", "where", "what", "whence", "with", "without", "want", "went", "you", "your", "yours", "yourself", "who", "whose", "was", "wasn't"]
+        nameTags = self.group_name.split(" ")
+        descTags = self.group_desc.split(" ")
+        contTags = nameTags + descTags
+        for tagRaw in contTags:
+            tag = tagRaw.strip().lower()
+            if tag not in blinds:
+                self.tags.add(tag)
+
+
 
 class Member(models.Model):
     # Refactor this to Groupuser
