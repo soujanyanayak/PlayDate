@@ -88,7 +88,7 @@ class createGroupEventCommentForm(ModelForm):
         model = models.groupEventComment
         fields = ['content', ]
         widgets = {
-            'content': forms.Textarea(attrs={'style': 'width: 100%; height:8vh', 'placeholder': "Your comment here."})
+            'content': forms.Textarea(attrs={'style': 'width: 150%; height:8vh', 'placeholder': "Your comment here."})
         }
 
 
@@ -108,5 +108,5 @@ class createGroupCommentForm(ModelForm):
         model = models.groupPostComment
         fields = ['content', ]
         widgets = {
-            'content': forms.Textarea(attrs={'style': 'width: 100%; height:8vh', 'placeholder': "Your comment here."})
+            'content': forms.Textarea(attrs={'style': 'width: 150%; height:8vh', 'placeholder': "Your comment here."})
         }

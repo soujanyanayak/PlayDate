@@ -158,7 +158,7 @@ The django data elements are stored in the context as well as in the session dat
                                         <h5 class="card-title">{{event.name}}</h5>
                                         <p class="card-text">{{event.desc}}</p>
                                         <strong>On : {{event.datetime}}</strong>
-                                        <div class="d-flex flex-row align-items-center">
+                                        <div class="d-flex flex-row" style="text-align:left">
                                             {% include "groups/userlink_template.html" %}
                                         </div>
                                         <form method="POST">
