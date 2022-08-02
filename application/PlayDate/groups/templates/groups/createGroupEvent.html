@@ -37,9 +37,7 @@
                 {{createGroupEventForm.address}}
 
                 <label id="id_bannerLabel" class="mt-3"> Banner: (Optional)</label><br />
-                {% include 'imageUpload.html' with iuID="banner" iuAttribute="banner" iuDisplayType="plain"
-                iuButtonText="Select Event Banner" iuContainerClass="d-flex flex-row-reverse align-items-center
-                justify-content-end" %}
+                {% include 'imageUpload.html' with iuID="banner" iuAttribute="banner" iuDisplayType="plain" iuButtonText="Select Event Banner" iuContainerClass="d-flex flex-row-reverse align-items-center justify-content-end" %}
                 <button style="margin-left: 60%; margin-top: 1vh" class="btn btn-primary pt-2">Create Event</button>
             </form>
         </div>

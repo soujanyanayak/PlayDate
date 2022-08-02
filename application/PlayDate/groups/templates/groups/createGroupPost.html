@@ -36,9 +36,7 @@
                 {{createGroupPostForm.post_content}}
                 <br />
                 <label for="post img">Post Image:</label>
-                {% include 'imageUpload.html' with iuID="banner" iuAttribute="banner" iuDisplayType="plain"
-                iuButtonText="Select Post Image" iuContainerClass="d-flex flex-row-reverse align-items-center
-                justify-content-end" %}
+                {% include 'imageUpload.html' with iuID="banner" iuAttribute="banner" iuDisplayType="plain" iuButtonText="Select Post Image" iuContainerClass="d-flex flex-row-reverse align-items-center justify-content-end" %}
                 <button style="margin-left: 60%; margin-top: 1vh" class="btn btn-primary pt-2">Create Post for
                     {{group.group_name}}</button>
             </form>
