@@ -205,8 +205,8 @@ class DependentControl {
     // Correctly sets the dob input element to reflect the dob.
     updateWidget() {
         if (this.data.client.dob instanceof Date) {
-            var element = document.getElementById(this.suffix+"_dob");
-            element.valueAsDate = this.data.client.dob;
+            var dobEl = document.getElementById(this.suffix+"_dob");
+            dobEl.valueAsDate = this.data.client.dob;
         }
         document.getElementById(this.suffix+"_type").value = this.data.client.type;
     }
@@ -472,6 +472,12 @@ var ajaxInfo = {
 // The state dropdown element
 var stateEl = document.getElementById("inputState");
 
+// The gender drop down
+var genderEl = document.getElementById('inputGender');
+
+// The date of birth element
+var dobEl = document.getElementById('inputDOB');
+
 /* Event Handlers */
 
 // remove(id)
@@ -555,6 +561,8 @@ function validateImage(inputId) {
 window.addEventListener("DOMContentLoaded", ()=> {
     // Set the state drop down to the correct state.
     stateEl.value = loadVals.profile.address.state;
+    genderEl.value = loadVals.account.gender;
+    dobEl.valueAsDate = new Date(loadVals.account.dob);
     // Set up the dependent controller
     dpdtController = new DependentContainer("dpdtContainer"); 
     dpdtController.loadData();
