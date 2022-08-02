@@ -93,6 +93,7 @@ def groupView(request, group_id):
     groupEvents = models.GroupEvent.objects.filter(group=group)
     groupPosts = models.Post.objects.filter(group=group)
     allGroupPosts = models.Post.objects.filter(group=group)
+    myProfile = Profile.objects.get(profileID=request.user)
     print(groupEvents, "\n\n")
     profiles = []
 
@@ -132,6 +133,7 @@ def groupView(request, group_id):
         'groupPosts': groupPosts,
         'joinGroupForm': joinGroupForm,
         'profiles': profiles,
+        'myProfile': myProfile,
     }
 
     # This represents the part of the page for a member of the group.
@@ -266,7 +268,7 @@ def viewGroupPost(request, group_id, post_id):
     if 'mainPage' in request.POST:
         print("DEV-CONSOLE: All Activities Button has been Clicked")
         request.session['group_id'] = group.group_id
-        return render(request, "groups/groups.html", context)
+        return redirect('groupView', group.group_id)
 
     if 'allEvents' in request.POST:
         print("DEV-CONSOLE: All Events Button has been Clicked")
@@ -342,7 +344,7 @@ def viewGroupPost(request, group_id, post_id):
                 post_id=postObject[0].post_id)
             print(groupPostComments)
 
-            return render(request, "groups/groups.html", context)
+            return render(request, "groups/viewThread.html", context)
         elif not forms.createGroupCommentForm.is_valid():
             print("FORM NOT VALID:", forms.createGroupCommentForm.errors,
                   "non-field errors:", forms.createGroupCommentForm.non_field_errors)
@@ -425,7 +427,7 @@ def viewGroupEvent(request, group_id, event_id):
     if 'mainPage' in request.POST:
         print("DEV-CONSOLE: All Activities Button has been Clicked")
         request.session['group_id'] = group.group_id
-        return redirect('createGroupPost')
+        return redirect('groupView', group.group_id)
 
     if 'newPost' in request.POST:
         print("DEV-CONSOLE: New Post Button has been Clicked")
@@ -488,9 +490,15 @@ def viewGroupEvent(request, group_id, event_id):
             group_id=group_id, event_id=event_id)
 
         isRSVP = True
+        groupEventComments = models.groupEventComment.objects.filter(
+            event_id=event_id)
         print(request.user, 'has RSVPd for group:',
               group.group_name, " event:", eventObject)
-        return render(request, "groups/viewGroupEvent.html", {'group': group, 'member_list': member_list, 'isMember': isMember, 'groupEvents': groupEvents, 'groupPosts': groupPosts, 'groupEventComments': groupEventComments, 'RSVP_list': RSVP_list, 'createGroupEventCommentForm': createGroupEventCommentForm, 'isRSVP': isRSVP})
+        request.session['group_id'] = group.group_id
+        request.session['event_id'] = event_id
+        return redirect('viewGroupEvent', group.group_id, event_id)
+
+        # return render(request, "groups/viewGroupEvent.html", {'group': group, 'groupEventComments': groupEventComments, 'member_list': member_list, 'isMember': isMember, 'groupEvents': groupEvents, 'groupPosts': groupPosts, 'groupEventComments': groupEventComments, 'RSVP_list': RSVP_list, 'createGroupEventCommentForm': createGroupEventCommentForm, 'isRSVP': isRSVP})
 
     if 'unRSVP' in request.POST:
         models.RSVP.objects.filter(
@@ -498,10 +506,15 @@ def viewGroupEvent(request, group_id, event_id):
         isRSVP = False
         RSVP_list = models.RSVP.objects.filter(
             group_id=group_id, event_id=event_id)
+        groupEventComments = models.groupEventComment.objects.filter(
+            event_id=event_id)
 
         print(request.user, 'has unRSVPd:', eventObject)
+        request.session['group_id'] = group.group_id
+        request.session['event_id'] = event_id
+        return redirect('viewGroupEvent', group.group_id, event_id)
 
-        return render(request, "groups/viewGroupEvent.html", {'group': group, 'member_list': member_list, 'isMember': isMember, 'groupEvents': groupEvents, 'groupPosts': groupPosts, 'groupEventComments': groupEventComments, 'RSVP_list': RSVP_list, 'createGroupEventCommentForm': createGroupEventCommentForm, 'isRSVP': isRSVP})
+        # return render(request, "groups/viewGroupEvent.html", {'group': group, 'member_list': member_list, 'isMember': isMember, 'groupEvents': groupEvents, 'groupPosts': groupPosts, 'groupEventComments': groupEventComments, 'RSVP_list': RSVP_list, 'createGroupEventCommentForm': createGroupEventCommentForm, 'isRSVP': isRSVP})
 
     # Event Comments
     if 'postComment' in request.POST:

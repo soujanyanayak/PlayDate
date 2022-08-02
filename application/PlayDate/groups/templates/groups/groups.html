@@ -23,7 +23,8 @@ The django data elements are stored in the context as well as in the session dat
     <!--🐱Navbar Content🐱-->
     {% block content %} {% if user.is_authenticated %} {% load static %} {% include "registered_navbar.html" %} {%else%}
     {% load static %} {% include "general_navbar.html" %} {% endif %} {% endblock %} <br>
-
+    
+    {% if myProfile.is_verified == True %}
     <div class="wrapper mt-4">
         <div class="row">
             <div class="col-lg-4" style="margin-left:8vw">
@@ -130,6 +131,7 @@ The django data elements are stored in the context as well as in the session dat
                     </div>
                 </div>
             </div>
+            {% if isMember == True %}
             <div class="col-lg-6">
                 <div class="card">
                     <div style="display: flex; justify-content: space-between;" class="bg-light">
@@ -155,7 +157,7 @@ The django data elements are stored in the context as well as in the session dat
                                     <div class="card-body">
                                         <h5 class="card-title">{{event.name}}</h5>
                                         <p class="card-text">{{event.desc}}</p>
-                                        <strong>Created On: {{event.datetime}}</strong>
+                                        <strong>On : {{event.datetime}}</strong>
                                         <div class="d-flex flex-row align-items-center">
                                             {% include "groups/userlink_template.html" %}
                                         </div>
@@ -258,6 +260,17 @@ The django data elements are stored in the context as well as in the session dat
                 </div>
             </div>
         </div>
+        {% endif %}
+        {% elif myProfile.is_verified == False  %}
+        {% include "groups/verifyYourself.html" %}
+        {% elif not user.is_authenticated %}
+            <div class="container mt-5 mb-5" style="height: 100vh">
+                <h1 style="text-align: center">You need to be logged in to join Groups!</h1>
+                <h4 style="text-align: center"><a href="/register/">🐱Register here!</a>•Already registered?•<a
+                        href="/login/">Login Here!🐱</a></h4>
+            </div>
+
+        {% endif %}
 
         {% include "footer.html" %}
 </body>
