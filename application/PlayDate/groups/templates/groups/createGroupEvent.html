@@ -19,7 +19,6 @@
         </h4>
         -->
 
-<<<<<<< HEAD
         <!--FIX-THIS: The top border is cut-off by the navbar-->
         <div class="card mx-auto my-3" style="padding-top: 5vh; border: solid blue; height: 90vh; width: 70vw">
             <div class="card-body">
@@ -48,31 +47,6 @@
                     <button style="margin-left: 60%; margin-top: 1vh" class="btn btn-primary pt-2">Create Event</button>
                 </form>
             </div>
-=======
-    <!--FIX-THIS: The top border is cut-off by the navbar-->
-    <div class="card mx-auto my-3" style="padding-top: 5vh; border: solid blue; width: 40%">
-        <div class="card-body">
-            <h1 style="text-align: center"><strong>New {{request.session.group_name}} Event!</strong></h1>
-            <form class="register" enctype="multipart/form-data" style="align-items: center; width: 50vw" method="POST">
-                {% csrf_token %}
-                <label for="event name">Event Name:</label>
-                {{createGroupEventForm.name}}
-                <label for="group desc">Group Description:</label>
-                {{createGroupEventForm.desc}}
-                <br />
-                <label for="event date">Date:</label>
-                {{createGroupEventForm.datetime}}
-                <br />
-                <label for="event address">Address:</label>
-                {{createGroupEventForm.address}}
-
-                <label id="id_bannerLabel" class="mt-3"> Banner: (Optional)</label><br />
-                {% include 'imageUpload.html' with iuID="banner" iuAttribute="banner" iuDisplayType="plain"
-                iuButtonText="Select Event Banner" iuContainerClass="d-flex flex-row-reverse align-items-center
-                justify-content-end" %}
-                <button style="margin-left: 60%; margin-top: 1vh" class="btn btn-primary pt-2">Create Group</button>
-            </form>
->>>>>>> 29cebfbe0e05b7136710c60c98419c119f99a38c
         </div>
     </div>
 </body>
