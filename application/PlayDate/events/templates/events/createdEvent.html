@@ -123,11 +123,16 @@ div.scroll {
                         <h5 style="padding-right: 6.5rem;">Event Date: {{event.datetime}}</h5>
                         <!-- <div class="tag">Tags: hiking  hikers</div> -->
                         <div class="mg-top-10">
-                          {% if rsvp != 1 %}
-                            <form method="POST" action="/events/register/{{event.event_id}}/">
-                              {% csrf_token %}
-                              <button name="rsvp" class="btn btn-primary pt-2" type="submit">Register</button>
-                            </form>
+                          {% if isRsvp %}
+                          <a id="btnAttendee_{{attendee.user.pk}}" class="btn btn-danger"  
+                          onclick="cancelRSVP({{user.pk}}, 'btnAttendee_{{attendee.user.pk}}')">Cancel RSVP</a>
+                            
+                          {% else %}
+                          <form method="POST" action="/events/register/{{event.event_id}}/">
+                            {% csrf_token %}
+                            <button name="rsvp" class="btn btn-primary pt-2" type="submit">Register</button>
+                          </form>
+                            
                           {% endif %}
                          
 
